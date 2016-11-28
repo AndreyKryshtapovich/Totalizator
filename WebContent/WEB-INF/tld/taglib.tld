@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<taglib xmlns="http://java.sun.com/JSP/TagLibraryDescriptor"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/ webjsptaglibrary_2_0.xsd"
+	version="2.0">  <!--дескриптор библиотеки тегов -->
+	<tlib-version> 1.0 </tlib-version>
+	<short-name> print </short-name>
+	<uri> /WEB-INF/tld/taglib.tld </uri>
+	<tag>
+		<name> jsptable </name>
+		<tag-class> by.epamtr.totalizator.usertag.TableTag </tag-class>
+		<body-content> empty </body-content>
+		<attribute>
+			<name>list</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>colunmName1</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>colunmName2</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name> colunmName3 </name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name> colunmName4 </name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name> colunmName5 </name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name> jspEventsTable </name>
+		<tag-class> by.epamtr.totalizator.usertag.EventsTableTag </tag-class>
+		<body-content> empty </body-content>
+		<attribute>
+			<name>matchedEventsList</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+	</tag>
+
+
+	<tag>
+		<name> dropdownGamePopulation </name>
+		<tag-class> by.epamtr.totalizator.usertag.DropdownGamePopulationTag
+		</tag-class>
+		<body-content> empty </body-content>
+		<attribute>
+			<name>gamesList</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name> dropdownEventPopulation </name>
+		<tag-class> by.epamtr.totalizator.usertag.DropdownEventPopulationTag
+		</tag-class>
+		<body-content> empty </body-content>
+		<attribute>
+			<name>eventsList</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+	</tag>
+
+
+
+
+
+
+
+	<tag>
+		<name> eventDetailsTable </name>
+		<tag-class> by.epamtr.totalizator.usertag.EventDetailsTableTag
+		</tag-class>
+		<body-content> empty </body-content>
+
+		<attribute>
+			<name>eventsList</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>eventName</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>teamOne</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>teamTwo</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>result</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>startDate</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>endDate</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<name>status</name>
+			<required> false </required>
+			<rtexprvalue> true </rtexprvalue>
+		</attribute>
+	</tag>
+
+
+
+
+
+</taglib>
