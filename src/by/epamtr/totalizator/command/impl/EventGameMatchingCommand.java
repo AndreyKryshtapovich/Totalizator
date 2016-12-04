@@ -16,13 +16,19 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class EventGameMatchingCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(EventGameMatchingCommand.class.getName());
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String EVENT = "event";
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String G0_TO_ADMIN_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
+	private final static String RESULT = "result";
+	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
 		HttpSession session = request.getSession(false);
-		String prevUrl = session.getAttribute("currentUrl").toString();
+		String prevUrl = session.getAttribute(CURRENT_URL).toString();
 		int selectedGameCupounId = Integer.valueOf(prevUrl.substring(prevUrl.lastIndexOf("=") + 1, prevUrl.lastIndexOf("=") + 2));
-		int selectedEventId = Integer.valueOf(request.getParameter("event").toString());
+		int selectedEventId = Integer.valueOf(request.getParameter(EVENT).toString());
 		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
@@ -30,23 +36,15 @@ public class EventGameMatchingCommand implements Command {
 		try {
 			boolean result = adminService.matchEventAndGame(selectedGameCupounId, selectedEventId);
 			if (result) {
-				//TODO message on page
-				request.getSession(false).setAttribute("eventCreationMessage", "Successfully matched event and game");
-				//url =" http://localhost:8080/TotalizatorController?command=search-matching-events&game=" + selectedGameCupounId;
-				
-				url ="http://localhost:8080/Totalizator/" + prevUrl;
-			//	System.out.println(url);
-				//System.out.println("http://localhost:8080/Totalizator/Controller?command=search-matching-events&game=9++2016-11-21+00%3A00%3A00.0+-+2016-11-25+23%3A59%3A00.0");
+				url = LOCALHOST + prevUrl;
 			} else {
-				//TODO message on page
-				request.getSession(false).setAttribute("eventCreationMessage", "Failed Adding Event");
-				url = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
+				boolean registrationResult = false;
+				request.getSession(false).setAttribute(RESULT, registrationResult);
+				url = G0_TO_ADMIN_PAGE;
 			}
-
 		} catch (ServiceException e) {
 			Logger.error(e);
-			request.getSession(false).setAttribute("eventCreationMessage", "Failed matching event and game");
-			url = "http://localhost:8080/Totalizator/Controller?command=go-to-event-creation";
+			url = GO_TO_ERROR_PAGE;
 		}
 		return url;
 	}

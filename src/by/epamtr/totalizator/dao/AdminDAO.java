@@ -2,6 +2,7 @@ package by.epamtr.totalizator.dao;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
@@ -17,4 +18,6 @@ public interface AdminDAO {
 	List<Event> getUnmatchedEvents(Timestamp gameStartDate, Timestamp gameEndDate) throws DAOException;
 	List<Event> getEventsByGameCupounId(int gameCupounId) throws DAOException;
 	List<GameCupoun> getGameByByGameCupounId(int gameCupounId) throws DAOException; 
+	Map<Integer,String> getResultDictionaryData() throws DAOException;
+	Map<Integer,String> getStatusDictionaryData() throws DAOException;
 }

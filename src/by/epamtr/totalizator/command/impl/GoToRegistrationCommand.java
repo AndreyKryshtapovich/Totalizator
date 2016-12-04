@@ -7,24 +7,17 @@ import by.epamtr.totalizator.controller.PageName;
 
 
 public class GoToRegistrationCommand implements Command {
+	private final static String GO_TO_REGISTRATION_PAGE = "Controller?command=go-to-registration";
+	private final static String CURRENT_URL = "currentUrl";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
-		String url = "Controller?command=go-to-registration";
-		request.getSession(false).setAttribute("currentUrl", url);
+		String url = GO_TO_REGISTRATION_PAGE;
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 
 		String page = PageName.REGISTRATION;
 		return page;
 		
-		/*RequestDispatcher dispatcher = request.getRequestDispatcher(PageName.REGISTRATION);
-		try {
-			dispatcher.forward(request, response);
-		} catch (ServletException e) {
-			Logger.error("Failed forwarding to the page");
-		} catch (IOException e) {
-			Logger.error("Failed forwarding to the page");
-		}
-*/
 	}
 
 }

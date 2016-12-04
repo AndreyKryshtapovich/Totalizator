@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.ClientOperationService;
@@ -15,43 +16,59 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class RegistrationUserCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(RegistrationUserCommand.class.getName());
+	private final static String LAST_NAME = "lastName";
+	private final static String FIRST_NAME = "firstName";
+	private final static String REGISTER_LOGIN = "register-login";
+	private final static String REGISTER_PASSWORD = "register-password";
+	private final static String REPEAT_PASSWORD = "rep-password";
+	private final static String SEX = "sex";
+	private final static String E_MAIL = "e-mail";
+	private final static String COUNTRY = "country";
+	private final static String CITY = "city";
+	private final static String ADDRESS = "address";
+	private final static String GO_TO_INDEX_PAGE = "http://localhost:8080/Totalizator/index.jsp";
+	private final static String GO_TO_REGISTRATION_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-registration";
+	private final static String RESULT = "result";
+	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-		/*String url = "Controller?command=registration-user&firstName=" + request.getParameter("firstName")
-				+ "&lastName=" + request.getParameter("lastName") + "&login=" + request.getParameter("login")
-				+ "&password=" + request.getParameter("password") + "&rep-password="
-				+ request.getParameter("rep-password") + "&sex=" + request.getParameter("sex") + "&e-mail="
-				+ request.getParameter("e-mail") + "&country=" + request.getParameter("country") + "&city="
-				+ request.getParameter("city") + "&address=" + request.getParameter("address");
-*/
-		//request.getSession(false).setAttribute("currentUrl", url);
-
+		
 		String url = null;
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();
+		
+		UserDTO userDTO = new UserDTO();
+		
+		userDTO.setFirstName(request.getParameter(FIRST_NAME));
+		userDTO.setLastName(request.getParameter(LAST_NAME));
+		userDTO.setRegisterLogin(request.getParameter(REGISTER_LOGIN));
+		userDTO.setSex(request.getParameter(SEX));
+		userDTO.seteMail(request.getParameter(E_MAIL));
+		userDTO.setCountry(request.getParameter(COUNTRY));
+		userDTO.setCity( request.getParameter(CITY));
+		userDTO.setAddress(request.getParameter(ADDRESS));
+		
 
 		try {
-			boolean result = clientService.registrationUser(request.getParameter("firstName"),
-					request.getParameter("lastName"), request.getParameter("register-login"), request.getParameter("register-password").getBytes(),
-					request.getParameter("rep-password").getBytes(), request.getParameter("sex"), request.getParameter("e-mail"),
-					request.getParameter("country"), request.getParameter("city"), request.getParameter("address"));
+			boolean result = clientService.registrationUser(userDTO, request.getParameter(REGISTER_PASSWORD).getBytes(),
+					request.getParameter(REPEAT_PASSWORD).getBytes());
 
+			boolean registrationResult;
 			if (result) {
-				boolean registrationResult = true;
-				request.getSession(false).setAttribute("result", registrationResult);
-				url = "http://localhost:8080/Totalizator/index.jsp";
+				registrationResult = true;
+				request.getSession(false).setAttribute(RESULT, registrationResult);
+				url = GO_TO_INDEX_PAGE;
 			} else {
-				boolean registrationResult = false;
-				request.getSession(false).setAttribute("result", registrationResult);
-				url = "http://localhost:8080/Totalizator/Controller?command=go-to-registration";
+				registrationResult = false;
+				request.getSession(false).setAttribute(RESULT, registrationResult);
+				url = GO_TO_REGISTRATION_PAGE;
 			}
 		} catch (ServiceException e) {
 			Logger.error(e);
-			boolean registrationResult = false;
-			request.getSession(false).setAttribute("result", registrationResult);
-			url = "http://localhost:8080/Totalizator/Controller?command=go-to-registration";
+			url = GO_TO_ERROR_PAGE;
 		}
 		return url;
 

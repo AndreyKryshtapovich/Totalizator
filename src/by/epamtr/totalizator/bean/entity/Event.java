@@ -17,6 +17,7 @@ public class Event implements Serializable {
 	private String teamTwo;
 	private Timestamp startDate;
 	private Timestamp endDate;
+	
 	public int getEventId() {
 		return eventId;
 	}

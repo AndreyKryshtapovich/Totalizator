@@ -20,12 +20,15 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class ShowEventsCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(ShowEventsCommand.class.getName());
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String EVENTS = "events";
+	private final static String SHOW_EVENTS_URL = "Controller?command=show-events";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-		String url = "Controller?command=show-events";
-		request.getSession(false).setAttribute("currentUrl", url);
+		String url = SHOW_EVENTS_URL;
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 
 		String page = null;
 		List<Event> eventsList = null;
@@ -40,7 +43,7 @@ public class ShowEventsCommand implements Command {
 		}
 
 		JSPListBean jsp = new JSPListBean(eventsList);
-		request.setAttribute("events", jsp);
+		request.setAttribute(EVENTS, jsp);
 		page = PageName.USER_PAGE;
 
 		return page;

@@ -9,7 +9,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 import java.util.Arrays;
 
-import org.apache.commons.codec.digest.DigestUtils; 
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class GeneralOperation implements GeneralOperationService {
 
@@ -17,15 +17,15 @@ public class GeneralOperation implements GeneralOperationService {
 	public User signIn(String login, byte[] password) throws ServiceException {
 		User user;
 		if (!Validator.loginValidation(login, password)) {
-			throw new ServiceException("invalid login or password.");
+			//throw new ServiceException("invalid login or password.");
+			return null;
 		}
-		
+
 		DAOFactory factory = DAOFactory.getInstance();
 		GeneralDAO generalDAO = factory.getDBGeneralDAO();
-		
+
 		String encrypedPassword = DigestUtils.md5Hex(password);
 		Arrays.fill(password, (byte) 0);
-		//System.out.println(encrypedPassword);
 		try {
 			user = generalDAO.signInCheck(login, encrypedPassword);
 		} catch (DAOException e) {

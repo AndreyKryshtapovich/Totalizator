@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
@@ -29,13 +31,6 @@ public class DBAdminDAO implements AdminDAO {
 			+ " `game_cupon`.`start_date`," + "`game_cupon`.`end_date`," + "`game_cupon`.`min_bet_amount`,"
 			+ "`game_cupon`.`game_cupon_pull`," + "`game_cupon`.`jackpot`," + "`game_cupon`.`status_id`"
 			+ "FROM `totalizator`.`game_cupon`" + "WHERE  `game_cupon`.`status_id` = 5;";
-	/*
-	 * private final static String GET_UNMATCHED_EVENTS =
-	 * "SELECT `event`.`event_id`," + " `event`.`event_name`," +
-	 * "`event`.`team_one`," + "`event`.`team_two`," + "`event`.`result_id`," +
-	 * "`event`.`start_date`," + "`event`.`end_date`," + "`event`.`status_id`" +
-	 * "FROM `totalizator`.`event`" + "WHERE `event`.`game_cupon_id` IS NULL; ";
-	 */
 
 	private final static String GET_UNMATCHED_EVENTS = "SELECT `event`.`event_id`," + "`event`.`event_name`,"
 			+ "`event`.`team_one`," + "`event`.`team_two`," + "`event`.`result_id`," + "`event`.`start_date`,"
@@ -49,13 +44,6 @@ public class DBAdminDAO implements AdminDAO {
 			+ " SET"
 			+ " `game_cupon_id` = ?"
 			+ " WHERE `event_id` = ?;";
-	/*private final static String GET_EVENTS_BY_GAME_CUPOUN_ID = "SELECT `event`.`event_name`,"
-			+ " `event`.`team_one`,"
-			+ " `event`.`team_two`,"
-			+ " `event`.`start_date`,"
-			+ " `event`.`end_date`"
-			+ " FROM `totalizator`.`event`"
-			+ " WHERE `event`.game_cupon_id = ?;";*/
 	
 	private final static String GET_EVENTS_BY_GAME_CUPOUN_ID = "SELECT ev.event_name,"
 			+ " ev.team_one,"
@@ -101,6 +89,15 @@ public class DBAdminDAO implements AdminDAO {
 			+ " `end_date` = ?,"
 			+ " `status_id` = ?"
 			+ " WHERE `event_id` = ?;";
+	
+	public final static String GET_RESULT_DICTIONARY_DATA = "SELECT `result`.`result_id`,"
+			+ "  `result`.`result_abbreviation`,"
+			+ " `result`.`result_note`"
+			+ " FROM `totalizator`.`result`;";
+	
+	public final static String GET_STATUS_DICTIONARY_DATA = "SELECT `status`.`status_id`,"
+			+ " `status`.`status_description`"
+			+ " FROM `totalizator`.`status`;";
 
 	@Override
 	public boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException {
@@ -389,7 +386,6 @@ public class DBAdminDAO implements AdminDAO {
 		boolean result = true;
 		Connection con = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
 		
 		try {
@@ -462,6 +458,72 @@ public class DBAdminDAO implements AdminDAO {
 			connectionPool.closeConnection(con, ps, rs);
 		}
 		return gamesList;
+	}
+
+	@Override
+	public Map<Integer, String> getResultDictionaryData() throws DAOException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		Map<Integer,String> resultMap = new HashMap<>();
+
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
+			
+			st = con.createStatement();
+			rs = st.executeQuery(GET_RESULT_DICTIONARY_DATA);
+
+			while (rs.next()) {
+				if(rs.getInt(1) == 4){
+					resultMap.put(rs.getInt(1), rs.getString(3));
+				}else{
+					resultMap.put(rs.getInt(1), rs.getString(2));
+				}
+			}
+			
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			connectionPool.closeConnection(con, st, rs);
+		}
+		return resultMap;
+	}
+
+	@Override
+	public Map<Integer, String> getStatusDictionaryData() throws DAOException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		Map<Integer,String> statusMap = new HashMap<>();
+
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
+			
+			st = con.createStatement();
+			rs = st.executeQuery(GET_STATUS_DICTIONARY_DATA);
+
+			while (rs.next()) {
+				statusMap.put(rs.getInt(1), rs.getString(2));
+			}
+			
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			connectionPool.closeConnection(con, st, rs);
+		}
+		return statusMap;
 	}
 
 }

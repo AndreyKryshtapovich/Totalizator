@@ -25,7 +25,7 @@ public class ServiceFactory {
 	public ClientOperationService getClientOperationService() {
 		return clientOperatoinService;
 	}
-	
+
 	public AdminOperationService getAdminOperationService() {
 		return adminOperatoinService;
 	}

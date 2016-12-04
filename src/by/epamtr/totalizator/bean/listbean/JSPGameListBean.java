@@ -1,11 +1,12 @@
 package by.epamtr.totalizator.bean.listbean;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 
-public class JSPGameListBean {
+public class JSPGameListBean  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Iterator<GameCupoun> it;
 	private List<GameCupoun> list;

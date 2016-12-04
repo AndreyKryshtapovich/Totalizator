@@ -1,7 +1,5 @@
 package by.epamtr.totalizator.controller;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 import by.epamtr.totalizator.command.Command;

@@ -8,15 +8,14 @@ import by.epamtr.totalizator.command.exception.CommandException;
 
 public class SignOutCommand implements Command {
 	private final static String LOGIN = "login";
+	private final static String GO_TO_INDEX_PAGE = "http://localhost:8080/Totalizator/index.jsp";
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-	/*	String url = "Controller?command=sign-out"; 
-		request.getSession(false).setAttribute("currentUrl", url);*/ 
 		
 		request.getSession(false).removeAttribute(LOGIN);
 		request.getSession().invalidate();
-		//String url = "Controller?command=go-to-index-page";
-		String url = "http://localhost:8080/Totalizator/index.jsp";
+		String url = GO_TO_INDEX_PAGE;
 		return url;
 		
 	}

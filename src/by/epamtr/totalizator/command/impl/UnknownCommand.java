@@ -8,11 +8,13 @@ import by.epamtr.totalizator.controller.PageName;
 
 
 public class UnknownCommand implements Command {
+	private final static String UNKNOWN_COMMAND_URL = "Controller?command=unknown";
+	private final static String CURRENT_URL = "currentUrl";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-		String url = "Controller?command=unknown";
-		request.getSession(false).setAttribute("currentUrl", url);
+		String url = UNKNOWN_COMMAND_URL;
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 
 		String page = PageName.ERROR_PAGE;
 		return page;

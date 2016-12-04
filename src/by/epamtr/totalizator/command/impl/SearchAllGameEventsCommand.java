@@ -21,22 +21,32 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class SearchAllGameEventsCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(SearchMatchingEventsCommand.class.getName());
+	private final static String SEARCH_ALL_EVENTS_URL = "Controller?command=search-all-events&game=";
+	private final static String GAME = "game";
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String GAME_EVENTS_URL = "gameEventsUrl";
+	private final static String EVENTS = "events";
+	private final static String GAME_CUPOUN_ID = "gameCupounId";
+	private final static String GAME_START_DATE = "gameStartDate";
+	private final static String GAME_END_DATE = "gameEndDate";
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		String url = "Controller?command=search-all-events&game=" + request.getParameter("game");
-		request.getSession(false).setAttribute("currentUrl", url);
+		String url = SEARCH_ALL_EVENTS_URL + request.getParameter(GAME);
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 		
-		Cookie newCookie = new Cookie("gameEventsUrl",url);
+		Cookie newCookie = new Cookie(GAME_EVENTS_URL,url);
 		response.addCookie(newCookie);
 		
 		String page = null;
 		List<Event> eventsList = null;
+		String parameters = request.getParameter(GAME);
 		
-		String parameters = request.getParameter("game");
 		if(parameters.isEmpty()){
 			page = PageName.ERROR_PAGE;
 			return page;
 		}
+		
 		int gameCupounId =Integer.valueOf(parameters.substring(0, 1)); 
 		String startDate = parameters.substring(3,25);
 		String endDate = parameters.substring(27);
@@ -47,15 +57,15 @@ public class SearchAllGameEventsCommand implements Command {
 		AdminOperationService adminService = factory.getAdminOperationService();
 		
 		try {
-			eventsList = adminService.showEventsByGameCupounId(gameCupounId);
+			eventsList = adminService.getEventsByGameCupounId(gameCupounId);
 		} catch (ServiceException e) {
 			Logger.error(e);
 		}
 		JSPListBean jsp = new JSPListBean(eventsList);
-		request.setAttribute("events", jsp);
-		request.setAttribute("gameCupounId", gameCupounId);
-		request.setAttribute("gameStartDate", gameStartDate);
-		request.setAttribute("gameEndDate", gameEndDate);
+		request.setAttribute(EVENTS, jsp);
+		request.setAttribute(GAME_CUPOUN_ID, gameCupounId);
+		request.setAttribute(GAME_START_DATE, gameStartDate);
+		request.setAttribute(GAME_END_DATE, gameEndDate);
 		
 		page = PageName.EVENT_DETAILS;
 		return page;

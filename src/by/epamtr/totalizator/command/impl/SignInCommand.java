@@ -1,8 +1,6 @@
 package by.epamtr.totalizator.command.impl;
 
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,18 +16,17 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 
 public class SignInCommand implements Command {
+	private final static Logger Logger = LogManager.getLogger(SignInCommand.class.getName());
 	private final static String LOGIN = "login";
 	private final static String PASSWORD = "password";
 	private final static String USER = "user";
-	private final static Logger Logger = LogManager.getLogger(SignInCommand.class.getName());
-
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String SHOW_EVENTS_COMMAND_URL = "http://localhost:8080/Totalizator/Controller?command=show-events";
+	private final static String GO_TO_ADMIN_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
+	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
-		/*String url = "Controller?command=sign-in" + "&login=" + request.getParameter(LOGIN) + "&password="
-				+ request.getParameter(PASSWORD);
-		
-		request.getSession(false).setAttribute("currentUrl", url);*/
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		GeneralOperationService generalService = factory.getGeneralOperationService();
@@ -40,26 +37,20 @@ public class SignInCommand implements Command {
 			user = generalService.signIn(request.getParameter(LOGIN), request.getParameter(PASSWORD).getBytes());
 			
 			if (user == null) {
-				//TODO
-			url = "http://localhost:8080/Totalizator";
+				url = LOCALHOST;
 			} else {
 				if (user.getRole().equals(USER)) {
 					request.getSession(true).setAttribute(LOGIN, request.getParameter(LOGIN));
-					// redirect for execution show-events command
-					url = "http://localhost:8080/Totalizator/Controller?command=show-events";
-					//return;
+					url = SHOW_EVENTS_COMMAND_URL;
 				} else {
 					request.getSession(true).setAttribute(LOGIN, request.getParameter(LOGIN));
-					url = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
+					url = GO_TO_ADMIN_PAGE;
 				}
-
 			}
 		} catch (ServiceException e) {
 			Logger.error(e);
-			url = "http://localhost:8080/Totalizator";
+			url = GO_TO_ERROR_PAGE;
 		}
 		return url;
-
 	}
-
 }

@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import by.epamtr.totalizator.bean.dto.EventDTO;
+import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.dao.AdminDAO;
 import by.epamtr.totalizator.dao.DAOFactory;
 import by.epamtr.totalizator.dao.exception.DAOException;
-import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class Validator {
 /*	public static boolean loginValidation(String login, String password) {
@@ -37,16 +39,15 @@ public class Validator {
 		return true;
 	}
 
-	public static boolean userInfoValidation(String firstName, String lastName, String login, byte[] password,
-			byte[] repPassword, String sex, String eMail, String country, String city, String address) {
+	public static boolean userInfoValidation(UserDTO userDTO, byte[] password, byte[] repPassword) {
 
-		if (firstName.isEmpty()) {
+		if (userDTO.getFirstName().isEmpty()) {
 			return false;
 		}
-		if (lastName.isEmpty()) {
+		if (userDTO.getLastName().isEmpty()) {
 			return false;
 		}
-		if (login.isEmpty()) {
+		if (userDTO.getRegisterLogin().isEmpty()) {
 			return false;
 		}
 		if (password.length == 0 || repPassword.length == 0) {
@@ -55,13 +56,13 @@ public class Validator {
 		if (!Arrays.equals(password, repPassword)) {
 			return false;
 		}
-		if (sex.isEmpty()) {
+		if (userDTO.getSex().isEmpty()) {
 			return false;
 		}
-		if (eMail.isEmpty()) {
+		if (userDTO.geteMail().isEmpty()) {
 			return false;
 		}
-		if (country.isEmpty()) {
+		if (userDTO.getCountry().isEmpty()) {
 			return false;
 		}
 
@@ -69,61 +70,59 @@ public class Validator {
 
 	}
 	
-	public static boolean newGameCupounInfoValidation(String startDate, String startTimeHours, String startTimeMinutes, String endDate,
-			String endTimeHours, String endTimeMinutes, String minBetAmount){
+	public static boolean newGameCupounInfoValidation(GameCupounDTO gameCupounDTO){
 		
-		if(startDate.isEmpty()){
+		if(gameCupounDTO.getStartDate().isEmpty()){
 			return false;
 		}
-		if(startTimeHours.isEmpty()){
+		if(gameCupounDTO.getStartTimeHours().isEmpty()){
 			return false;
 		}
-		if(startTimeMinutes.isEmpty()){
+		if(gameCupounDTO.getStartTimeMinutes().isEmpty()){
 			return false;
 		}
-		if(endDate.isEmpty()){
+		if(gameCupounDTO.getEndDate().isEmpty()){
 			return false;
 		}
-		if(endTimeHours.isEmpty()){
+		if(gameCupounDTO.getEndTimeHours().isEmpty()){
 			return false;
 		}
-		if(endTimeMinutes.isEmpty()){
+		if(gameCupounDTO.getEndTimeMinutes().isEmpty()){
 			return false;
 		}
-		if(minBetAmount.isEmpty()){
+		if(gameCupounDTO.getMinBetAmount().isEmpty()){
 			return false;
 		}
 		return true;
 	}
 	
-	public static boolean newEventInfoValidation(String eventName, String startDate, String startTimeHours, String startTimeMinutes, String endDate,
-			String endTimeHours, String endTimeMinutes, String teamOne, String teamTwo){
+	public static boolean newEventInfoValidation(EventDTO eventDTO){
 		
-		if(eventName.isEmpty()){
+		if(eventDTO.getEventName().isEmpty()){
 			return false;
 		}
-		if(startDate.isEmpty()){
+		if(eventDTO.getStartDate().isEmpty()){
 			return false;
 		}
-		if(startTimeHours.isEmpty()){
+		if(eventDTO.getStartTimeHours().isEmpty()){
 			return false;
 		}
-		if(startTimeMinutes.isEmpty()){
+		if(eventDTO.getStartTimeMinutes().isEmpty()){
 			return false;
 		}
-		if(endDate.isEmpty()){
+		if(eventDTO.getEndDate().isEmpty()){
 			return false;
 		}
-		if(endTimeHours.isEmpty()){
+		if(eventDTO.getEndTimeHours().isEmpty()){
 			return false;
 		}
-		if(endTimeMinutes.isEmpty()){
+		if(eventDTO.getEndTimeMinutes().isEmpty()){
 			return false;
 		}
-		if(teamOne.isEmpty()){
+		if(eventDTO.getTeamOne().isEmpty()){
 			return false;
 		}
-		if(teamTwo.isEmpty()){
+		if(eventDTO.getTeamTwo().isEmpty()){
 			return false;
 		}
 		return true;

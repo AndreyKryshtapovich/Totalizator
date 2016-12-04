@@ -10,7 +10,7 @@ public class MessageListener implements ServletRequestListener {
 
 	private final static String COMMAND = "command";
 	private final static String METHOD = "get";
-
+	private final static String RESULT = "result";
 	public MessageListener() {
 
 	}
@@ -18,16 +18,15 @@ public class MessageListener implements ServletRequestListener {
 	public void requestDestroyed(ServletRequestEvent arg0) {
 		HttpServletRequest request = (HttpServletRequest) arg0.getServletRequest();
 		CommandChecker checker = new CommandChecker();
-		String requestMethod = checker.getMethod(request.getParameter("command"));
+		String requestMethod = checker.getMethod(request.getParameter(COMMAND));
 		if (requestMethod != null) {
 			if (requestMethod.equals(METHOD)) {
-				request.getSession(false).removeAttribute("result");
+				request.getSession(false).removeAttribute(RESULT);
 			}
 		}
 	}
 
 	public void requestInitialized(ServletRequestEvent arg0) {
-		// TODO Auto-generated method stub
 	}
 
 }

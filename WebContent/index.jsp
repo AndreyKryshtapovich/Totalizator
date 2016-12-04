@@ -128,7 +128,8 @@
 	</aside>
 
 
-	<main class="content">
+	<!-- <main class="content"> -->
+	<div class="content">
 	<article>
 		<h2 class="rules">Правила Тотализатора</h2>
 		<section>
@@ -209,7 +210,8 @@
 			</ol>
 		</section>
 	</article>
-	</main>
+	<!-- </main> -->
+	</div>
 	<footer class="bottom">
 		<p>&copy;All rights reserved. Totalizator by Andrey Kryshtapovich</p>
 

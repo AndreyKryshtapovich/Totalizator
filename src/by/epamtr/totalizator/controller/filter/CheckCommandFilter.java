@@ -6,7 +6,6 @@ import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -27,7 +26,7 @@ public class CheckCommandFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		CommandChecker commandChecker = new CommandChecker();
 		String commandName = req.getParameter(COMMAND_NAME);
@@ -36,14 +35,7 @@ public class CheckCommandFilter implements Filter {
 			method = method.toUpperCase();
 		}
 		if (req.getMethod().equals(method)) {
-			try {
 				chain.doFilter(request, response);
-			} catch (IOException e) {
-				Logger.error(e);
-				e.printStackTrace();
-			} catch (ServletException e) {
-				Logger.error(e);
-			}
 		} else {
 			RequestDispatcher dispatcher = request.getRequestDispatcher(PageName.ERROR_PAGE);
 			try {

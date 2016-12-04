@@ -16,7 +16,7 @@ import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 
 
-public class Controller extends HttpServlet {
+public final class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String COMMAND_NAME = "command";
 	private final CommandProvider provider = new CommandProvider();
@@ -26,7 +26,7 @@ public class Controller extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response){
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String commandName = null;
 		Command command = null;
 		String page = null;
@@ -35,25 +35,18 @@ public class Controller extends HttpServlet {
 
 		try {
 			page = command.execute(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+			if (dispatcher != null) {
+				dispatcher.forward(request, response);
+			}
 		} catch (CommandException e) {
 			Logger.error(e);
-			page = PageName.ERROR_PAGE; // might be fatal error or some other
-										// page
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-		if (dispatcher != null) {
-			try {
-				dispatcher.forward(request, response);
-			} catch (ServletException e) {
-				Logger.error(e);
-			} catch (IOException e) {
-				Logger.error(e);
-			}
-		}
+		
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String commandName = null;
 		Command command = null;
 		String url = null;
@@ -62,15 +55,8 @@ public class Controller extends HttpServlet {
 		command = provider.getCommand(commandName);
 		try {
 		url = command.execute(request, response);
+		response.sendRedirect(url);
 		} catch (CommandException e) {
-			Logger.error(e);
-			//page = PageName.ERROR_PAGE; // might be fatal error or some other
-										// page
-		}
-
-		try {
-			response.sendRedirect(url);
-		} catch (IOException e) {
 			Logger.error(e);
 		}
  

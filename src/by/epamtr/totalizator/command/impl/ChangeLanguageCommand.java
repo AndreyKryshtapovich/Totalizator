@@ -9,15 +9,19 @@ import by.epamtr.totalizator.command.exception.CommandException;
 
 public class ChangeLanguageCommand implements Command {
 
+	private final static String LOCAL = "local";
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
 		HttpSession session = request.getSession(false);
-		session.setAttribute("local", request.getParameter("local"));
-		if (session.getAttribute("currentUrl") != null) {
-			url = "http://localhost:8080/Totalizator/" + session.getAttribute("currentUrl");
+		session.setAttribute(LOCAL, request.getParameter(LOCAL));
+		if (session.getAttribute(CURRENT_URL) != null) {
+			url = LOCALHOST + session.getAttribute(CURRENT_URL);
 		} else {
-			url = "http://localhost:8080/Totalizator";
+			url = LOCALHOST;
 		}
 		return url;
 	}

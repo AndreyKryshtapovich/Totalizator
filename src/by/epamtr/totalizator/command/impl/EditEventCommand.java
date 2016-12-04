@@ -19,32 +19,48 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 public class EditEventCommand implements Command {
 
 	private final static Logger Logger = LogManager.getLogger(EditEventCommand.class.getName());
+	private final static String EVENT_ID = "eventId";
+	private final static String GAME_COUPON_ID = "gameCouponId";
+	private final static String NAME = "name";
+	private final static String TEAM_ONE = "team-one";
+	private final static String TEAM_TWO = "team-two";
+	private final static String RESULT_ID = "resultId";
+	private final static String START_DATE = "start-date";
+	private final static String START_TIME_HOURS = "start-time-hours";
+	private final static String START_TIME_MINUTES = "start-time-minutes";
+	private final static String END_DATE = "end-date";
+	private final static String END_TIME_HOURS = "end-time-hours";
+	private final static String END_TIME_MINUTES = "end-time-minutes";
+	private final static String STATUS = "status";
+	private final static String GAME_EVENTS_URL = "gameEventsUrl";
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String GO_TO_ERROR_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-error-page";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
 
-		int eventId = Integer.valueOf(request.getParameter("eventId"));
-		int gameCouponId = Integer.valueOf(request.getParameter("gameCouponId"));
-		String eventName = request.getParameter("name");
-		String teamOne = request.getParameter("team-one");
-		String teamTwo = request.getParameter("team-two");
+		int eventId = Integer.valueOf(request.getParameter(EVENT_ID));
+		int gameCouponId = Integer.valueOf(request.getParameter(GAME_COUPON_ID));
+		String eventName = request.getParameter(NAME);
+		String teamOne = request.getParameter(TEAM_ONE);
+		String teamTwo = request.getParameter(TEAM_TWO);
 
-		int resultId = Integer.valueOf(request.getParameter("resultId"));
+		int resultId = Integer.valueOf(request.getParameter(RESULT_ID));
 
-		String startDate = request.getParameter("start-date");
-		String startTimeHours = request.getParameter("start-time-hours");
-		String startTimeMinutes = request.getParameter("start-time-minutes");
+		String startDate = request.getParameter(START_DATE);
+		String startTimeHours = request.getParameter(START_TIME_HOURS);
+		String startTimeMinutes = request.getParameter(START_TIME_MINUTES);
 
-		String endDate = request.getParameter("end-date");
-		String endTimeHours = request.getParameter("end-time-hours");
-		String endTimeMinutes = request.getParameter("end-time-minutes");
+		String endDate = request.getParameter(END_DATE);
+		String endTimeHours = request.getParameter(END_TIME_HOURS);
+		String endTimeMinutes = request.getParameter(END_TIME_MINUTES);
 
 		String correctStartDate = startDate + " " + startTimeHours + ":" + startTimeMinutes + ":" + "00";
 		String correctEndDate = endDate + " " + endTimeHours + ":" + endTimeMinutes + ":" + "00";
 		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
-		int status = Integer.valueOf(request.getParameter("status"));
+		int status = Integer.valueOf(request.getParameter(STATUS));
 
 		Event event = new Event();
 		event.setEventId(eventId);
@@ -62,9 +78,10 @@ public class EditEventCommand implements Command {
 
 		String gameEventsUrl = null;
 		Cookie[] cookies = request.getCookies();
+		
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if(cookie.getName().equals("gameEventsUrl")){
+				if(cookie.getName().equals(GAME_EVENTS_URL)){
 					gameEventsUrl = cookie.getValue();
 				}
 			}
@@ -73,13 +90,13 @@ public class EditEventCommand implements Command {
 		try {
 			boolean result = adminService.updateEvent(event);
 			if (result) {
-				url ="http://localhost:8080/Totalizator/" + gameEventsUrl;
+				url = LOCALHOST + gameEventsUrl;
 			} else {
-				url = "http://localhost:8080/Totalizator/Controller?command=go-to-error-page";
+				url = GO_TO_ERROR_PAGE;
 			}
 		} catch (ServiceException e) {
 			Logger.error(e);
-			url = "http://localhost:8080/Totalizator/Controller?command=go-to-error-page";
+			url = GO_TO_ERROR_PAGE;
 		}
 
 		return url;

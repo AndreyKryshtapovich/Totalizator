@@ -1,6 +1,5 @@
 package by.epamtr.totalizator.command.impl;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.epamtr.totalizator.bean.dto.EventsListDTO;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 import by.epamtr.totalizator.command.Command;
@@ -20,59 +20,53 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class SearchMatchingEventsCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(SearchMatchingEventsCommand.class.getName());
+	private final static String EVENTS = "events";
+	private final static String GAME_CUPOUN_ID = "gameCupounId";
+	private final static String GAME_START_DATE = "gameStartDate";
+	private final static String GAME_END_DATE = "gameEndDate";
+	private final static String GAME = "game";
+	private final static String SEARCH_MATCHING_EVENTS_URL = "Controller?command=search-matching-events&game=";
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String MATCHED_EVENTS = "matchedEvents";
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		String url = "Controller?command=search-matching-events&game=" + request.getParameter("game");
-		request.getSession(false).setAttribute("currentUrl", url);
+		String url = SEARCH_MATCHING_EVENTS_URL + request.getParameter(GAME);
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 		
 		String page = null;
-		List<Event> eventsList = null;
 		List<Event> matchedEventsList = null;
-		
-		String parameters = request.getParameter("game");
-		/*int gameCupounId =Integer.valueOf(parameters.substring(0, 1)); 
-		String startDate = parameters.substring(3,25);
-		String endDate = parameters.substring(27);
-		Timestamp gameStartDate = Timestamp.valueOf(startDate);
-		Timestamp gameEndDate = Timestamp.valueOf(endDate);*/
+		String parameters = request.getParameter(GAME);
+		EventsListDTO unmatchedEventsDTO = new EventsListDTO();
 		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
 		
 		try {
-			eventsList = adminService.showUnmatchedEvents(parameters);
+			unmatchedEventsDTO = adminService.getUnmatchedEvents(parameters);
 		} catch (ServiceException e) {
 			page = PageName.ERROR_PAGE;
 			Logger.error(e);
 			return page;
 		}
 		
-		int gameCupounId =Integer.valueOf(parameters.substring(0, 1)); 
-		String startDate = parameters.substring(3,25);
-		String endDate = parameters.substring(27);
-		Timestamp gameStartDate = Timestamp.valueOf(startDate);
-		Timestamp gameEndDate = Timestamp.valueOf(endDate);
-		
-		//TODO utils or somehing like this 
-		JSPListBean jsp = new JSPListBean(eventsList);
-		request.setAttribute("events", jsp);
-		request.setAttribute("gameCupounId", gameCupounId);
-		request.setAttribute("gameStartDate", gameStartDate);
-		request.setAttribute("gameEndDate", gameEndDate);
+		JSPListBean jsp = new JSPListBean(unmatchedEventsDTO.getEventList());
+		request.setAttribute(EVENTS, jsp);
+		request.setAttribute(GAME_CUPOUN_ID, unmatchedEventsDTO.getGameCupounId());
+		request.setAttribute(GAME_START_DATE, unmatchedEventsDTO.getGameStartDate());
+		request.setAttribute(GAME_END_DATE, unmatchedEventsDTO.getGameEndDate());
 		
 		try {
-			matchedEventsList = adminService.showEventsByGameCupounId(gameCupounId);
+			matchedEventsList = adminService.getEventsByGameCupounId(unmatchedEventsDTO.getGameCupounId());
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			page = PageName.ERROR_PAGE;
 			Logger.error(e);
+			return page;
 		}
-		
 		JSPListBean matchedEventsJsp = new JSPListBean(matchedEventsList);
-		request.setAttribute("matchedEvents", matchedEventsJsp);
+		request.setAttribute(MATCHED_EVENTS, matchedEventsJsp);
 		
 		page = PageName.EVENT_GAME_MATCHING;
-		
-		
 		return page;
 	}
 

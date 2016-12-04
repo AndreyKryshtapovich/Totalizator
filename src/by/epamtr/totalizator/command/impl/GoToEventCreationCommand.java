@@ -8,11 +8,13 @@ import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.controller.PageName;
 
 public class GoToEventCreationCommand implements Command {
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String GO_TO_EVENT_CREATION = "Controller?command=go-to-event-creation";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		String url = "Controller?command=go-to-event-creation";
-		request.getSession(false).setAttribute("currentUrl", url);
+		String url = GO_TO_EVENT_CREATION;
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 
 		String page = PageName.EVENT_CREATION;
 		return page;

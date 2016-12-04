@@ -13,6 +13,7 @@ public class GameCupoun implements Serializable {
 	private int jackpot;
 	//TODO game is canselled rewrite!!!!
 	private int status = 5;
+	
 	public int getGameCupounId() {
 		return gameCupounId;
 	}

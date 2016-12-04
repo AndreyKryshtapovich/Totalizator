@@ -1,22 +1,26 @@
 package by.epamtr.totalizator.service;
 
 
-import java.sql.Timestamp;
-import java.util.List;
 
+import java.util.List;
+import java.util.Map;
+
+import by.epamtr.totalizator.bean.dto.EventDTO;
+import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.EventsListDTO;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
 public interface AdminOperationService {
-	boolean createNewGameCupoun(String startDate, String startTimeHours, String startTimeMinutes, String endDate, String endTimeHours, String endTimeMinutes,String minBetAmount) throws ServiceException ;
-	boolean createNewEvent(String eventName ,String startDate, String startTimeHours, String startTimeMinutes, String endDate, String endTimeHours, String endTimeMinutes, String teamOne, String teamTwo) throws ServiceException ;
+	boolean createNewGameCupoun(GameCupounDTO gameCupounDTO) throws ServiceException ;
+	boolean createNewEvent(EventDTO eventDTO) throws ServiceException ;
 	boolean matchEventAndGame(int selectedGameCupounId, int selectedEventId) throws ServiceException;
 	boolean updateEvent(Event event) throws ServiceException;
-	List<GameCupoun> showGamesInDevelopment() throws ServiceException;
-	List<GameCupoun> showAllGames() throws ServiceException;
-	//List<Event> showUnmatchedEvents(Timestamp gameStartDate, Timestamp gameEndDate) throws ServiceException;
-	List<Event> showUnmatchedEvents(String parameters) throws ServiceException;
-	List<Event> showEventsByGameCupounId(int gameCupounId) throws ServiceException;
-//	List<Event> showEventsByGameCupounId(String parameters) throws ServiceException;
+	List<GameCupoun> getGamesInDevelopment() throws ServiceException;
+	List<GameCupoun> getAllGames() throws ServiceException;
+	EventsListDTO getUnmatchedEvents(String parameters) throws ServiceException;
+	List<Event> getEventsByGameCupounId(int gameCupounId) throws ServiceException;
+	Map<Integer,String> getResultDictionaryData() throws ServiceException;
+	Map<Integer,String> getStatusDictionaryData() throws ServiceException;
 }

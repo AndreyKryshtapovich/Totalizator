@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.epamtr.totalizator.bean.dto.GameCupounDTO;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.AdminOperationService;
@@ -16,49 +17,56 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class GameCreationCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(GameCreationCommand.class.getName());
-
+	private final static String START_DATE = "start-date";
+	private final static String START_TIME_HOURS = "start-time-hours";
+	private final static String START_TIME_MINUTES = "start-time-minutes";
+	private final static String END_DATE = "end-date";
+	private final static String END_TIME_HOURS = "end-time-hours";
+	private final static String END_TIME_MINUTES = "end-time-minutes";
+	private final static String MIN_BET_AMOUNT = "min-bet-amount";
+	private final static String GO_TO_GAME_CREATION_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-game-creation";
+	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-		/*String url = "Controller?command=game-creation&start-date=" + request.getParameter("start-date")
-		+ "&start-time-hours=" + request.getParameter("start-time-hours") + "&start-time-minutes=" + request.getParameter("start-time-minutes")
-		+ "&end-date=" + request.getParameter("end-date") + "&end-time-hours="
-		+ request.getParameter("end-time-hours") + "&end-time-minutes=" + request.getParameter("end-time-minutes") + "&min-bet-amount="
-		+ request.getParameter("min-bet-amount");
-		request.getSession(false).setAttribute("currentUrl", url);*/
+
 		
 		String url = null;
 		
-		String startDate = request.getParameter("start-date");
-		String startTimeHours = request.getParameter("start-time-hours");
-		String startTimeMinutes = request.getParameter("start-time-minutes");
-		String endDate = request.getParameter("end-date");
-		String endTimeHours = request.getParameter("end-time-hours");
-		String endTimeMinutes = request.getParameter("end-time-minutes");
-		String minBetAmount = request.getParameter("min-bet-amount");
+		String startDate = request.getParameter(START_DATE);
+		String startTimeHours = request.getParameter(START_TIME_HOURS);
+		String startTimeMinutes = request.getParameter(START_TIME_MINUTES);
+		String endDate = request.getParameter(END_DATE);
+		String endTimeHours = request.getParameter(END_TIME_HOURS);
+		String endTimeMinutes = request.getParameter(END_TIME_MINUTES);
+		String minBetAmount = request.getParameter(MIN_BET_AMOUNT);
 	
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
 		
+		GameCupounDTO gameCupounDTO = new GameCupounDTO();
+		gameCupounDTO.setStartDate(startDate);
+		gameCupounDTO.setStartTimeHours(startTimeHours);
+		gameCupounDTO.setStartTimeMinutes(startTimeMinutes);
+		gameCupounDTO.setEndDate(endDate);
+		gameCupounDTO.setEndTimeHours(endTimeHours);
+		gameCupounDTO.setEndTimeMinutes(endTimeMinutes);
+		gameCupounDTO.setMinBetAmount(minBetAmount);
+		
 		try {
-			boolean result =  adminService.createNewGameCupoun(startDate, startTimeHours, startTimeMinutes, endDate, endTimeHours, endTimeMinutes, minBetAmount);
+			boolean result =  adminService.createNewGameCupoun(gameCupounDTO);
 			if (result) {
-				// now admin is redirected to the game creation page. In future to the page with list of all games
-				// show-all-games command
 				boolean gameCreatingResult = true;
 				request.getSession(false).setAttribute("result", gameCreatingResult);
-				url = "http://localhost:8080/Totalizator/Controller?command=go-to-game-creation";
+				url = GO_TO_GAME_CREATION_PAGE;
 			} else {
 				boolean gameCreatingResult = false;
-				// in future admin will be redirected to the same game creation page with some message
-				url = "http://localhost:8080/Totalizator/Controller?command=go-to-game-creation";
+				request.getSession(false).setAttribute("result", gameCreatingResult);
+				url = GO_TO_GAME_CREATION_PAGE;
 			}
 		
 		} catch (ServiceException e) {
 			Logger.error(e);
-			//url = "http://localhost:8080/Totalizator/Controller?command=go-to-error-page";
-			boolean gameCreatingResult = false;
-			request.getSession(false).setAttribute("result", gameCreatingResult);
-			url = "http://localhost:8080/Totalizator/Controller?command=go-to-game-creation";
+			url = GO_TO_ERROR_PAGE;
 		}
 		return url;
 	}

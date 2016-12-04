@@ -17,7 +17,7 @@
 	var="ru_button" />
 <fmt:message bundle="${loc}" key="local.locbutton.name.en"
 	var="en_button" />
-	
+
 <fmt:message bundle="${loc}" key="local.login" var="login" />
 <fmt:message bundle="${loc}" key="local.password" var="password" />
 <fmt:message bundle="${loc}" key="local.signIn" var="signIn" />
@@ -39,6 +39,7 @@
 <fmt:message bundle="${loc}" key="local.M" var="M" />
 <fmt:message bundle="${loc}" key="local.F" var="F" />
 <fmt:message bundle="${loc}" key="local.unknown" var="unknown" />
+<fmt:message bundle="${loc}" key="local.personalData" var="personalData" />
 </head>
 <body>
 	<header>
@@ -79,8 +80,7 @@
 				<form action="Controller" method="get" name="go-to-registration">
 					<input type="hidden" name="command" value="go-to-registration" />
 					<div class="user">
-						<input class="btn-register" type="submit"
-							value="${register}">
+						<input class="btn-register" type="submit" value="${register}">
 					</div>
 				</form>
 
@@ -119,12 +119,17 @@
 	</aside>
 
 
-	<main class="content">
-
+	<!-- <main class="content"> -->
+   <div class="content">
 	<div class="center clearfix">
+		<c:if test="${not empty sessionScope.result}">
+			<c:if test="${not sessionScope.result }">
+				<c:out value="Failed registration." />
+			</c:if>
+		</c:if>
 		<form action="Controller" method="post" name="registration">
 			<fieldset id="ancestor">
-				<legend>Персональные Данные:</legend>
+				<legend class="legendInfo">${personalData }</legend>
 				<div>
 					<input type="hidden" name="command" value="registration-user" />
 				</div>
@@ -201,7 +206,8 @@
 			</div>
 		</form>
 	</div>
-	</main>
+</div>
+	<!-- </main> -->
 
 	<footer class="bottom">
 		<p>&copy;All rights reserved. Totalizator by Andrey Kryshtapovich</p>
