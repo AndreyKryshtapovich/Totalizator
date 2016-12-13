@@ -79,17 +79,17 @@ public final class ConnectionPool {
 		}
 	}
 
-	public void dispose() {
+	public void dispose() throws ConnectionPoolException {
 		clearConnectionQueue();
 	}
 
-	private void clearConnectionQueue() {
+	private void clearConnectionQueue() throws ConnectionPoolException {
 		try {
 			closeConnectionsQueue(givenAwayConQueue);
 			closeConnectionsQueue(connectionQueue);
 		} catch (SQLException e) {
 			Logger.error("Error closing the connection.");
-			// logger.log(Level.ERROR, "Error closing the connection.", e);
+			throw new ConnectionPoolException();
 		}
 	}
 	
@@ -135,6 +135,35 @@ public final class ConnectionPool {
 			// logger.log(Level.ERROR, "Statement isn't closed.");
 		}
 	}
+	
+	public void closeConnection(Connection con, PreparedStatement ps, Statement st, ResultSet rs) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			Logger.error("Connection isn't return to the pool.");
+			// logger.log(Level.ERROR, "Connection isn't return to the pool.");
+		}
+		try {
+			rs.close();
+		} catch (SQLException e) {
+			Logger.error("ResultSet isn't closed.");
+			// logger.log(Level.ERROR, "ResultSet isn't closed.");
+		}
+		try {
+			ps.close();
+		} catch (SQLException e) {
+			Logger.error("PreparedStatement isn't closed.");
+			// logger.log(Level.ERROR, "Statement isn't closed.");
+		}
+		
+		try {
+			st.close();
+		} catch (SQLException e) {
+			Logger.error("Statement isn't closed.");
+			// logger.log(Level.ERROR, "Statement isn't closed.");
+		}
+	}
+
 
 	public void closeConnection(Connection con, Statement st, ResultSet rs) {
 		try {
@@ -169,6 +198,15 @@ public final class ConnectionPool {
 		} catch (SQLException e) {
 			Logger.error("Statement isn't closed.");
 			// logger.log(Level.ERROR, "Statement isn't closed.");
+		}
+	}
+	
+	public void closeConnection(Connection con) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			Logger.error("Connection isn't return to the pool.");
+			// logger.log(Level.ERROR, "Connection isn't return to the pool.");
 		}
 	}
 

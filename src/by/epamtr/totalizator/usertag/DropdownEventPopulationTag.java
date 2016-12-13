@@ -35,9 +35,9 @@ public class DropdownEventPopulationTag extends TagSupport {
 					pageContext.getOut().write("</option>");
 				}
 				pageContext.getOut().write("</datalist>");
-				pageContext.getOut().write("<input type='submit' value='Submit Matching'>");
+				//pageContext.getOut().write("<input type='submit' class='addEmailBtn' value='Submit Matching'>");
 				
-
+				pageContext.getOut().write("<button type='submit' class='addEmailBtn'>Submit Matching</button>");
 			} catch (IOException e) {
 				throw new JspTagException(e.getMessage());
 			}

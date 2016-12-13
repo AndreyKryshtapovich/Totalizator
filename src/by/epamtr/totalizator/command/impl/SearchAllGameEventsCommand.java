@@ -18,6 +18,7 @@ import by.epamtr.totalizator.controller.PageName;
 import by.epamtr.totalizator.service.AdminOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
+import by.epamtr.totalizator.util.Utils;
 
 public class SearchAllGameEventsCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(SearchMatchingEventsCommand.class.getName());
@@ -47,11 +48,9 @@ public class SearchAllGameEventsCommand implements Command {
 			return page;
 		}
 		
-		int gameCupounId =Integer.valueOf(parameters.substring(0, 1)); 
-		String startDate = parameters.substring(3,25);
-		String endDate = parameters.substring(27);
-		Timestamp gameStartDate = Timestamp.valueOf(startDate);
-		Timestamp gameEndDate = Timestamp.valueOf(endDate);
+		int gameCupounId =Integer.valueOf(Utils.parseParamGameCupounId(parameters)); 
+		Timestamp gameStartDate = Timestamp.valueOf(Utils.parseParamGameCupounStartDate(parameters));
+		Timestamp gameEndDate = Timestamp.valueOf(Utils.parseParamGameCupounEndDate(parameters));
 		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();

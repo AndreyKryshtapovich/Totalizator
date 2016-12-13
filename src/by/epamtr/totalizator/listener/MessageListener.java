@@ -11,6 +11,7 @@ public class MessageListener implements ServletRequestListener {
 	private final static String COMMAND = "command";
 	private final static String METHOD = "get";
 	private final static String RESULT = "result";
+	private final static String BET_AMOUNT_RESULT = "betAmountResult";
 	public MessageListener() {
 
 	}
@@ -22,6 +23,8 @@ public class MessageListener implements ServletRequestListener {
 		if (requestMethod != null) {
 			if (requestMethod.equals(METHOD)) {
 				request.getSession(false).removeAttribute(RESULT);
+				request.getSession(false).removeAttribute(BET_AMOUNT_RESULT);
+				
 			}
 		}
 	}

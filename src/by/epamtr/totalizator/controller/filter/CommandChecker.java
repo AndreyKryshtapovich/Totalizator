@@ -26,6 +26,8 @@ public class CommandChecker {
 		correctCommandsMethods.put("search-all-events", "get");
 		correctCommandsMethods.put("go-to-event-edit", "get");
 		correctCommandsMethods.put("edit-event", "post");
+		correctCommandsMethods.put("make-bet", "post");
+		correctCommandsMethods.put("go-to-bet-submit", "get");
 	}
 	
 	public String getMethod(String key){

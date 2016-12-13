@@ -61,12 +61,10 @@ public class EventCreationCommand implements Command {
 			boolean result = adminService.createNewEvent(eventDTO);
 			boolean eventAddResult;
 			if (result) {
-				//TODO message on page
 				eventAddResult = true;
 				request.getSession(false).setAttribute(RESULT, eventAddResult);
 				url = GO_TO_EVENT_CREATION;
 			} else {
-				//TODO message on page
 				eventAddResult = false;
 				request.getSession(false).setAttribute(RESULT, eventAddResult);
 				url = GO_TO_EVENT_CREATION;

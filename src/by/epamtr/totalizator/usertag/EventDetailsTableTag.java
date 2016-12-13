@@ -88,7 +88,9 @@ public class EventDetailsTableTag extends TagSupport {
 				pageContext.getOut().write(event.getStatusDescription());
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("<td>");
-				pageContext.getOut().write("<input type='submit' value='Edit'>");
+				pageContext.getOut().write("<button type='submit' style='top:0px; left:0px;' class='addEmailBtn'>Edit</button>");
+				
+				/*pageContext.getOut().write("<input type='submit' value='Edit'>");*/
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("</form>");
 				pageContext.getOut().write("</tr>");

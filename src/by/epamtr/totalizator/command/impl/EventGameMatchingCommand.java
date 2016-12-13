@@ -28,7 +28,14 @@ public class EventGameMatchingCommand implements Command {
 		HttpSession session = request.getSession(false);
 		String prevUrl = session.getAttribute(CURRENT_URL).toString();
 		int selectedGameCupounId = Integer.valueOf(prevUrl.substring(prevUrl.lastIndexOf("=") + 1, prevUrl.lastIndexOf("=") + 2));
-		int selectedEventId = Integer.valueOf(request.getParameter(EVENT).toString());
+		String event = request.getParameter(EVENT).toString();
+		
+		if(event.isEmpty()){
+			url = GO_TO_ERROR_PAGE;
+			return url;
+		}
+		
+		int selectedEventId = Integer.valueOf(event);
 		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();

@@ -10,11 +10,13 @@ import by.epamtr.totalizator.command.impl.EventCreationCommand;
 import by.epamtr.totalizator.command.impl.EventGameMatchingCommand;
 import by.epamtr.totalizator.command.impl.GameCreationCommand;
 import by.epamtr.totalizator.command.impl.GoToAdminPageCommand;
+import by.epamtr.totalizator.command.impl.GoToBetSubmitCommand;
 import by.epamtr.totalizator.command.impl.GoToEditSearchEventCommand;
 import by.epamtr.totalizator.command.impl.GoToErrorPageCommand;
 import by.epamtr.totalizator.command.impl.GoToEventCreationCommand;
 import by.epamtr.totalizator.command.impl.GoToEventEditCommand;
 import by.epamtr.totalizator.command.impl.GoToSearchEventCommand;
+import by.epamtr.totalizator.command.impl.MakeBetCommand;
 import by.epamtr.totalizator.command.impl.GoToGameCreationCommand;
 import by.epamtr.totalizator.command.impl.GoToRegistrationCommand;
 import by.epamtr.totalizator.command.impl.RegistrationUserCommand;
@@ -49,6 +51,8 @@ public class CommandProvider {
 		commands.put(CommandName.SEARCH_ALL_EVENTS, new SearchAllGameEventsCommand());
 		commands.put(CommandName.GO_TO_EVENT_EDIT, new GoToEventEditCommand());
 		commands.put(CommandName.EDIT_EVENT, new EditEventCommand());
+		commands.put(CommandName.MAKE_BET, new MakeBetCommand());
+		commands.put(CommandName.GO_TO_BET_SUBMIT, new GoToBetSubmitCommand());
 	}
 
 	public Command getCommand(String commandName) {

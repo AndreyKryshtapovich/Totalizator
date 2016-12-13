@@ -58,6 +58,7 @@ public class DBAdminDAO implements AdminDAO {
 			+ " FROM `totalizator`.`event` as ev JOIN `totalizator`.status as s ON ev.status_id = s.status_id"
 			+ " LEFT JOIN `totalizator`.result as r on ev.result_id = r.result_id"
 			+ " WHERE ev.game_cupon_id = ?;";
+	
 	public final static String GET_ALL_GAMES = "SELECT `game_cupon`.`game_cupon_id`,"
 			+ " `game_cupon`.`start_date`,"
 			+ " `game_cupon`.`end_date`,"

@@ -3,6 +3,7 @@ package by.epamtr.totalizator.service;
 import by.epamtr.totalizator.service.impl.AdminOperation;
 import by.epamtr.totalizator.service.impl.ClientOperation;
 import by.epamtr.totalizator.service.impl.GeneralOperation;
+import by.epamtr.totalizator.service.impl.InitOperation;
 
 public class ServiceFactory {
 	private static final ServiceFactory instance = new ServiceFactory();
@@ -10,6 +11,7 @@ public class ServiceFactory {
 	private GeneralOperationService generalOperatoinService = new GeneralOperation();
 	private ClientOperationService clientOperatoinService = new ClientOperation();
 	private AdminOperationService adminOperatoinService = new AdminOperation();
+	private InitOperationService initOperationService = new InitOperation();
 
 	private ServiceFactory() {
 	}
@@ -28,5 +30,9 @@ public class ServiceFactory {
 
 	public AdminOperationService getAdminOperationService() {
 		return adminOperatoinService;
+	}
+	
+	public InitOperationService getInitOperationService(){
+		return initOperationService;
 	}
 }

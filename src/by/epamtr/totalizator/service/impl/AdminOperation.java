@@ -11,6 +11,8 @@ import by.epamtr.totalizator.dao.exception.DAOException;
 import by.epamtr.totalizator.dao.impl.DBAdminDAO;
 import by.epamtr.totalizator.service.AdminOperationService;
 import by.epamtr.totalizator.service.exception.ServiceException;
+import by.epamtr.totalizator.util.Utils;
+
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,8 @@ public class AdminOperation implements AdminOperationService {
 		
 		Integer intMinBetAmount = Integer.parseInt(gameCupounDTO.getMinBetAmount());
 	
-		String correctStartDate = gameCupounDTO.getStartDate() + " " + gameCupounDTO.getStartTimeHours() + ":" + gameCupounDTO.getStartTimeMinutes() + ":" + "00";
-		String correctEndDate = gameCupounDTO.getEndDate() + " " + gameCupounDTO.getEndTimeHours() + ":" + gameCupounDTO.getEndTimeMinutes() + ":" + "00";
+		String correctStartDate = Utils.concatStringDate(gameCupounDTO.getStartDate(), gameCupounDTO.getStartTimeHours(), gameCupounDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(gameCupounDTO.getEndDate(), gameCupounDTO.getEndTimeHours(), gameCupounDTO.getEndTimeMinutes());
 		Timestamp gameCuponStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp gameCuponEndDate =  Timestamp.valueOf(correctEndDate);
 		
@@ -59,13 +61,12 @@ public class AdminOperation implements AdminOperationService {
 		boolean result = true;
 		
 		if (!Validator.newEventInfoValidation(eventDTO)) {
-			//throw new ServiceException("invalid parameters.");
 			result = false;
 			return result;
 		}
-		
-		String correctStartDate = eventDTO.getStartDate() + " " + eventDTO.getStartTimeHours() + ":" + eventDTO.getStartTimeMinutes() + ":" + "00";
-		String correctEndDate = eventDTO.getEndDate() + " " + eventDTO.getEndTimeHours() + ":" + eventDTO.getEndTimeMinutes() + ":" + "00";
+	
+		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(), eventDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(), eventDTO.getEndTimeMinutes());
 		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp eventEndDate =  Timestamp.valueOf(correctEndDate);
 		
@@ -117,11 +118,9 @@ public class AdminOperation implements AdminOperationService {
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO = factory.getDBAdminDAO();
 		
-		int gameCupounId =Integer.valueOf(parameters.substring(0, 1));
-		String startDate = parameters.substring(3,25);
-		String endDate = parameters.substring(27);
-		Timestamp gameStartDate = Timestamp.valueOf(startDate);
-		Timestamp gameEndDate = Timestamp.valueOf(endDate);
+		int gameCupounId =Integer.valueOf(Utils.parseParamGameCupounId(parameters));
+		Timestamp gameStartDate = Timestamp.valueOf(Utils.parseParamGameCupounStartDate(parameters));
+		Timestamp gameEndDate = Timestamp.valueOf(Utils.parseParamGameCupounEndDate(parameters));
 		
 		try {
 			eventsList = adminDAO.getUnmatchedEvents(gameStartDate, gameEndDate);
@@ -182,7 +181,6 @@ public class AdminOperation implements AdminOperationService {
 	@Override
 	public boolean updateEvent(Event event) throws ServiceException {
 		boolean result = true;
-		//TODO VALIDATION
 		if (!Validator.updateEventValidation(event)) {
 			throw new ServiceException("invalid dates.");
 		}

@@ -14,7 +14,7 @@ import by.epamtr.totalizator.dao.exception.DAOException;
 public class DBGeneralDAO implements GeneralDAO {
 	private final static String GET_USER_INFO = "SELECT " + "`user`.`first_name`," + "`user`.`last_name`,"
 			+ "`user`.`login`," + "`user`.`password`," + "`user`.`sex`," + "`user`.`e_mail`," + "`user`.`country`,"
-			+ "`user`.`city`," + "`user`.`address`," + "`user`.`role`" + "FROM `totalizator`.`user`"
+			+ "`user`.`city`," + "`user`.`address`," + "`user`.`role`," + " `user`.`user_id`" +  "FROM `totalizator`.`user`"
 			+ "WHERE `user`.`login` = ? and `user`.`password` = ?;";
 
 	@Override
@@ -49,6 +49,7 @@ public class DBGeneralDAO implements GeneralDAO {
 					user.setLastName(rs.getString(2));
 					user.setSex(rs.getString(5));
 					user.setRole(rs.getString(10));
+					user.setUserId(rs.getInt(11));
 				}
 			}
 

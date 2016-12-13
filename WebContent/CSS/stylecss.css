@@ -43,7 +43,7 @@ input[type=submit] {
 	color: #FFFFFF;
 	border-radius: 8px;
 	padding: 10px 40px;
-	min-height: 600px; /* for default height with out a content */
+	min-height: 580px; /* for default height with out a content */
   
 }
 

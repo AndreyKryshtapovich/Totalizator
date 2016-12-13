@@ -1,6 +1,6 @@
 package by.epamtr.totalizator.command.impl;
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +12,7 @@ import by.epamtr.totalizator.controller.PageName;
 import by.epamtr.totalizator.service.AdminOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
+import by.epamtr.totalizator.util.Utils;
 
 public class GoToEventEditCommand implements Command {
 	private final static String CURRENT_URL = "currentUrl";
@@ -36,12 +37,28 @@ public class GoToEventEditCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		
-		String url = GO_TO_EVENT_EDIT_WITH_PARAMS + request.getParameter(EVENT_ID)
-		+ GAME_ID_PARAM + request.getParameter(GAME_ID) + EVENT_NAME_PARAM + request.getParameter(EVENT_NAME)
-		+ TEAM_ONE_PARAM + request.getParameter(TEAM_ONE) + TEAM_TWO_PARAM
-		+ request.getParameter(TEAM_TWO) + RESULT_ID_PARAM + request.getParameter(RESULT_ID) + START_DATE_PARAM
-		+ request.getParameter(START_DATE) + END_DATE_PARAM + request.getParameter(END_DATE) + STATUS_ID_PARAM
-		+ request.getParameter(STATUS_ID);
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(GO_TO_EVENT_EDIT_WITH_PARAMS);
+		sb.append(request.getParameter(EVENT_ID));
+		sb.append(GAME_ID_PARAM);
+		sb.append(request.getParameter(GAME_ID));
+		sb.append(EVENT_NAME_PARAM);
+		sb.append(request.getParameter(EVENT_NAME));
+		sb.append(TEAM_ONE_PARAM);
+		sb.append(request.getParameter(TEAM_ONE));
+		sb.append(TEAM_TWO_PARAM);
+		sb.append(request.getParameter(TEAM_TWO));
+		sb.append(RESULT_ID_PARAM);
+		sb.append(request.getParameter(RESULT_ID));
+		sb.append(START_DATE_PARAM);
+		sb.append(request.getParameter(START_DATE));
+		sb.append(END_DATE_PARAM);
+		sb.append(request.getParameter(END_DATE));
+		sb.append(STATUS_ID_PARAM);
+		sb.append(request.getParameter(STATUS_ID));
+		
+		String url = sb.toString();
 		
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 		
@@ -67,16 +84,16 @@ public class GoToEventEditCommand implements Command {
 		}
 		
 		String fullStartDate = request.getParameter(START_DATE);
-		String startDate = fullStartDate.substring(0,fullStartDate.indexOf(" "));
-	
-		String startTimeHours = fullStartDate.substring(fullStartDate.indexOf(" ") + 1,fullStartDate.indexOf(":"));
-		String startTimeMinutes = fullStartDate.substring(fullStartDate.indexOf(":") + 1,fullStartDate.indexOf(":") + 3);
+
+		String startDate = Utils.parseDateFromFullDate(fullStartDate);
+		String startTimeHours = Utils.parseHoursFromFullDate(fullStartDate);
+		String startTimeMinutes = Utils.parseMinutesFromFullDate(fullStartDate);
 		
 		String fullEndDate = request.getParameter(END_DATE);
-		String endDate = fullEndDate.substring(0,fullStartDate.indexOf(" "));
-		String endTimeHours = fullEndDate.substring(fullStartDate.indexOf(" ") + 1,fullStartDate.indexOf(":"));
-		String endTimeMinutes = fullEndDate.substring(fullStartDate.indexOf(":") + 1,fullStartDate.indexOf(":") + 3);
 		
+		String endDate = Utils.parseDateFromFullDate(fullEndDate);
+		String endTimeHours = Utils.parseHoursFromFullDate(fullEndDate);
+		String endTimeMinutes = Utils.parseMinutesFromFullDate(fullEndDate);
 		
 		request.setAttribute(EVENT_ID, request.getParameter(EVENT_ID));
 		request.setAttribute(EVENT_NAME, request.getParameter(EVENT_NAME));

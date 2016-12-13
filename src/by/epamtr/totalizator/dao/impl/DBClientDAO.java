@@ -5,10 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.entity.Event;
+import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.ClientDAO;
@@ -16,22 +22,29 @@ import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
 public class DBClientDAO implements ClientDAO {
+	private final static Logger Logger = LogManager.getLogger(DBClientDAO.class.getName());
 	private final static String REGISTRATION_USER = " INSERT INTO `user` (first_name,last_name,login,password,sex,e_mail,country,city,address,role)"
 			+ "VALUES" + "(?,?,?,?,?,?,?,?,?,'user');";
-	
-	private final static String GET_EVENTS_INFO = "SELECT ev.event_id, "
-			+ "ev.event_name, "
-			+ "ev.game_cupon_id, "
-			+ "ev.team_one, "
-			+ "ev.team_two, "
-			+ "ev.result_id, "
-			+ "ev.start_date, "
-			+ "ev.end_date, "
-			+ "ev.status_id "
-			+ "FROM event as ev  JOIN game_cupon as gc "
-			+ "ON  ev.game_cupon_id = gc.game_cupon_id "
-			+ "WHERE ev.game_cupon_id = 1;";
 
+	private final static String GET_EVENTS_INFO = "SELECT ev.event_id, " + "ev.event_name, " + "ev.game_cupon_id, "
+			+ "ev.team_one, " + "ev.team_two, " + "ev.result_id, " + "ev.start_date, " + "ev.end_date, "
+			+ "ev.status_id " + "FROM event as ev  JOIN game_cupon as gc " + "ON  ev.game_cupon_id = gc.game_cupon_id "
+			+ "WHERE ev.game_cupon_id = ?" + " ORDER BY ev.event_id ;";
+
+	private final static String GET_OPENED_GAME = "SELECT `game_cupon`.`game_cupon_id`," + " `game_cupon`.`start_date`,"
+			+ " `game_cupon`.`end_date`," + " `game_cupon`.`min_bet_amount`," + " `game_cupon`.`game_cupon_pull`,"
+			+ " `game_cupon`.`jackpot`" + " FROM `totalizator`.`game_cupon`" + " WHERE `game_cupon`.`status_id` = 1;";
+
+	private final static String GET_OPENED_GAMES_COUNT = "SELECT COUNT(*)" + " FROM `totalizator`.`game_cupon`"
+			+ " WHERE `game_cupon`.`status_id` = 1;";
+
+	private final static String INSERT_INTO_BET = "INSERT INTO `totalizator`.`bet`" + " (`user_id`,"
+			+ " `game_cupon_id`," + " `credit_card_number`," + " `bet_money_amount`," + " `transaction_date`)"
+			+ " VALUES (?, ?, ?, ?, ?);";
+
+	private final static String INSERT_INTO_USER_BET_DETAIL = "INSERT INTO `totalizator`.`user_bet_detail`"
+			+ " (`bet_id`," + " `event_id`," + " `result_id`)" + "VALUES (?,?,?);";
+	private final static String GET_LAST_INSERTED_ID = "SELECT LAST_INSERT_ID();";
 
 	@Override
 	public boolean registrationUser(User user, String login, String password) throws DAOException {
@@ -75,36 +88,222 @@ public class DBClientDAO implements ClientDAO {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
+		PreparedStatement ps = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
 		List<Event> eventsList = new ArrayList<>();
-			
-			try {
-				con = connectionPool.takeConnection();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException("Connection failed.", e);
+
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+		try {
+			st = con.createStatement();
+			ps = con.prepareStatement(GET_EVENTS_INFO);
+			rs = st.executeQuery(GET_OPENED_GAMES_COUNT);
+			rs.next();
+			int openedGamesCount = rs.getInt(1);
+
+			if (openedGamesCount != 1) {
+				return eventsList;
 			}
-			
-			try {
-				st = con.createStatement();
-				rs = st.executeQuery(GET_EVENTS_INFO);
-				
-				while (rs.next()) {
-					Event event = new Event();
-					event.setEventName(rs.getString(2));
-					event.setGameCuponId(rs.getInt(3));
-					event.setTeamOne(rs.getString(4));
-					event.setTeamTwo(rs.getString(5));
-					event.setStartDate(rs.getTimestamp(7));
-					event.setEndDate(rs.getTimestamp(8));
-					eventsList.add(event);
-					
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					Logger.error(e);
 				}
-			}catch (SQLException e1) {
-				throw new DAOException("Database access error. Failed data obtaining.", e1);
-			} finally {
-				connectionPool.closeConnection(con, st,rs);
 			}
+		}
+
+		try {
+			rs = st.executeQuery(GET_OPENED_GAME);
+			rs.next();
+			int openedGameCupounId = rs.getInt(1);
+
+			ps.setInt(1, openedGameCupounId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventId(rs.getInt(1));
+				event.setEventName(rs.getString(2));
+				event.setGameCuponId(rs.getInt(3));
+				event.setTeamOne(rs.getString(4));
+				event.setTeamTwo(rs.getString(5));
+				event.setStartDate(rs.getTimestamp(7));
+				event.setEndDate(rs.getTimestamp(8));
+				eventsList.add(event);
+
+			}
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			connectionPool.closeConnection(con, ps, st, rs);
+		}
 		return eventsList;
 	}
 
+	@Override
+	public GameCupoun getOpenedGame() throws DAOException {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		GameCupoun game = new GameCupoun();
+
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(GET_OPENED_GAMES_COUNT);
+			rs.next();
+			int openedGamesCount = rs.getInt(1);
+
+			if (openedGamesCount != 1) {
+				throw new DAOException("Invalid number of currently opened games.");
+			}
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+		}
+
+		try {
+			rs = st.executeQuery(GET_OPENED_GAME);
+
+			while (rs.next()) {
+				game.setGameCupounId(rs.getInt(1));
+				game.setStartDate(rs.getTimestamp(2));
+				game.setEndDate(rs.getTimestamp(3));
+				game.setMinBetAmount(rs.getInt(4));
+				game.setGameCuponPull(rs.getInt(5));
+				game.setJackpot(rs.getInt(6));
+				game.setStatus(1);
+			}
+
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			connectionPool.closeConnection(con, st, rs);
+		}
+		return game;
+	}
+
+	@Override
+	public boolean makeBet(MakeBetDTO makeBetDTO, String encryptedCardNumber) throws DAOException {
+		boolean result = true;
+
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		Statement st = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		
+
+		try {
+			con = connectionPool.takeConnection();
+			con.setAutoCommit(false);
+		} catch (ConnectionPoolException | SQLException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
+
+			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+			ps = con.prepareStatement(INSERT_INTO_BET);
+			ps.setInt(1, makeBetDTO.getUser().getUserId());
+			ps.setInt(2, Integer.valueOf(makeBetDTO.getGameCouponId()));
+			
+			ps.setString(3, encryptedCardNumber);
+			ps.setInt(4, Integer.valueOf(makeBetDTO.getBetAmount()));
+			ps.setTimestamp(5, currentTime);
+
+			if (ps.executeUpdate() == 0) {
+				result = false;
+				return result;
+			}
+			ps.close();
+
+			st = con.createStatement();
+			rs = st.executeQuery(GET_LAST_INSERTED_ID);
+			rs.next();
+			int lastInsertedBetId = rs.getInt(1);
+			
+			rs.close();
+			st.close();
+
+			ps = con.prepareStatement(INSERT_INTO_USER_BET_DETAIL);
+			ps.setInt(1, lastInsertedBetId);
+			
+
+			int eventId = 0;
+			int resultId = 0;
+
+			for (int i = 1; i < 16; i++) {
+				eventId = makeBetDTO.getEventsList().get(i - 1).getEventId();
+				resultId = Integer.valueOf(makeBetDTO.getUserResultMap().get("result" + new Integer(i).toString()));
+				ps.setInt(2, eventId);
+				ps.setInt(3, resultId);
+				
+				if (ps.executeUpdate() == 0) {
+					result = false;
+					return result;
+				}
+			}
+			
+			con.commit();
+
+		} catch (SQLException e1) {
+			try {
+				con.rollback();
+			} catch (SQLException e) {
+				Logger.error("Failed rollback a transaction.",e);
+			}
+			throw new DAOException("Database access error. Failed inserting bet data.", e1);
+		} finally {
+			try {
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				Logger.error("Failed setting AutoCommit = true.",e);
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+			connectionPool.closeConnection(con);
+		}
+		return result;
+	}
 }

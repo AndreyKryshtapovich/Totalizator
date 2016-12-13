@@ -15,6 +15,7 @@ import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.AdminOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
+import by.epamtr.totalizator.util.Utils;
 
 public class EditEventCommand implements Command {
 
@@ -55,9 +56,10 @@ public class EditEventCommand implements Command {
 		String endDate = request.getParameter(END_DATE);
 		String endTimeHours = request.getParameter(END_TIME_HOURS);
 		String endTimeMinutes = request.getParameter(END_TIME_MINUTES);
-
-		String correctStartDate = startDate + " " + startTimeHours + ":" + startTimeMinutes + ":" + "00";
-		String correctEndDate = endDate + " " + endTimeHours + ":" + endTimeMinutes + ":" + "00";
+		
+		String correctStartDate = Utils.concatStringDate(startDate, startTimeHours, startTimeMinutes);
+		String correctEndDate = Utils.concatStringDate(endDate, endTimeHours, endTimeMinutes);
+		
 		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
 		int status = Integer.valueOf(request.getParameter(STATUS));

@@ -2,11 +2,11 @@ package by.epamtr.totalizator.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
-
 import org.apache.commons.codec.digest.DigestUtils;
-
+import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.bean.entity.Event;
+import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.dao.ClientDAO;
 import by.epamtr.totalizator.dao.DAOFactory;
@@ -82,6 +82,41 @@ public class ClientOperation implements ClientOperationService {
 			throw new ServiceException("Failed showing events.", e);
 		}
 		return eventsList;
+	}
+
+	@Override
+	public boolean makeBet(MakeBetDTO makeBetDTO,byte[] creditCardNumber) throws ServiceException {
+		boolean result = true;
+		if (!Validator.makeBetValidation(makeBetDTO, creditCardNumber)) {
+			result = false;
+			return result;
+		}
+		String encryptedCardNumber = DigestUtils.md5Hex(creditCardNumber);
+		Arrays.fill(creditCardNumber, (byte) 0);
+		
+		DAOFactory factory = DAOFactory.getInstance();
+		ClientDAO clientDAO = factory.getDBClientDAO();
+		
+		try {
+			result = clientDAO.makeBet(makeBetDTO, encryptedCardNumber);
+		} catch (DAOException e) {
+			throw new ServiceException("Failed making bet.",e);
+		}		
+		return result;
+	}
+
+	@Override
+	public GameCupoun getOpenedGame() throws ServiceException {
+		GameCupoun game = new GameCupoun();
+		DAOFactory factory = DAOFactory.getInstance();
+		ClientDAO clientDAO = factory.getDBClientDAO();
+		try {
+			game = clientDAO.getOpenedGame();
+		} catch (DAOException e) {
+			throw new ServiceException("Failed showing events.", e);
+		}
+		
+		return game;
 	}
 
 }

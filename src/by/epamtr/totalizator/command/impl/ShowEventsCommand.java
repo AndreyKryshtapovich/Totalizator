@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
+import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -23,7 +24,8 @@ public class ShowEventsCommand implements Command {
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String EVENTS = "events";
 	private final static String SHOW_EVENTS_URL = "Controller?command=show-events";
-
+	private final static String MIN_BET_AMOUNT = "minBetAmount";
+	private final static String DRAWING = "drawing";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
@@ -32,6 +34,7 @@ public class ShowEventsCommand implements Command {
 
 		String page = null;
 		List<Event> eventsList = null;
+		GameCupoun game = new GameCupoun();
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();
@@ -40,10 +43,22 @@ public class ShowEventsCommand implements Command {
 			eventsList = clientService.showEvents();
 		} catch (ServiceException e) {
 			Logger.error(e);
+			page = PageName.ERROR_PAGE;
+			return page;
 		}
-
+		
+		try {
+			game = clientService.getOpenedGame();
+		} catch (ServiceException e) {
+			Logger.error(e);
+			page = PageName.ERROR_PAGE;
+			return page;
+		}
+		
 		JSPListBean jsp = new JSPListBean(eventsList);
 		request.setAttribute(EVENTS, jsp);
+		request.setAttribute(MIN_BET_AMOUNT, game.getMinBetAmount());
+		request.setAttribute(DRAWING, game.getGameCupounId());
 		page = PageName.USER_PAGE;
 
 		return page;

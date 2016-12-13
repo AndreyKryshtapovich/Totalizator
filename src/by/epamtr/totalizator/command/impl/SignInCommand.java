@@ -41,6 +41,7 @@ public class SignInCommand implements Command {
 			} else {
 				if (user.getRole().equals(USER)) {
 					request.getSession(true).setAttribute(LOGIN, request.getParameter(LOGIN));
+					request.getSession(true).setAttribute(USER, user);
 					url = SHOW_EVENTS_COMMAND_URL;
 				} else {
 					request.getSession(true).setAttribute(LOGIN, request.getParameter(LOGIN));

@@ -7,6 +7,7 @@ import java.util.List;
 
 import by.epamtr.totalizator.bean.dto.EventDTO;
 import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
@@ -178,5 +179,15 @@ public class Validator {
 			result = false;
 		}
 		return result;
+	}
+	
+	public static boolean makeBetValidation(MakeBetDTO makeBetDTO, byte[] creditCardNumber){
+		if (creditCardNumber.length == 0) {
+			return false;
+		}
+		if(makeBetDTO.getUserResultMap().size() < 15){
+			return false;
+		}
+		return true;
 	}
 }

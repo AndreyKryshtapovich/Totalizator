@@ -66,24 +66,10 @@
 						</form>
 					</div>
 				</div>
-			<%-- 	<form action="Controller" method="get" name="registration">
-					<input type="hidden" name="command" value="go-to-registration" />
-					<div class="user">
-						<input class="btn-register" type="submit" value="${register}">
-					</div>
-				</form> --%>
 
 				<form action="Controller" method="post" name="sign-out">
 					<div>
 						<input type="hidden" name="command" value="sign-out" />
-					<%-- 	<div class="user">
-							<input type="text" name="login" id="login" placeholder="${login}"
-								required />
-						</div> --%>
-					<%-- 	<div class="user">
-							<input type="password" name="password" id="password"
-								placeholder="${password}" required />
-						</div> --%>
 						<div class="user">
 							<input class="btn-login" type="submit" value="${signOut}">
 						</div>
@@ -152,100 +138,7 @@
 			</div>
 		</form>
 	</div>
-
-<%-- 
-	<div>
-		<form action="Controller" method="post" name="sign-out">
-			<div>
-				<input type="hidden" name="command" value="sign-out" />
-			</div>
-			<div>
-				<input type="submit" value="${signOut}">
-			</div>
-		</form>
-	</div> --%>
-
-	</div>
-
-
-
-
-
-<%-- 	<h1>this is admin page</h1>
-	<h2>${message}${sessionScope.login}</h2> --%>
-
-<%-- 	<form action="Controller" method="post">
-		<div>
-			<input type="hidden" name="command" value="change-language" />
-		</div>
-		<input type="hidden" name="local" value="ru" /> <input type="submit"
-			value="${ru_button}" /><br />
-	</form>
-
-	<form action="Controller" method="post">
-		<div>
-			<input type="hidden" name="command" value="change-language" />
-		</div>
-		<input type="hidden" name="local" value="en" /> <input type="submit"
-			value="${en_button}" /><br />
-	</form> --%>
-	<%-- <div>
-		<form action="Controller" method="get" name="create-game">
-			<div>
-				<input type="hidden" name="command" value="go-to-game-creation" />
-			</div>
-			<div>
-				<input type="submit" value="${createGame}">
-			</div>
-		</form>
-	</div>
-
-
-	<div>
-		<form action="Controller" method="get" name="create-game">
-			<div>
-				<input type="hidden" name="command" value="go-to-event-creation" />
-			</div>
-			<div>
-				<input type="submit" value="CreateEvents">
-			</div>
-		</form>
-	</div>
-
-	<div>
-		<form action="Controller" method="get" name="matching">
-			<div>
-				<input type="hidden" name="command" value="go-to-search-event" />
-			</div>
-			<div>
-				<input type="submit" value="Match Events To Games">
-			</div>
-		</form>
-	</div>
-
-	<div>
-		<form action="Controller" method="get" name="searchEdit">
-			<div>
-				<input type="hidden" name="command" value="go-to-edit-search-event" />
-			</div>
-			<div>
-				<input type="submit" value="Edit/Search Event">
-			</div>
-		</form>
-	</div>
-
-
-	<div>
-		<form action="Controller" method="post" name="sign-out">
-			<div>
-				<input type="hidden" name="command" value="sign-out" />
-			</div>
-			<div>
-				<input type="submit" value="${signOut}">
-			</div>
-		</form>
-	</div> --%>
-	
+</div>
 	
 	<footer class="bottom">
 		<p>&copy;All rights reserved. Totalizator by Andrey Kryshtapovich</p>
