@@ -225,4 +225,38 @@ public class AdminOperation implements AdminOperationService {
 		return statusMap;
 	}
 
+	@Override
+	public boolean unmatchEventAndGame(int selectedEventId) throws ServiceException {
+		boolean result = true;
+		
+		DAOFactory factory = DAOFactory.getInstance();
+		DBAdminDAO adminDAO = factory.getDBAdminDAO();
+		try {
+			if(!adminDAO.unmatchEventAndGame(selectedEventId)){
+				result = false;
+			}	
+		} catch (DAOException e) {
+			throw new ServiceException("Failed unmatching event and game.", e);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean deleteEvent(int selectedEventId) throws ServiceException {
+boolean result = true;
+		
+		DAOFactory factory = DAOFactory.getInstance();
+		DBAdminDAO adminDAO = factory.getDBAdminDAO();
+		try {
+			if(!adminDAO.deleteEvent(selectedEventId)){
+				result = false;
+			}	
+		} catch (DAOException e) {
+			throw new ServiceException("Failed to delete an event.", e);
+		}
+		
+		return result;
+	}
+
 }

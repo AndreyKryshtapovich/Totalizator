@@ -29,6 +29,10 @@
 <fmt:message bundle="${loc}" key="local.news" var="news" />
 <fmt:message bundle="${loc}" key="local.results" var="results" />
 <fmt:message bundle="${loc}" key="local.about" var="about" />
+
+<fmt:message bundle="${loc}" key="local.minBetAmount" var="minBetAmount" />
+<fmt:message bundle="${loc}" key="local.drawing" var="drawing" />
+<fmt:message bundle="${loc}" key="local.betAmount" var="betAmount" />
 </head>
 <body>
 
@@ -83,8 +87,8 @@
 	<div class="content">
 	<div class="center clearfix">
 		<h2>${message}${sessionScope.login}</h2>
-		<h3>Min.bet amount: ${requestScope.minBetAmount}$</h3>
-		<h3>Drawing №: ${requestScope.drawing}</h3>
+		<h3>${minBetAmount } ${requestScope.minBetAmount}$</h3>
+		<h3>${drawing } №: ${requestScope.drawing}</h3>
 		<c:if test="${not empty sessionScope.result}">
 					<c:if test="${sessionScope.result }">
 						<c:out value="Your bet registrated successfully." />
@@ -111,6 +115,11 @@
 				<c:if test="${not empty events.list}">
 				<print:jsptable list="${events}" colunmName1="Date"
 					colunmName2="Event" colunmName3="1" colunmName4="X" colunmName5="2" />
+					
+			<div class='form-row'>
+				<label> ${betAmount }</label>
+				<input type='number' min='1' name='bet-amount' required />
+			</div>
 				<div class="registration-submit">
 					<input class="btn-register" type="submit" value="${createBet}">
 				</div>

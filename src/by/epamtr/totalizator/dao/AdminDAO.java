@@ -13,6 +13,8 @@ public interface AdminDAO {
 	boolean createNewEvent(Event event) throws DAOException;
 	boolean matchEventAndGame(int selectedGameCupounId, int selectedEventId)throws DAOException;
 	boolean updateEvent(Event event) throws DAOException;
+	boolean unmatchEventAndGame(int selectedEventId)throws DAOException;
+	boolean deleteEvent(int selectedEventId)throws DAOException;
 	List<GameCupoun> getGamesInDevelopment() throws DAOException;
 	List<GameCupoun> getAllGames() throws DAOException;
 	List<Event> getUnmatchedEvents(Timestamp gameStartDate, Timestamp gameEndDate) throws DAOException;

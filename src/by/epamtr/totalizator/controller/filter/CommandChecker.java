@@ -28,6 +28,8 @@ public class CommandChecker {
 		correctCommandsMethods.put("edit-event", "post");
 		correctCommandsMethods.put("make-bet", "post");
 		correctCommandsMethods.put("go-to-bet-submit", "get");
+		correctCommandsMethods.put("unmatch-event", "post");
+		correctCommandsMethods.put("delete-event", "post");
 	}
 	
 	public String getMethod(String key){

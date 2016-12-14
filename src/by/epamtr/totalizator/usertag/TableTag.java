@@ -62,10 +62,6 @@ public class TableTag extends TagSupport {
 			pageContext.getOut().write("</tr>");
 			pageContext.getOut().write("</table>");
 			
-			pageContext.getOut().write("<div class='form-row'>");
-			pageContext.getOut().write("<label> Bet Amount:</label>");
-			pageContext.getOut().write("<input type='number' min='1' name='bet-amount' required />");
-			pageContext.getOut().write("</div>");
 		} catch (IOException e) {
 			throw new JspTagException(e.getMessage());
 		}

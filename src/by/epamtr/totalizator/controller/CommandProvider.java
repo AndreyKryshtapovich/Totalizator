@@ -5,6 +5,7 @@ import java.util.Map;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.CommandName;
 import by.epamtr.totalizator.command.impl.ChangeLanguageCommand;
+import by.epamtr.totalizator.command.impl.DeleteEventCommand;
 import by.epamtr.totalizator.command.impl.EditEventCommand;
 import by.epamtr.totalizator.command.impl.EventCreationCommand;
 import by.epamtr.totalizator.command.impl.EventGameMatchingCommand;
@@ -26,6 +27,7 @@ import by.epamtr.totalizator.command.impl.ShowEventsCommand;
 import by.epamtr.totalizator.command.impl.SignInCommand;
 import by.epamtr.totalizator.command.impl.SignOutCommand;
 import by.epamtr.totalizator.command.impl.UnknownCommand;
+import by.epamtr.totalizator.command.impl.UnmatchEventCommand;
 
 public class CommandProvider {
 	private Map<CommandName, Command> commands = new HashMap<CommandName, Command>();
@@ -53,6 +55,8 @@ public class CommandProvider {
 		commands.put(CommandName.EDIT_EVENT, new EditEventCommand());
 		commands.put(CommandName.MAKE_BET, new MakeBetCommand());
 		commands.put(CommandName.GO_TO_BET_SUBMIT, new GoToBetSubmitCommand());
+		commands.put(CommandName.UNMATCH_EVENT, new UnmatchEventCommand());
+		commands.put(CommandName.DELETE_EVENT, new DeleteEventCommand());
 	}
 
 	public Command getCommand(String commandName) {

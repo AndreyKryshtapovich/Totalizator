@@ -30,7 +30,7 @@
 </head>
 <body>
 
-<header>
+	<header>
 		<section>
 			<div class="top-area">
 				<ul class="topnav" id="myTopnav">
@@ -79,93 +79,117 @@
 	</header>
 
 
-	 <div class="content">
-	<div class="center clearfix">
-		<form action="Controller" method="post" name="edit-event">
-			<fieldset>
-				<legend class="legendInfo">Please insert event's info</legend>
-			<div>
-				<input type="hidden" name="command" value="edit-event" />
-				<input type="hidden" name="eventId" value="${requestScope.eventId }" />
-			</div>
+	<div class="content">
+		<div class="center clearfix">
+			<form action="Controller" method="post" name="edit-event">
+				<fieldset>
+					<legend class="legendInfo">Please insert event's info</legend>
+					<div>
+						<input type="hidden" name="command" value="edit-event" /> <input
+							type="hidden" name="eventId" value="${requestScope.eventId }" />
+					</div>
 
-			<div class="form-row">
-				<label for="name">Event Name:</label><input type="text" name="name" id="name"
-					value="${requestScope.eventName}" />
-			</div>
+					<div class="form-row">
+						<label for="name">Event Name:</label><input type="text"
+							name="name" id="name" value="${requestScope.eventName}" />
+					</div>
 
-			<div class="form-row">
-				<label for="gameCouponID">Game Coupon Id:</label><input type="number" name="gameCouponId" id="gameCouponId"
-					value="${requestScope.gameId}" readonly />
-			</div>
+					<div class="form-row">
+						<label for="gameCouponID">Game Coupon Id:</label><input
+							type="number" name="gameCouponId" id="gameCouponId"
+							value="${requestScope.gameId}" readonly />
+					</div>
 
-			<div class="form-row">
-				<label for="team-one">Team One:</label><input type="text" name="team-one" id="team-one"
-					value="${requestScope.teamOne}" />
-			</div>
+					<div class="form-row">
+						<label for="team-one">Team One:</label><input type="text"
+							name="team-one" id="team-one" value="${requestScope.teamOne}" />
+					</div>
 
 
-			<div class="form-row">
-				<label for="team-two">Team Two:</label><input type="text" name="team-two" id="team-two"
-					value="${requestScope.teamTwo}" />
-			</div>
+					<div class="form-row">
+						<label for="team-two">Team Two:</label><input type="text"
+							name="team-two" id="team-two" value="${requestScope.teamTwo}" />
+					</div>
 
-			<div class="form-row">
-				<label>Result:</label> 
-				<select name="resultId">
-					<c:forEach var="item" items="${resultsMap}">
-						<option value="${item.key}" ${item.key == selectedRes ? 'selected="selected"' : ''}>
-						${item.value}
-						</option>
-					</c:forEach>
-				</select>
-				
-			</div>
+					<div class="form-row">
+						<label>Result:</label> <select name="resultId">
+							<c:forEach var="item" items="${resultsMap}">
+								<option value="${item.key}"
+									${item.key == selectedRes ? 'selected="selected"' : ''}>
+									${item.value}</option>
+							</c:forEach>
+						</select>
 
-			<div class="form-row">
-				<label for="start-date">Event Start Date:</label><input type="date" name="start-date" id="start-date" value="${requestScope.startDate}"  />
-			</div>
+					</div>
 
-			<div class="form-row-time">
-				<label> Event Start Time:</label><input type="number" min="0" max="23" name="start-time-hours"
-					id="start-time-hours" value="${requestScope.startTimeHours}" /> : <input type="number" min="0" max="59"
-					name="start-time-minutes" id="start-time-minutes" value="${requestScope.startTimeMinutes}"/>
-			</div>
+					<div class="form-row">
+						<label for="start-date">Event Start Date:</label><input
+							type="date" name="start-date" id="start-date"
+							value="${requestScope.startDate}" />
+					</div>
+
+					<div class="form-row-time">
+						<label> Event Start Time:</label><input type="number" min="0"
+							max="23" name="start-time-hours" id="start-time-hours"
+							value="${requestScope.startTimeHours}" /> : <input type="number"
+							min="0" max="59" name="start-time-minutes"
+							id="start-time-minutes" value="${requestScope.startTimeMinutes}" />
+					</div>
+
+
+					<div class="form-row">
+						<label for="end-date">Event End Date:</label><input type="date"
+							name="end-date" id="end-date" value="${requestScope.endDate}" />
+					</div>
+
+					<div class="form-row-time">
+						<label> Event End Time:</label><input type="number" min="0"
+							max="23" name="end-time-hours" id="end-time-hours"
+							value="${requestScope.endTimeHours}" /> : <input type="number"
+							min="0" max="59" name="end-time-minutes" id="end-time-minutes"
+							value="${requestScope.endTimeMinutes}" />
+					</div>
+
+					<div class="form-row">
+						<label>Status:</label> <select name="status">
+							<c:forEach var="item" items="${statusMap}">
+								<option value="${item.key}"
+									${item.key == selectedStatus ? 'selected="selected"' : ''}>
+									${item.value}</option>
+							</c:forEach>
+						</select>
+					</div>
+
+					<br>
+				</fieldset>
+				<div class="registration-submit">
+					<input class="adminWorkBtn" type="submit" value="Save changes">
+				</div>
+			</form>
+
+			<form action="Controller" method="post" name="unmatch-event">
+				<input type="hidden" name="command" value="unmatch-event" /> <input
+					type="hidden" name="eventId" value="${requestScope.eventId }" />
+
+				<div class="registration-submit">
+					<input class="adminWorkBtn" type="submit" value="Unmatch">
+				</div>
+			</form>
 			
+				<form action="Controller" method="post" name="delete-event">
+				<input type="hidden" name="command" value="delete-event" /> <input
+					type="hidden" name="eventId" value="${requestScope.eventId }" />
 
-			<div class="form-row">
-				<label for="end-date">Event End Date:</label><input type="date" name="end-date" id="end-date" value="${requestScope.endDate}"/>
-			</div>
-
-			<div class="form-row-time">
-				<label> Event End Time:</label><input type="number" min="0" max="23" name="end-time-hours"
-					id="end-time-hours" value="${requestScope.endTimeHours}" /> : <input type="number" min="0" max="59"
-					name="end-time-minutes" id="end-time-minutes" value="${requestScope.endTimeMinutes}" />
-			</div>
-
-			<div class="form-row">
-				<label>Status:</label>
-	
-					<select name="status">
-					<c:forEach var="item" items="${statusMap}">
-						<option value="${item.key}" ${item.key == selectedStatus ? 'selected="selected"' : ''}>
-						${item.value}
-						</option>
-					</c:forEach>
-				</select>
-			</div>
-
-			<br>
-			</fieldset>
-			<div class="registration-submit">
-				<input class="adminWorkBtn" type="submit" value="Save changes">
-			</div>
-		</form>
-	</div>
+				<div class="registration-submit">
+					<input class="adminWorkBtn" type="submit" value="Delete Event">
+				</div>
+			</form>
+			
+		</div>
 	</div>
 
-	
-		<footer class="bottom">
+
+	<footer class="bottom">
 		<p>&copy;All rights reserved. Totalizator by Andrey Kryshtapovich</p>
 
 		<section>

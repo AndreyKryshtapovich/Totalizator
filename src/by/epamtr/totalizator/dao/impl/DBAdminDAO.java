@@ -99,6 +99,12 @@ public class DBAdminDAO implements AdminDAO {
 	public final static String GET_STATUS_DICTIONARY_DATA = "SELECT `status`.`status_id`,"
 			+ " `status`.`status_description`"
 			+ " FROM `totalizator`.`status`;";
+	private final static String UNMATCH_EVENT_AND_GAME = "UPDATE `totalizator`.`event`"
+			+ " SET"
+			+ " `game_cupon_id` = null"
+			+ " WHERE `event_id` = ?;";
+	private final static String DELETE_EVENT = "DELETE FROM `totalizator`.`event`"
+			+ " WHERE `totalizator`.`event`.event_id = ?;";
 
 	@Override
 	public boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException {
@@ -525,6 +531,67 @@ public class DBAdminDAO implements AdminDAO {
 			connectionPool.closeConnection(con, st, rs);
 		}
 		return statusMap;
+	}
+
+	@Override
+	public boolean unmatchEventAndGame(int selectedEventId) throws DAOException {
+		boolean result = true;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+		
+		try{
+			ps = con.prepareStatement(UNMATCH_EVENT_AND_GAME);
+			ps.setInt(1, selectedEventId);
+			
+			if (ps.executeUpdate() == 0) {
+				result = false;
+			}
+			
+			return result;
+		
+		}catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed unmatching event and game.", e1);
+		} finally {
+			connectionPool.closeConnection(con, ps);
+		}
+		
+	}
+
+	@Override
+	public boolean deleteEvent(int selectedEventId) throws DAOException {
+		boolean result = true;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+		
+		try{
+			ps = con.prepareStatement(DELETE_EVENT);
+			ps.setInt(1, selectedEventId);
+			
+			if (ps.executeUpdate() == 0) {
+				result = false;
+			}
+			
+			return result;
+		
+		}catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed to delete an event.", e1);
+		} finally {
+			connectionPool.closeConnection(con, ps);
+		}
 	}
 
 }
