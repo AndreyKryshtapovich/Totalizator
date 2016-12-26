@@ -14,9 +14,14 @@ public class UnknownCommand implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
 		String url = UNKNOWN_COMMAND_URL;
+		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
-		String page = PageName.ERROR_PAGE;
+		page = PageName.ERROR_PAGE;
 		return page;
 
 	}

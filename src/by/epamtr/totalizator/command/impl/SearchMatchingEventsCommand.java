@@ -32,9 +32,13 @@ public class SearchMatchingEventsCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = SEARCH_MATCHING_EVENTS_URL + request.getParameter(GAME);
+		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 		
-		String page = null;
 		List<Event> matchedEventsList = null;
 		String parameters = request.getParameter(GAME);
 		EventsListDTO unmatchedEventsDTO = new EventsListDTO();

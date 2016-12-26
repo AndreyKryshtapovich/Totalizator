@@ -30,6 +30,7 @@ public class CommandChecker {
 		correctCommandsMethods.put("go-to-bet-submit", "get");
 		correctCommandsMethods.put("unmatch-event", "post");
 		correctCommandsMethods.put("delete-event", "post");
+		correctCommandsMethods.put("close-game-coupon", "post");
 	}
 	
 	public String getMethod(String key){

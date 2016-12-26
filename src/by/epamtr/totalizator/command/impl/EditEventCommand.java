@@ -36,11 +36,18 @@ public class EditEventCommand implements Command {
 	private final static String GAME_EVENTS_URL = "gameEventsUrl";
 	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
 	private final static String GO_TO_ERROR_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-error-page";
+	private final static String CURRENT_URL = "currentUrl";
+	private final static String PARAM_RESULT = "param_result";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
-
+		
+		if (request.getSession(false) == null) {
+			url = LOCALHOST;
+			return url;
+		}
+		
 		int eventId = Integer.valueOf(request.getParameter(EVENT_ID));
 		int gameCouponId = Integer.valueOf(request.getParameter(GAME_COUPON_ID));
 		String eventName = request.getParameter(NAME);
@@ -94,7 +101,8 @@ public class EditEventCommand implements Command {
 			if (result) {
 				url = LOCALHOST + gameEventsUrl;
 			} else {
-				url = GO_TO_ERROR_PAGE;
+				request.getSession(false).setAttribute(PARAM_RESULT, false);
+				url = request.getSession(false).getAttribute(CURRENT_URL).toString();
 			}
 		} catch (ServiceException e) {
 			Logger.error(e);

@@ -15,9 +15,14 @@ public class GoToErrorPageCommand implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
 		String url = GO_TO_ERROR_PAGE;
+		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
-		String page = PageName.ERROR_PAGE;
+		page = PageName.ERROR_PAGE;
 		return page;
 	}
 

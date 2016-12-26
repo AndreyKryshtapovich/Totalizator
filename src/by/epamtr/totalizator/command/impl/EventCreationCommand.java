@@ -27,11 +27,16 @@ public class EventCreationCommand implements Command {
 	private final static String RESULT = "result";
 	private final static String GO_TO_EVENT_CREATION = "http://localhost:8080/Totalizator/Controller?command=go-to-event-creation";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
 
+		if(request.getSession(false) == null){
+			url = LOCALHOST;
+			return url;
+		}
 		String eventName = request.getParameter(NAME);
 		String startDate = request.getParameter(START_DATE);
 		String startTimeHours = request.getParameter(START_TIME_HOURS);

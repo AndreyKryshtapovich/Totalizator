@@ -22,8 +22,12 @@ public class GoToSearchEventCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = GO_TO_SEARCH_EVENT;
-		request.getSession(false).setAttribute(CURRENT_URL, url);
 		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
+		request.getSession(false).setAttribute(CURRENT_URL, url);
 		List<GameCupoun> gamesList = null;
 		
 		ServiceFactory factory = ServiceFactory.getInstance();

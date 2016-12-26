@@ -16,9 +16,14 @@ public class GoToAdminPageCommand implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		
 		String url = GO_TO_ADMIN_PAGE;
+		String page = PageName.ADMIN_PAGE;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
-		String page = PageName.ADMIN_PAGE;
+		
 		return page;
 	}
 

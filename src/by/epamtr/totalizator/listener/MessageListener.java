@@ -12,6 +12,11 @@ public class MessageListener implements ServletRequestListener {
 	private final static String METHOD = "get";
 	private final static String RESULT = "result";
 	private final static String BET_AMOUNT_RESULT = "betAmountResult";
+	private final static String PARAM_RESULT = "param_result";
+	private final static String SUCCESS_CLOSE_MSG = "successCloseMsg";
+	private final static String CANSELLED_MSG = "canselledMsg";
+	private final static String ROLLBACK_MSG = "rollbackMsg";
+
 	public MessageListener() {
 
 	}
@@ -22,9 +27,15 @@ public class MessageListener implements ServletRequestListener {
 		String requestMethod = checker.getMethod(request.getParameter(COMMAND));
 		if (requestMethod != null) {
 			if (requestMethod.equals(METHOD)) {
-				request.getSession(false).removeAttribute(RESULT);
-				request.getSession(false).removeAttribute(BET_AMOUNT_RESULT);
-				
+				if (request.getSession(false) != null) {
+					request.getSession(false).removeAttribute(RESULT);
+					request.getSession(false).removeAttribute(BET_AMOUNT_RESULT);
+					request.getSession(false).removeAttribute(PARAM_RESULT);
+					
+					request.getSession(false).removeAttribute( SUCCESS_CLOSE_MSG );
+					request.getSession(false).removeAttribute( CANSELLED_MSG );
+					request.getSession(false).removeAttribute( ROLLBACK_MSG );
+				}
 			}
 		}
 	}

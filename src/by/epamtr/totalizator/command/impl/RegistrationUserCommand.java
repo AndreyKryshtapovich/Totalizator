@@ -30,13 +30,18 @@ public class RegistrationUserCommand implements Command {
 	private final static String GO_TO_REGISTRATION_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-registration";
 	private final static String RESULT = "result";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
 		
 		String url = null;
-
+		if(request.getSession(false) == null){
+			url = LOCALHOST;
+			return url;
+		}
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();
 		

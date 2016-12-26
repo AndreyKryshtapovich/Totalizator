@@ -5,6 +5,7 @@ import java.util.Map;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.CommandName;
 import by.epamtr.totalizator.command.impl.ChangeLanguageCommand;
+import by.epamtr.totalizator.command.impl.CloseGameCouponCommand;
 import by.epamtr.totalizator.command.impl.DeleteEventCommand;
 import by.epamtr.totalizator.command.impl.EditEventCommand;
 import by.epamtr.totalizator.command.impl.EventCreationCommand;
@@ -57,6 +58,7 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_BET_SUBMIT, new GoToBetSubmitCommand());
 		commands.put(CommandName.UNMATCH_EVENT, new UnmatchEventCommand());
 		commands.put(CommandName.DELETE_EVENT, new DeleteEventCommand());
+		commands.put(CommandName.CLOSE_GAME_COUPON, new CloseGameCouponCommand());
 	}
 
 	public Command getCommand(String commandName) {

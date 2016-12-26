@@ -22,12 +22,20 @@ public class GoToEditSearchEventCommand implements Command {
 	private final static String GO_TO_EDIT_SEARCH_EVENT = "Controller?command=go-to-edit-search-event";
 	private final static String CURRENT_URL = "currentUrl";
 	
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = GO_TO_EDIT_SEARCH_EVENT;
+		String page = null;
+		
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
+		
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 		
-		String page = null;
+		
 		List<GameCupoun> gamesList = null;
 		
 		ServiceFactory factory = ServiceFactory.getInstance();

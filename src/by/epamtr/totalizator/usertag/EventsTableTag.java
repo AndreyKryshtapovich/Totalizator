@@ -59,14 +59,8 @@ public class EventsTableTag extends TagSupport {
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("<td>");
 				pageContext.getOut().write(event.getEndDate().toString());
-				/*pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<td>");
-			//	pageContext.getOut().write("<input type='date' name='end-date" + new Integer(i+1).toString() + "'/>");
-			//	pageContext.getOut().write("</td>");
-			//	pageContext.getOut().write("<td>");
-			//	pageContext.getOut().write("<input type='number' min='0' max='23' name='end-hours" + new Integer(i+1).toString() + "'/> : <input type='number' min='0' max='59' name='end-minutes" + new Integer(i+1).toString() + "'/>");
-			//	pageContext.getOut().write("</td>");
-*/				pageContext.getOut().write("</tr>");
+				pageContext.getOut().write("</tr>");
+				
 			}
 			pageContext.getOut().write("</tr>");
 			pageContext.getOut().write("</table>");

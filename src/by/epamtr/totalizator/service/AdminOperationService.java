@@ -19,8 +19,10 @@ public interface AdminOperationService {
 	boolean updateEvent(Event event) throws ServiceException;
 	boolean unmatchEventAndGame(int selectedEventId) throws ServiceException;
 	boolean deleteEvent(int selectedEventId) throws ServiceException;
+	int closeGameCoupon(int gameCouponId) throws ServiceException;
 	List<GameCupoun> getGamesInDevelopment() throws ServiceException;
 	List<GameCupoun> getAllGames() throws ServiceException;
+	GameCupoun getGameByGameCupounId(int gameCupounId) throws ServiceException; 
 	EventsListDTO getUnmatchedEvents(String parameters) throws ServiceException;
 	List<Event> getEventsByGameCupounId(int gameCupounId) throws ServiceException;
 	Map<Integer,String> getResultDictionaryData() throws ServiceException;

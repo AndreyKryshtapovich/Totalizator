@@ -1,5 +1,6 @@
 package by.epamtr.totalizator.dao.impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
@@ -20,6 +24,8 @@ import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
 public class DBAdminDAO implements AdminDAO {
+	private final static Logger Logger = LogManager.getLogger(DBClientDAO.class.getName());
+
 	private final static String INSERT_NEW_GAME_CUPOUN = "INSERT INTO `totalizator`.`game_cupon`" + "(`start_date`,"
 			+ "`end_date`," + "`min_bet_amount`," + "`game_cupon_pull`," + "`jackpot`," + "`status_id`)" + "VALUES"
 			+ "(?,?,?,?,?,?);";
@@ -36,75 +42,45 @@ public class DBAdminDAO implements AdminDAO {
 			+ "`event`.`team_one`," + "`event`.`team_two`," + "`event`.`result_id`," + "`event`.`start_date`,"
 			+ "`event`.`end_date`," + "`event`.`status_id`" + " FROM `totalizator`.`event`"
 			+ " WHERE `event`.`game_cupon_id` IS NULL" + " AND `event`.`start_date` > ? AND `event`.`end_date` <= ? ;";
-	
+
 	private final static String GAME_MATTCHED_EVENTS_COUNT = " SELECT COUNT(*) FROM totalizator.event"
 			+ " WHERE `event`.`game_cupon_id` = ?;";
-	
-	private final static String EVENT_GAME_MATCHING = "UPDATE `totalizator`.`event`"
-			+ " SET"
-			+ " `game_cupon_id` = ?"
+
+	private final static String EVENT_GAME_MATCHING = "UPDATE `totalizator`.`event`" + " SET" + " `game_cupon_id` = ?"
 			+ " WHERE `event_id` = ?;";
-	
-	private final static String GET_EVENTS_BY_GAME_CUPOUN_ID = "SELECT ev.event_name,"
-			+ " ev.team_one,"
-			+ " ev.team_two,"
-			+ " coalesce(r.result_abbreviation,''),"
-			+ " ev.start_date,"
-			+ " ev.end_date,"
-			+ " s.status_description,"
-			+ " ev.status_id,"
-			+ " ev.result_id,"
-			+ " ev.event_id"
+
+	private final static String GET_EVENTS_BY_GAME_CUPOUN_ID = "SELECT ev.event_name," + " ev.team_one,"
+			+ " ev.team_two," + " coalesce(r.result_abbreviation,'')," + " ev.start_date," + " ev.end_date,"
+			+ " s.status_description," + " ev.status_id," + " ev.result_id," + " ev.event_id"
 			+ " FROM `totalizator`.`event` as ev JOIN `totalizator`.status as s ON ev.status_id = s.status_id"
-			+ " LEFT JOIN `totalizator`.result as r on ev.result_id = r.result_id"
-			+ " WHERE ev.game_cupon_id = ?;";
-	
-	public final static String GET_ALL_GAMES = "SELECT `game_cupon`.`game_cupon_id`,"
-			+ " `game_cupon`.`start_date`,"
-			+ " `game_cupon`.`end_date`,"
-			+ " `game_cupon`.`min_bet_amount`,"
-			+ " `game_cupon`.`game_cupon_pull`,"
-			+ " `game_cupon`.`jackpot`,"
-			+ " `game_cupon`.`status_id`"
-			+ " FROM `totalizator`.`game_cupon`"
-			+ " WHERE  `game_cupon`.`status_id` = 1 OR 2 OR 5;";
-	
-	public final static String GET_GAME_BY_GAME_COUPON_ID="SELECT `game_cupon`.`game_cupon_id`,"
-			+ " `game_cupon`.`start_date`,"
-			+ " `game_cupon`.`end_date`,"
-			+ " `game_cupon`.`min_bet_amount`,"
-			+ " `game_cupon`.`game_cupon_pull`,"
-			+ " `game_cupon`.`jackpot`,"
-			+ " `game_cupon`.`status_id`"
-			+ " FROM `totalizator`.`game_cupon`"
-			+ " WHERE  `game_cupon`.`game_cupon_id` = ?;";
-	
-	public final static String UPDATE_EVENT = "UPDATE `totalizator`.`event`"
-			+ " SET"
-			+ " `event_name` = ?,"
-			+ " `game_cupon_id` = ?,"
-			+ " `team_one` = ?,"
-			+ " `team_two` = ?,"
-			+ " `result_id` = ?,"
-			+ " `start_date` = ?,"
-			+ " `end_date` = ?,"
-			+ " `status_id` = ?"
-			+ " WHERE `event_id` = ?;";
-	
+			+ " LEFT JOIN `totalizator`.result as r on ev.result_id = r.result_id" + " WHERE ev.game_cupon_id = ?"
+			+ " ORDER BY ev.event_id;"; // added order by
+
+	public final static String GET_ALL_GAMES = "SELECT `game_cupon`.`game_cupon_id`," + " `game_cupon`.`start_date`,"
+			+ " `game_cupon`.`end_date`," + " `game_cupon`.`min_bet_amount`," + " `game_cupon`.`game_cupon_pull`,"
+			+ " `game_cupon`.`jackpot`," + " `game_cupon`.`status_id`" + " FROM `totalizator`.`game_cupon`"
+			+ " WHERE  `game_cupon`.`status_id` IN (1,2,5);"; // changed
+
+	public final static String GET_GAME_BY_GAME_COUPON_ID = "SELECT `game_cupon`.`game_cupon_id`,"
+			+ " `game_cupon`.`start_date`," + " `game_cupon`.`end_date`," + " `game_cupon`.`min_bet_amount`,"
+			+ " `game_cupon`.`game_cupon_pull`," + " `game_cupon`.`jackpot`," + " `game_cupon`.`status_id`"
+			+ " FROM `totalizator`.`game_cupon`" + " WHERE  `game_cupon`.`game_cupon_id` = ?;";
+
+	public final static String UPDATE_EVENT = "UPDATE `totalizator`.`event`" + " SET" + " `event_name` = ?,"
+			+ " `game_cupon_id` = ?," + " `team_one` = ?," + " `team_two` = ?," + " `result_id` = ?,"
+			+ " `start_date` = ?," + " `end_date` = ?," + " `status_id` = ?" + " WHERE `event_id` = ?;";
+
 	public final static String GET_RESULT_DICTIONARY_DATA = "SELECT `result`.`result_id`,"
-			+ "  `result`.`result_abbreviation`,"
-			+ " `result`.`result_note`"
-			+ " FROM `totalizator`.`result`;";
-	
+			+ "  `result`.`result_abbreviation`," + " `result`.`result_note`" + " FROM `totalizator`.`result`;";
+
 	public final static String GET_STATUS_DICTIONARY_DATA = "SELECT `status`.`status_id`,"
-			+ " `status`.`status_description`"
-			+ " FROM `totalizator`.`status`;";
-	private final static String UNMATCH_EVENT_AND_GAME = "UPDATE `totalizator`.`event`"
-			+ " SET"
-			+ " `game_cupon_id` = null"
-			+ " WHERE `event_id` = ?;";
+			+ " `status`.`status_description`" + " FROM `totalizator`.`status`;";
+	private final static String UNMATCH_EVENT_AND_GAME = "UPDATE `totalizator`.`event`" + " SET"
+			+ " `game_cupon_id` = null" + " WHERE `event_id` = ?;";
 	private final static String DELETE_EVENT = "DELETE FROM `totalizator`.`event`"
 			+ " WHERE `totalizator`.`event`.event_id = ?;";
+
+	private final static String CLOSE_GAME_COUPON = "{ call close_game_coupon(?,?) }";
 
 	@Override
 	public boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException {
@@ -229,7 +205,8 @@ public class DBAdminDAO implements AdminDAO {
 
 		try {
 			Calendar cal = Calendar.getInstance();
-			// event should end in 2 days since game coupon end date gameCouponEndDate + 2 
+			// event should end in 2 days since game coupon end date
+			// gameCouponEndDate + 2
 			// event should start after gameCouponEndDate
 			cal.setTimeInMillis(gameEndDate.getTime());
 			cal.add(Calendar.DAY_OF_MONTH, 2);
@@ -268,38 +245,56 @@ public class DBAdminDAO implements AdminDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		try {
 
-			try {
-				con = connectionPool.takeConnection();
-			} catch (ConnectionPoolException e) {
-				throw new DAOException("Connection failed.", e);
-			}
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
 			ps = con.prepareStatement(GAME_MATTCHED_EVENTS_COUNT);
 			ps.setInt(1, selectedGameCupounId);
 			rs = ps.executeQuery();
-			
-			while(rs.next()){
-				if(rs.getInt(1) >= 15){
+
+			while (rs.next()) {
+				if (rs.getInt(1) >= 15) {
 					result = false;
 					return result;
 				}
 			}
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+		}
+
+		try {
 			ps = con.prepareStatement(EVENT_GAME_MATCHING);
 			ps.setInt(1, selectedGameCupounId);
 			ps.setInt(2, selectedEventId);
 			if (ps.executeUpdate() == 0) {
 				result = false;
 			}
-			
-
-			return result;
 		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed creation new event.", e1);
 		} finally {
 			connectionPool.closeConnection(con, ps);
 		}
-
+		return result;
 	}
 
 	@Override
@@ -323,12 +318,6 @@ public class DBAdminDAO implements AdminDAO {
 
 			while (rs.next()) {
 				Event event = new Event();
-			/*	event.setEventName(rs.getString(1));
-				event.setTeamOne(rs.getString(2));
-				event.setTeamTwo(rs.getString(3));
-				event.setStartDate(rs.getTimestamp(4));
-				event.setEndDate(rs.getTimestamp(5));*/
-				
 				event.setEventName(rs.getString(1));
 				event.setTeamOne(rs.getString(2));
 				event.setTeamTwo(rs.getString(3));
@@ -394,7 +383,7 @@ public class DBAdminDAO implements AdminDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		
+
 		try {
 
 			try {
@@ -402,8 +391,7 @@ public class DBAdminDAO implements AdminDAO {
 			} catch (ConnectionPoolException e) {
 				throw new DAOException("Connection failed.", e);
 			}
-			
-			
+
 			ps = con.prepareStatement(UPDATE_EVENT);
 			ps.setString(1, event.getEventName());
 			ps.setInt(2, event.getGameCuponId());
@@ -414,11 +402,11 @@ public class DBAdminDAO implements AdminDAO {
 			ps.setTimestamp(7, event.getEndDate());
 			ps.setInt(8, event.getStatus());
 			ps.setInt(9, event.getEventId());
-			
+
 			if (ps.executeUpdate() == 0) {
 				result = false;
 			}
-		
+
 			return result;
 		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed updating an event.", e1);
@@ -428,7 +416,7 @@ public class DBAdminDAO implements AdminDAO {
 	}
 
 	@Override
-	public List<GameCupoun> getGameByByGameCupounId(int gameCupounId) throws DAOException {
+	public List<GameCupoun> getGameByGameCupounId(int gameCupounId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -442,7 +430,7 @@ public class DBAdminDAO implements AdminDAO {
 		}
 
 		try {
-			
+
 			ps = con.prepareStatement(GET_GAME_BY_GAME_COUPON_ID);
 			ps.setInt(1, gameCupounId);
 			rs = ps.executeQuery();
@@ -473,7 +461,7 @@ public class DBAdminDAO implements AdminDAO {
 		Statement st = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		Map<Integer,String> resultMap = new HashMap<>();
+		Map<Integer, String> resultMap = new HashMap<>();
 
 		try {
 			con = connectionPool.takeConnection();
@@ -482,18 +470,18 @@ public class DBAdminDAO implements AdminDAO {
 		}
 
 		try {
-			
+
 			st = con.createStatement();
 			rs = st.executeQuery(GET_RESULT_DICTIONARY_DATA);
 
 			while (rs.next()) {
-				if(rs.getInt(1) == 4){
+				if (rs.getInt(1) == 4) {
 					resultMap.put(rs.getInt(1), rs.getString(3));
-				}else{
+				} else {
 					resultMap.put(rs.getInt(1), rs.getString(2));
 				}
 			}
-			
+
 		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed data obtaining.", e1);
 		} finally {
@@ -508,7 +496,7 @@ public class DBAdminDAO implements AdminDAO {
 		Statement st = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		Map<Integer,String> statusMap = new HashMap<>();
+		Map<Integer, String> statusMap = new HashMap<>();
 
 		try {
 			con = connectionPool.takeConnection();
@@ -517,14 +505,14 @@ public class DBAdminDAO implements AdminDAO {
 		}
 
 		try {
-			
+
 			st = con.createStatement();
 			rs = st.executeQuery(GET_STATUS_DICTIONARY_DATA);
 
 			while (rs.next()) {
 				statusMap.put(rs.getInt(1), rs.getString(2));
 			}
-			
+
 		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed data obtaining.", e1);
 		} finally {
@@ -539,29 +527,29 @@ public class DBAdminDAO implements AdminDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		
+
 		try {
 			con = connectionPool.takeConnection();
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection failed.", e);
 		}
-		
-		try{
+
+		try {
 			ps = con.prepareStatement(UNMATCH_EVENT_AND_GAME);
 			ps.setInt(1, selectedEventId);
-			
+
 			if (ps.executeUpdate() == 0) {
 				result = false;
 			}
-			
+
 			return result;
-		
-		}catch (SQLException e1) {
+
+		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed unmatching event and game.", e1);
 		} finally {
 			connectionPool.closeConnection(con, ps);
 		}
-		
+
 	}
 
 	@Override
@@ -570,27 +558,62 @@ public class DBAdminDAO implements AdminDAO {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		
+
 		try {
 			con = connectionPool.takeConnection();
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection failed.", e);
 		}
-		
-		try{
+
+		try {
 			ps = con.prepareStatement(DELETE_EVENT);
 			ps.setInt(1, selectedEventId);
-			
+
 			if (ps.executeUpdate() == 0) {
 				result = false;
 			}
-			
+
 			return result;
-		
-		}catch (SQLException e1) {
+
+		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed to delete an event.", e1);
 		} finally {
 			connectionPool.closeConnection(con, ps);
+		}
+	}
+
+	@Override
+	public int closeGameCoupon(int gameCouponId) throws DAOException {
+		int spResult = 0;
+		Connection con = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+		CallableStatement cs = null;
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
+			cs = con.prepareCall(CLOSE_GAME_COUPON);
+			cs.setInt(1, gameCouponId);
+			cs.registerOutParameter(2, java.sql.Types.INTEGER);
+			cs.execute();
+			spResult = cs.getInt(2);
+			return spResult;
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed to close game coupon.", e1);
+		} finally {
+			
+			if (cs != null) {
+				try {
+					cs.close();
+				} catch (SQLException e) {
+					Logger.error(e);
+				}
+			}
+			
+			connectionPool.closeConnection(con);
 		}
 	}
 

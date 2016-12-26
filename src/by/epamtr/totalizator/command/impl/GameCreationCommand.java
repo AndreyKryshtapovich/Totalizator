@@ -26,11 +26,14 @@ public class GameCreationCommand implements Command {
 	private final static String MIN_BET_AMOUNT = "min-bet-amount";
 	private final static String GO_TO_GAME_CREATION_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-game-creation";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
+	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-
-		
 		String url = null;
+		if(request.getSession(false) == null){
+			url = LOCALHOST;
+			return url;
+		}
 		
 		String startDate = request.getParameter(START_DATE);
 		String startTimeHours = request.getParameter(START_TIME_HOURS);

@@ -30,9 +30,13 @@ public class ShowEventsCommand implements Command {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
 		String url = SHOW_EVENTS_URL;
-		request.getSession(false).setAttribute(CURRENT_URL, url);
-
 		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
+		request.getSession(false).setAttribute(CURRENT_URL, url);
+		
 		List<Event> eventsList = null;
 		GameCupoun game = new GameCupoun();
 

@@ -13,9 +13,14 @@ public class GoToRegistrationCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		String url = GO_TO_REGISTRATION_PAGE;
+		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
-		String page = PageName.REGISTRATION;
+		page = PageName.REGISTRATION;
 		return page;
 		
 	}

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
+import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -30,42 +31,61 @@ public class SearchAllGameEventsCommand implements Command {
 	private final static String GAME_CUPOUN_ID = "gameCupounId";
 	private final static String GAME_START_DATE = "gameStartDate";
 	private final static String GAME_END_DATE = "gameEndDate";
-	
+	private final static String IN_PROGRESS_FLAG = "InProgressFlag";
+	private final static int IN_PROGRESS = 2;
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = SEARCH_ALL_EVENTS_URL + request.getParameter(GAME);
-		request.getSession(false).setAttribute(CURRENT_URL, url);
-		
-		Cookie newCookie = new Cookie(GAME_EVENTS_URL,url);
-		response.addCookie(newCookie);
-		
 		String page = null;
+		if (request.getSession(false) == null) {
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
+		request.getSession(false).setAttribute(CURRENT_URL, url);
+
+		Cookie newCookie = new Cookie(GAME_EVENTS_URL, url);
+		response.addCookie(newCookie);
+
 		List<Event> eventsList = null;
 		String parameters = request.getParameter(GAME);
-		
-		if(parameters.isEmpty()){
+		GameCupoun currentGame = null;
+
+		if (parameters.isEmpty()) {
 			page = PageName.ERROR_PAGE;
 			return page;
 		}
-		
-		int gameCupounId =Integer.valueOf(Utils.parseParamGameCupounId(parameters)); 
+
+		int gameCupounId = Integer.valueOf(Utils.parseParamGameCupounId(parameters));
 		Timestamp gameStartDate = Timestamp.valueOf(Utils.parseParamGameCupounStartDate(parameters));
 		Timestamp gameEndDate = Timestamp.valueOf(Utils.parseParamGameCupounEndDate(parameters));
-		
+
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
-		
+
 		try {
 			eventsList = adminService.getEventsByGameCupounId(gameCupounId);
 		} catch (ServiceException e) {
 			Logger.error(e);
 		}
+
+		try {
+			currentGame = adminService.getGameByGameCupounId(gameCupounId);
+		} catch (ServiceException e) {
+			Logger.error(e);
+		}
+
+		if (currentGame.getStatus() == IN_PROGRESS) {
+
+			request.setAttribute(IN_PROGRESS_FLAG, true);
+		}
+
 		JSPListBean jsp = new JSPListBean(eventsList);
 		request.setAttribute(EVENTS, jsp);
 		request.setAttribute(GAME_CUPOUN_ID, gameCupounId);
 		request.setAttribute(GAME_START_DATE, gameStartDate);
 		request.setAttribute(GAME_END_DATE, gameEndDate);
-		
+
 		page = PageName.EVENT_DETAILS;
 		return page;
 	}

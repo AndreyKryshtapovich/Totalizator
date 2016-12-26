@@ -45,6 +45,7 @@ public class SignInCommand implements Command {
 					url = SHOW_EVENTS_COMMAND_URL;
 				} else {
 					request.getSession(true).setAttribute(LOGIN, request.getParameter(LOGIN));
+					request.getSession(true).setAttribute(USER, user);
 					url = GO_TO_ADMIN_PAGE;
 				}
 			}

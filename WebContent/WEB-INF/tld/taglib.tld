@@ -84,12 +84,6 @@
 		</attribute>
 	</tag>
 
-
-
-
-
-
-
 	<tag>
 		<name> eventDetailsTable </name>
 		<tag-class> by.epamtr.totalizator.usertag.EventDetailsTableTag
@@ -146,13 +140,10 @@
 	</tag>
 
 
-
-
-
-
-<tag>
+	<tag>
 		<name> betSubmitTable </name>
-		<tag-class> by.epamtr.totalizator.usertag.BetSubmitTableTag </tag-class>
+		<tag-class> by.epamtr.totalizator.usertag.BetSubmitTableTag
+		</tag-class>
 		<body-content> empty </body-content>
 		<attribute>
 			<name>list</name>
@@ -177,7 +168,7 @@
 			<required> false </required>
 			<rtexprvalue> true </rtexprvalue>
 		</attribute>
-		
+
 		<attribute>
 			<name> betAmount </name>
 			<required> false </required>

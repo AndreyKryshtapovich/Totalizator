@@ -22,9 +22,15 @@ public class EventGameMatchingCommand implements Command {
 	private final static String G0_TO_ADMIN_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
 	private final static String RESULT = "result";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
+	
+	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
+		if(request.getSession(false) == null){
+			url = LOCALHOST;
+			return url;
+		}
 		HttpSession session = request.getSession(false);
 		String prevUrl = session.getAttribute(CURRENT_URL).toString();
 		int selectedGameCupounId = Integer.valueOf(prevUrl.substring(prevUrl.lastIndexOf("=") + 1, prevUrl.lastIndexOf("=") + 2));

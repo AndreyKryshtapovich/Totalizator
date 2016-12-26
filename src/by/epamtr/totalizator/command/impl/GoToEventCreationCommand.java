@@ -14,9 +14,14 @@ public class GoToEventCreationCommand implements Command {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = GO_TO_EVENT_CREATION;
+		String page = null;
+		if(request.getSession(false) == null){
+			page = PageName.INDEX_PAGE;
+			return page;
+		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
-		String page = PageName.EVENT_CREATION;
+		page = PageName.EVENT_CREATION;
 		return page;
 
 	}
