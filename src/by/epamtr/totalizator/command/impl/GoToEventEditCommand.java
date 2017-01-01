@@ -5,6 +5,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -36,17 +39,19 @@ public class GoToEventEditCommand implements Command {
 	private final static String STATUS_ID = "statusId";
 	private final static String ZERO = "0";
 	private final static String FOUR = "4";
+	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-		StringBuilder sb = new StringBuilder();
 		String page = null;
 
 		if (request.getSession(false) == null) {
 			page = PageName.INDEX_PAGE;
 			return page;
 		}
+		
+		StringBuilder sb = new StringBuilder();
 
 		sb.append(GO_TO_EVENT_EDIT_WITH_PARAMS);
 		sb.append(request.getParameter(EVENT_ID));
@@ -88,6 +93,7 @@ public class GoToEventEditCommand implements Command {
 		try {
 			status = adminService.getStatusDictionaryData();
 		} catch (ServiceException e) {
+			Logger.error(e);
 			page = PageName.ERROR_PAGE;
 			return page;
 		}
@@ -96,6 +102,7 @@ public class GoToEventEditCommand implements Command {
 			int gameCupounId = Integer.valueOf(request.getParameter(GAME_ID));
 			game = adminService.getGameByGameCupounId(gameCupounId);
 		} catch (ServiceException e) {
+			Logger.error(e);
 			page = PageName.ERROR_PAGE;
 			return page;
 		}
@@ -105,7 +112,7 @@ public class GoToEventEditCommand implements Command {
 		String startDate = Utils.parseDateFromFullDate(fullStartDate);
 		String startTimeHours = Utils.parseHoursFromFullDate(fullStartDate);
 		String startTimeMinutes = Utils.parseMinutesFromFullDate(fullStartDate);
-
+ 
 		String fullEndDate = request.getParameter(END_DATE);
 
 		String endDate = Utils.parseDateFromFullDate(fullEndDate);

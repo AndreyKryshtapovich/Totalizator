@@ -47,7 +47,7 @@ public class ShowEventsCommand implements Command {
 			eventsList = clientService.showEvents();
 		} catch (ServiceException e) {
 			Logger.error(e);
-			page = PageName.ERROR_PAGE;
+			page = PageName.USER_PAGE;
 			return page;
 		}
 		
@@ -55,8 +55,8 @@ public class ShowEventsCommand implements Command {
 			game = clientService.getOpenedGame();
 		} catch (ServiceException e) {
 			Logger.error(e);
-			page = PageName.ERROR_PAGE;
-			return page;
+			page = PageName.USER_PAGE;
+			return page; 
 		}
 		
 		JSPListBean jsp = new JSPListBean(eventsList);

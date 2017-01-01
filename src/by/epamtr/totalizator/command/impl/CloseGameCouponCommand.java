@@ -20,6 +20,10 @@ public class CloseGameCouponCommand implements Command {
 	private final static String SUCCESS_CLOSE_MSG = "successCloseMsg";
 	private final static String CANSELLED_MSG = "canselledMsg";
 	private final static String ROLLBACK_MSG = "rollbackMsg";
+	private final static int CLOSED_SUCCESSFULLY = 1;
+	private final static int LESS_THEN_15_APPR_EVENTS = -1;
+	private final static int CANSELLED = -2;
+	private final static int ROLLBACK = -3;
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -49,18 +53,18 @@ public class CloseGameCouponCommand implements Command {
 			
 			url = GO_TO_EDIT_SEARCH;
 			
-			if(spResult == 1){
+			if(spResult == CLOSED_SUCCESSFULLY){
 				request.getSession(false).setAttribute(SUCCESS_CLOSE_MSG, true);
 			}
 			
-			if(spResult == -1){
+			if(spResult == LESS_THEN_15_APPR_EVENTS){
 				request.getSession(false).setAttribute(SUCCESS_CLOSE_MSG, false);
 			}
 			
-			if(spResult == -2){
+			if(spResult == CANSELLED){
 				request.getSession(false).setAttribute(CANSELLED_MSG, true);
 			}
-			if(spResult == -3){
+			if(spResult == ROLLBACK){
 				request.getSession(false).setAttribute(ROLLBACK_MSG, true);
 			}
 		} else {

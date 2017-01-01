@@ -13,6 +13,7 @@ public interface AdminDAO {
 	boolean createNewEvent(Event event) throws DAOException;
 	boolean matchEventAndGame(int selectedGameCupounId, int selectedEventId)throws DAOException;
 	boolean updateEvent(Event event) throws DAOException;
+	boolean updateGame(GameCupoun game) throws DAOException;
 	boolean unmatchEventAndGame(int selectedEventId)throws DAOException;
 	boolean deleteEvent(int selectedEventId) throws DAOException;
 	int closeGameCoupon(int gameCouponId) throws DAOException;

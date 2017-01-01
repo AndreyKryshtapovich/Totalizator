@@ -27,6 +27,7 @@
 			<jsp:useBean id="games"
 				class="by.epamtr.totalizator.bean.listbean.JSPGameListBean"
 				scope="request" />
+				
 			<c:if test="${not empty sessionScope.successCloseMsg}">
 				<c:if test="${sessionScope.successCloseMsg}">
 					<c:out value="Game Cupoun was successfully closed." />
@@ -41,15 +42,15 @@
 			</c:if>
 
 			<c:if test="${not empty sessionScope.canselledMsg}">
-				<c:if test="${not sessionScope.canselledMsg}">
+				<c:if test="${sessionScope.canselledMsg}">
 					<c:out value="Game Cupoun was canselled." />
 				</c:if>
 			</c:if>
 
-			<c:if test="${not empty sessionScope.canselledMsg}">
-				<c:if test="${not sessionScope.rollbackMsg}">
+			<c:if test="${not empty sessionScope.rollbackMsg}">
+				<c:if test="${sessionScope.rollbackMsg}">
 					<c:out
-						value="Game Cupoun was canselled. Transaction was rollbacked." />
+						value="Something went wrong. Transaction was rollbacked." />
 				</c:if>
 			</c:if>
 

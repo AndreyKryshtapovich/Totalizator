@@ -30,6 +30,14 @@
 
 			<c:out
 				value="Game Cupoun Id: ${gameCupounId} Game Dates: ${gameStartDate} - ${gameEndDate}"></c:out>
+		<br>
+			<c:if test="${not empty sessionScope.param_result}">
+				<c:if test="${sessionScope.param_result }">
+					<c:out value="Game was successfully updated." />
+				</c:if>
+			</c:if>
+
+
 			<print:eventDetailsTable eventsList="${events}"
 				eventName="Event Name" teamOne="Team One" teamTwo="TeamTwo"
 				result="Result" startDate="Start Date" endDate="End Date"
@@ -40,15 +48,32 @@
 					<form action="Controller" method="post" name="close-game-coupon">
 						<div>
 							<input type="hidden" name="command" value="close-game-coupon" />
-							<input type="hidden" name="gameCouponId" value= "${gameCupounId}" />
+							<input type="hidden" name="gameCouponId" value="${gameCupounId}" />
 						</div>
 						<div class="registration-submit">
-							<input class="adminWorkBtn" type="submit" value="Close Cur. GC ">
+							<input class="adminWorkBtn" type="submit" value="Close Game">
 						</div>
 					</form>
 				</div>
 
 			</c:if>
+
+
+			<div>
+				<form action="Controller" method="get"
+					name="go-to-game-coupon-details">
+					<div>
+						<input type="hidden" name="command"
+							value="go-to-game-coupon-details" /> <input type="hidden"
+							name="gameCouponId" value="${gameCupounId}" />
+					</div>
+					<div class="registration-submit">
+						<input class="adminWorkBtn" type="submit" value="Edit Game">
+					</div>
+				</form>
+			</div>
+
+
 		</div>
 	</div>
 

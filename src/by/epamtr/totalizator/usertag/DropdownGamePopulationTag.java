@@ -33,7 +33,7 @@ public class DropdownGamePopulationTag extends TagSupport {
 				for(int i = 0; i < size; i++){
 					GameCupoun currentGameCupoun = gamesList.getElement();
 					pageContext.getOut().write("<option value='" + new Integer(currentGameCupoun.getGameCupounId()).toString() + " " + " " + currentGameCupoun.getStartDate().toString() + " - " + currentGameCupoun.getEndDate().toString() +"'>");
-					//pageContext.getOut().write( new Integer(currentGameCupoun.getGameCupounId()).toString() + " " + currentGameCupoun.getStartDate().toString() + " - " + currentGameCupoun.getEndDate().toString());
+			
 					pageContext.getOut().write("</option>");
 				}
 				pageContext.getOut().write("</datalist>");

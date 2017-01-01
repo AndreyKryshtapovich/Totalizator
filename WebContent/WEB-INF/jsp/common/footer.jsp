@@ -10,11 +10,11 @@
 <footer class="bottom">
 		<p>&copy;All rights reserved. Totalizator by Andrey Kryshtapovich</p>
 
-		<section>
+		<!-- <section>
 			<p>Наш адрес электронной почты info@toto.com, телефон
 				контакт-центра: 8 (800) 77-56-21.</p>
 		</section>
-
+ -->
 		<section>
 			<a href="https://www.facebook.com"> <img
 				src="IMG/facebook_logo.jpg" alt="Facebook" width="25" height="25">

@@ -8,6 +8,7 @@ import by.epamtr.totalizator.command.impl.ChangeLanguageCommand;
 import by.epamtr.totalizator.command.impl.CloseGameCouponCommand;
 import by.epamtr.totalizator.command.impl.DeleteEventCommand;
 import by.epamtr.totalizator.command.impl.EditEventCommand;
+import by.epamtr.totalizator.command.impl.EditGameCouponCommand;
 import by.epamtr.totalizator.command.impl.EventCreationCommand;
 import by.epamtr.totalizator.command.impl.EventGameMatchingCommand;
 import by.epamtr.totalizator.command.impl.GameCreationCommand;
@@ -17,6 +18,7 @@ import by.epamtr.totalizator.command.impl.GoToEditSearchEventCommand;
 import by.epamtr.totalizator.command.impl.GoToErrorPageCommand;
 import by.epamtr.totalizator.command.impl.GoToEventCreationCommand;
 import by.epamtr.totalizator.command.impl.GoToEventEditCommand;
+import by.epamtr.totalizator.command.impl.GoToGameCouponDetailsCommand;
 import by.epamtr.totalizator.command.impl.GoToSearchEventCommand;
 import by.epamtr.totalizator.command.impl.MakeBetCommand;
 import by.epamtr.totalizator.command.impl.GoToGameCreationCommand;
@@ -59,6 +61,8 @@ public class CommandProvider {
 		commands.put(CommandName.UNMATCH_EVENT, new UnmatchEventCommand());
 		commands.put(CommandName.DELETE_EVENT, new DeleteEventCommand());
 		commands.put(CommandName.CLOSE_GAME_COUPON, new CloseGameCouponCommand());
+		commands.put(CommandName.GO_TO_GAME_COUPON_DETAILS, new GoToGameCouponDetailsCommand());
+		commands.put(CommandName.EDIT_GAME_COUPON, new EditGameCouponCommand());
 	}
 
 	public Command getCommand(String commandName) {

@@ -293,4 +293,28 @@ public class AdminOperation implements AdminOperationService {
 		return spResult;
 	}
 
+	@Override
+	public boolean updateGame(GameCupoun game) throws ServiceException {
+		boolean result = true;
+		//TODO
+		// Validation !!
+		/*if (!Validator.updateEventValidation(event)) {
+			result = false;
+			return result;
+		}*/
+
+		DAOFactory factory = DAOFactory.getInstance();
+		DBAdminDAO adminDAO = factory.getDBAdminDAO();
+
+		try {
+			if (!adminDAO.updateGame(game)) {
+				result = false;
+			}
+
+		} catch (DAOException e) {
+			throw new ServiceException("Failed updating a game.", e);
+		}
+		return result;
+	}
+
 }

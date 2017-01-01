@@ -81,6 +81,15 @@ public class DBAdminDAO implements AdminDAO {
 			+ " WHERE `totalizator`.`event`.event_id = ?;";
 
 	private final static String CLOSE_GAME_COUPON = "{ call close_game_coupon(?,?) }";
+	
+	private final static String UPDATE_GAME_COUPON = " UPDATE `totalizator`.`game_cupon`"
+			+ " SET"
+			+ " `start_date` = ?,"
+			+ " `end_date` = ?,"
+			+ " `min_bet_amount` = ?,"
+			+ " `jackpot` = ?,"
+			+ " `status_id` = ?"
+			+ " WHERE `game_cupon_id` = ?;";
 
 	@Override
 	public boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException {
@@ -614,6 +623,41 @@ public class DBAdminDAO implements AdminDAO {
 			}
 			
 			connectionPool.closeConnection(con);
+		}
+	}
+
+	@Override
+	public boolean updateGame(GameCupoun game) throws DAOException {
+		boolean result = true;
+		Connection con = null;
+		PreparedStatement ps = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+		try {
+
+			try {
+				con = connectionPool.takeConnection();
+			} catch (ConnectionPoolException e) {
+				throw new DAOException("Connection failed.", e);
+			}
+			
+			ps = con.prepareStatement(UPDATE_GAME_COUPON);
+			ps.setTimestamp(1, game.getStartDate());
+			ps.setTimestamp(2, game.getEndDate());
+			ps.setInt(3, game.getMinBetAmount());
+			ps.setInt(4, game.getJackpot());
+			ps.setInt(5, game.getStatus());
+			ps.setInt(6, game.getGameCupounId());
+
+			if (ps.executeUpdate() == 0) {
+				result = false;
+			}
+
+			return result;
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed updating a game.", e1);
+		} finally {
+			connectionPool.closeConnection(con, ps);
 		}
 	}
 

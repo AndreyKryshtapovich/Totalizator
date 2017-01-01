@@ -17,4 +17,5 @@ public class PageName {
 	public static final String EVENT_DETAILS = "WEB-INF/jsp/eventDetails.jsp";
 	public static final String EDIT_EVENT = "WEB-INF/jsp/editEvent.jsp";
 	public static final String BET_SUBMIT = "WEB-INF/jsp/betSubmit.jsp";
+	public static final String GAME_COUPON_DETAILS = "WEB-INF/jsp/gameCouponDetails.jsp";
 }

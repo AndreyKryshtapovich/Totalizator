@@ -17,6 +17,7 @@ public interface AdminOperationService {
 	boolean createNewEvent(EventDTO eventDTO) throws ServiceException ;
 	boolean matchEventAndGame(int selectedGameCupounId, int selectedEventId) throws ServiceException;
 	boolean updateEvent(Event event) throws ServiceException;
+	boolean updateGame(GameCupoun game) throws ServiceException;
 	boolean unmatchEventAndGame(int selectedEventId) throws ServiceException;
 	boolean deleteEvent(int selectedEventId) throws ServiceException;
 	int closeGameCoupon(int gameCouponId) throws ServiceException;
