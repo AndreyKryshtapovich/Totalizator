@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.epamtr.totalizator.bean.dto.GameCupounDTO;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -41,8 +42,7 @@ public class EditGameCouponCommand implements Command {
 			return url;
 		}
 		
-		int gameCouponId = Integer.valueOf(request.getParameter("gameCouponId"));
-		
+		String gameCouponId = request.getParameter("gameCouponId").toString();
 		String startDate = request.getParameter(START_DATE);
 		String startTimeHours = request.getParameter(START_TIME_HOURS);
 		String startTimeMinutes = request.getParameter(START_TIME_MINUTES);
@@ -50,23 +50,24 @@ public class EditGameCouponCommand implements Command {
 		String endDate = request.getParameter(END_DATE);
 		String endTimeHours = request.getParameter(END_TIME_HOURS);
 		String endTimeMinutes = request.getParameter(END_TIME_MINUTES);
+		String status = request.getParameter(STATUS).toString();
+		String minBetAmount = request.getParameter("minBetAmount").toString();
+		String jackpot = request.getParameter("jackpot").toString();
 		
-		String correctStartDate = Utils.concatStringDate(startDate, startTimeHours, startTimeMinutes);
-		String correctEndDate = Utils.concatStringDate(endDate, endTimeHours, endTimeMinutes);
+		GameCupounDTO gameDTO = new GameCupounDTO();
+		gameDTO.setGameCupounId(gameCouponId);
 		
-		Timestamp gameStartDate = Timestamp.valueOf(correctStartDate);
-		Timestamp gameEndDate = Timestamp.valueOf(correctEndDate);
-		int status = Integer.valueOf(request.getParameter(STATUS));
-		int minBetAmount = Integer.valueOf(request.getParameter("minBetAmount"));
-		int jackpot = Integer.valueOf(request.getParameter("jackpot"));
+		gameDTO.setStartDate(startDate);
+		gameDTO.setStartTimeHours(startTimeHours);
+		gameDTO.setStartTimeMinutes(startTimeMinutes);
 		
-		GameCupoun game = new GameCupoun();
-		game.setGameCupounId(gameCouponId);
-		game.setStartDate(gameStartDate);
-		game.setEndDate(gameEndDate);
-		game.setMinBetAmount(minBetAmount);
-		game.setJackpot(jackpot);
-		game.setStatus(status);
+		gameDTO.setEndDate(endDate);
+		gameDTO.setEndTimeHours(endTimeHours);
+		gameDTO.setEndTimeMinutes(endTimeMinutes);
+		
+		gameDTO.setStatus(status);
+		gameDTO.setMinBetAmount(minBetAmount);
+		gameDTO.setJackpot(jackpot);
 		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
@@ -82,7 +83,7 @@ public class EditGameCouponCommand implements Command {
 		}
 		
 		try {
-			boolean result = adminService.updateGame(game);
+			boolean result = adminService.updateGame(gameDTO);
 			if (result) {
 				request.getSession(false).setAttribute(PARAM_RESULT, true);
 				url = LOCALHOST + gameEventsUrl;
@@ -94,8 +95,7 @@ public class EditGameCouponCommand implements Command {
 			Logger.error(e);
 			url = GO_TO_ERROR_PAGE;
 		}
-		
-		
+
 		return url;
 	}
 

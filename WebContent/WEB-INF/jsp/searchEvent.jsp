@@ -15,6 +15,9 @@
 <title>Matching page</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
+
+<fmt:message bundle="${loc}" key="local.gameInDev" var="gameInDev" />
+<fmt:message bundle="${loc}" key="local.searchEvents" var="searchEvents" />
 </head>
 <body>
 
@@ -30,11 +33,11 @@
 	<form action='Controller' method='get' name='search-matching-events'>
 		<input type="hidden" name="command" value="search-matching-events" />
 		<div class="form-row">
-			<label>Game In Development:</label>
+			<label>${gameInDev }</label>
 			<print:dropdownGamePopulation gamesList="${games}" />
 		</div>
 		<div class="user">
-		<input type='submit' class="adminWorkBtn" value='Search Events'>
+		<input type='submit' class="adminWorkBtn" value='${searchEvents }'>
 		</div>
 	</form>
 	</div>

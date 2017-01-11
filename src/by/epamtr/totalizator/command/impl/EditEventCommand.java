@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import by.epamtr.totalizator.bean.dto.EventDTO;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -48,13 +49,14 @@ public class EditEventCommand implements Command {
 			return url;
 		}
 		
-		int eventId = Integer.valueOf(request.getParameter(EVENT_ID));
-		int gameCouponId = Integer.valueOf(request.getParameter(GAME_COUPON_ID));
+		
+		String eventId = request.getParameter(EVENT_ID);
+		String gameCouponId = request.getParameter(GAME_COUPON_ID);
 		String eventName = request.getParameter(NAME);
 		String teamOne = request.getParameter(TEAM_ONE);
 		String teamTwo = request.getParameter(TEAM_TWO);
 
-		int resultId = Integer.valueOf(request.getParameter(RESULT_ID));
+		String resultId = request.getParameter(RESULT_ID);
 
 		String startDate = request.getParameter(START_DATE);
 		String startTimeHours = request.getParameter(START_TIME_HOURS);
@@ -63,24 +65,26 @@ public class EditEventCommand implements Command {
 		String endDate = request.getParameter(END_DATE);
 		String endTimeHours = request.getParameter(END_TIME_HOURS);
 		String endTimeMinutes = request.getParameter(END_TIME_MINUTES);
+		String status = request.getParameter(STATUS);
 		
-		String correctStartDate = Utils.concatStringDate(startDate, startTimeHours, startTimeMinutes);
-		String correctEndDate = Utils.concatStringDate(endDate, endTimeHours, endTimeMinutes);
+		EventDTO eventDTO = new EventDTO();
 		
-		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
-		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
-		int status = Integer.valueOf(request.getParameter(STATUS));
-
-		Event event = new Event();
-		event.setEventId(eventId);
-		event.setEventName(eventName);
-		event.setGameCuponId(gameCouponId);
-		event.setTeamOne(teamOne);
-		event.setTeamTwo(teamTwo);
-		event.setResultId(resultId);
-		event.setStartDate(eventStartDate);
-		event.setEndDate(eventEndDate);
-		event.setStatus(status);
+		eventDTO.setEventId(eventId);
+		eventDTO.setEventName(eventName);
+		eventDTO.setTeamOne(teamOne);
+		eventDTO.setTeamTwo(teamTwo);
+		eventDTO.setResultId(resultId);
+		
+		eventDTO.setStartDate(startDate);
+		eventDTO.setStartTimeHours(startTimeHours);
+		eventDTO.setStartTimeMinutes(startTimeMinutes);
+		
+		eventDTO.setEndDate(endDate);
+		eventDTO.setEndTimeHours(endTimeHours);
+		eventDTO.setEndTimeMinutes(endTimeMinutes);
+		
+		eventDTO.setGameCuponId(gameCouponId);
+		eventDTO.setStatus(status);
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
@@ -97,7 +101,7 @@ public class EditEventCommand implements Command {
 		}
 
 		try {
-			boolean result = adminService.updateEvent(event);
+			boolean result = adminService.updateEvent(eventDTO);
 			if (result) {
 				url = LOCALHOST + gameEventsUrl;
 			} else {

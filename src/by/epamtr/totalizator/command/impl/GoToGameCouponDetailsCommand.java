@@ -18,7 +18,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 import by.epamtr.totalizator.util.Utils;
 
 public class GoToGameCouponDetailsCommand implements Command {
-	private final static String GO_TO_GAME_COUPON_DETAILS_WITH_PARAMS = "http://localhost:8080/Totalizator/Controller?command=go-to-game-coupon-details&gameCouponId=";
+	private final static String GO_TO_GAME_COUPON_DETAILS_WITH_PARAMS = "Controller?command=go-to-game-coupon-details&gameCouponId=";
 	private final static String GAME_COUPON_ID = "gameCouponId";
 	private final static String CURRENT_URL = "currentUrl";
 	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
@@ -39,6 +39,7 @@ public class GoToGameCouponDetailsCommand implements Command {
 		String url = sb.toString();
 
 		request.getSession(false).setAttribute(CURRENT_URL, url);
+		
 		String gameCouponId = request.getParameter(GAME_COUPON_ID).toString();
 
 		if (gameCouponId.isEmpty()) {

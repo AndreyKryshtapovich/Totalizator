@@ -184,15 +184,32 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public boolean updateEvent(Event event) throws ServiceException {
+	public boolean updateEvent(EventDTO eventDTO) throws ServiceException {
 		boolean result = true;
-		if (!Validator.updateEventValidation(event)) {
+		if (!Validator.updateEventValidation(eventDTO)) {
 			result = false;
 			return result;
 		}
 
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
+		
+		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(), eventDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(), eventDTO.getEndTimeMinutes());
+		
+		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
+		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
+		
+		Event event = new Event();
+		event.setEventId(Integer.valueOf(eventDTO.getEventId()));
+		event.setEventName(eventDTO.getEventName());
+		event.setGameCuponId(Integer.valueOf(eventDTO.getGameCuponId()));
+		event.setTeamOne(eventDTO.getTeamOne());
+		event.setTeamTwo(eventDTO.getTeamTwo());
+		event.setResultId(Integer.valueOf(eventDTO.getResultId()));
+		event.setStartDate(eventStartDate);
+		event.setEndDate(eventEndDate);
+		event.setStatus(Integer.valueOf(eventDTO.getStatus()));
 
 		try {
 			if (!adminDAO.updateEvent(event)) {
@@ -294,17 +311,29 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public boolean updateGame(GameCupoun game) throws ServiceException {
+	public boolean updateGame(GameCupounDTO gameDTO) throws ServiceException {
 		boolean result = true;
-		//TODO
-		// Validation !!
-		/*if (!Validator.updateEventValidation(event)) {
+		if (!Validator.updateGameCouponValidation(gameDTO)) {
 			result = false;
 			return result;
-		}*/
+		}
 
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
+		
+		String correctStartDate = Utils.concatStringDate(gameDTO.getStartDate(), gameDTO.getStartTimeHours(), gameDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(gameDTO.getEndDate(), gameDTO.getEndTimeHours(), gameDTO.getEndTimeMinutes());
+		
+		Timestamp gameStartDate = Timestamp.valueOf(correctStartDate);
+		Timestamp gameEndDate = Timestamp.valueOf(correctEndDate);
+		
+		GameCupoun game = new GameCupoun();
+		game.setGameCupounId(Integer.valueOf(gameDTO.getGameCupounId()));
+		game.setStartDate(gameStartDate);
+		game.setEndDate(gameEndDate);
+		game.setMinBetAmount(Integer.valueOf(gameDTO.getMinBetAmount()));
+		game.setJackpot(Integer.valueOf(gameDTO.getJackpot()));
+		game.setStatus(Integer.valueOf(gameDTO.getStatus()));
 
 		try {
 			if (!adminDAO.updateGame(game)) {

@@ -123,12 +123,12 @@
 					<div class="form-row">
 						<c:if test="${requestScope.gameStatus eq 'In developing'}">
 							<label for="minBetAmount">Min. Bet. Amount:</label>
-							<input type="number" name="minBetAmount" id="minBetAmount"
+							<input type="number" min="0" name="minBetAmount" id="minBetAmount"
 								value="${requestScope.minBetAmount}" />
 						</c:if>
 						<c:if test="${requestScope.gameStatus ne 'In developing'}">
 							<label for="minBetAmount">Min. Bet. Amount:</label>
-							<input type="number" name="minBetAmount" id="minBetAmount"
+							<input type="number" min="0" name="minBetAmount" id="minBetAmount"
 								value="${requestScope.minBetAmount}" readonly />
 						</c:if>
 					</div>
@@ -136,13 +136,13 @@
 					<div class="form-row">
 						<c:if test="${requestScope.gameStatus eq 'In developing'}">
 							<label for="Jackpot">Jackpot:</label>
-							<input type="number" name="jackpot" id="jackpot"
+							<input type="number" min="0" name="jackpot" id="jackpot"
 								value="${requestScope.jackpot}" />
 						</c:if>
 
 						<c:if test="${requestScope.gameStatus ne 'In developing'}">
 							<label for="Jackpot">Jackpot:</label>
-							<input type="number" name="jackpot" id="jackpot"
+							<input type="number" min="0" name="jackpot" id="jackpot"
 								value="${requestScope.jackpot}" readonly />
 						</c:if>
 					</div>

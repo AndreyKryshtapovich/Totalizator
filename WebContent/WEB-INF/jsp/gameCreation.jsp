@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="CSS/registrationcss.css">
 <link rel="stylesheet" type="text/css" href="CSS/eventCreation.css">
 <link rel="stylesheet" type="text/css" href="CSS/admincss.css">
-<title>Creation new game</title>
+<title>New Game Creation</title>
 <fmt:setLocale value="${sessionScope.local}" />
 <fmt:setBundle basename="localization.local" var="loc" />
 
@@ -33,6 +33,7 @@
 <fmt:message bundle="${loc}" key="local.gameStartTime"
 	var="gameStartTime" />
 <fmt:message bundle="${loc}" key="local.gameEndTime" var="gameEndTime" />
+<fmt:message bundle="${loc}" key="local.createGame" var="createGame" />
 
 </head>
 <body>
@@ -93,7 +94,7 @@
 				</fieldset>
 
 				<div class="registration-submit">
-					<input class="adminWorkBtn" type="submit" value="Submit Creation">
+					<input class="adminWorkBtn" type="submit" value="${createGame}">
 				</div>
 			</form>
 		</div>

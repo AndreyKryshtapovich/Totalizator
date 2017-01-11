@@ -229,9 +229,4 @@ public class EventDTO implements Serializable {
 				+ startTimeMinutes + ", endDate=" + endDate + ", endTimeHours=" + endTimeHours + ", endTimeMinutes="
 				+ endTimeMinutes + "]";
 	}
-	
-	
-	
-	
-	
 }
