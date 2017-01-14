@@ -11,8 +11,11 @@ public class GameCupoun implements Serializable {
 	private int minBetAmount;
 	private int gameCuponPull;
 	private int jackpot;
-	//TODO game is canselled rewrite!!!!
 	private int status = 5;
+	
+	public GameCupoun(){
+		
+	}
 	
 	public int getGameCupounId() {
 		return gameCupounId;

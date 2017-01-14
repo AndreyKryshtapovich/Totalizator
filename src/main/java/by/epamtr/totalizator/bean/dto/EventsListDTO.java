@@ -13,6 +13,11 @@ public class EventsListDTO implements Serializable {
 	private List<Event> eventList;
 	private Timestamp gameStartDate;
 	private Timestamp gameEndDate;
+	
+	public EventsListDTO(){
+		
+	}
+	
 	public int getGameCupounId() {
 		return gameCupounId;
 	}

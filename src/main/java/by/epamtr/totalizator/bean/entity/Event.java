@@ -18,6 +18,10 @@ public class Event implements Serializable {
 	private Timestamp startDate;
 	private Timestamp endDate;
 	
+	public Event(){
+		
+	}
+	
 	public int getEventId() {
 		return eventId;
 	}

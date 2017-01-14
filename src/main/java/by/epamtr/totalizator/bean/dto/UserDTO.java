@@ -14,6 +14,11 @@ public class UserDTO implements Serializable {
 	private String address;
 	private String role;
 	private String registerLogin;
+	
+	public UserDTO(){
+		
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

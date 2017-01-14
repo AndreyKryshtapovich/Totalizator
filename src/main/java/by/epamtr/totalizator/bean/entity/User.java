@@ -14,6 +14,11 @@ public class User implements Serializable {
 	private String address;
 	private String role;
 	private int userId;
+	
+	public User(){
+		
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

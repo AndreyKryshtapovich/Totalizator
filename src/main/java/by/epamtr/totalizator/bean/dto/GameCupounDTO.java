@@ -16,6 +16,11 @@ public class GameCupounDTO implements Serializable {
 	private String gameCuponPull;
 	private String jackpot;
 	private String status;
+	
+	public GameCupounDTO(){
+		
+	}
+	
 	public String getGameCupounId() {
 		return gameCupounId;
 	}

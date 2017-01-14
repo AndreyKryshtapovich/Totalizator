@@ -26,7 +26,7 @@ public class DropdownGamePopulationTag extends TagSupport {
 		int size = gamesList.getSize();
 			try {
 				
-				pageContext.getOut().write("<input list='games' name='game' id='game'>");
+				pageContext.getOut().write("<input list='games' name='game' id='game' autocomplete='off'>");
 				
 				
 				pageContext.getOut().write("<datalist id='games'>");

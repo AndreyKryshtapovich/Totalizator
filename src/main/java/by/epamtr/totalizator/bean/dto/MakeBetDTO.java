@@ -16,6 +16,11 @@ public class MakeBetDTO implements Serializable {
 	private String gameCouponId;
 	private User user;
 	private int minBetAmount;
+	
+	public MakeBetDTO(){
+		
+	}
+	
 	public List<Event> getEventsList() {
 		return eventsList;
 	}

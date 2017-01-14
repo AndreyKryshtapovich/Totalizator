@@ -20,6 +20,11 @@ public class EventDTO implements Serializable {
 	private String endDate;
 	private String endTimeHours;
 	private String endTimeMinutes;
+	
+	public EventDTO(){
+		
+	}
+	
 	public String getEventId() {
 		return eventId;
 	}

@@ -25,7 +25,7 @@ public class DropdownEventPopulationTag extends TagSupport {
 			int size = eventsList.getSize();
 			try {
 
-				pageContext.getOut().write("<input list='events' name='event' id='event'>");
+				pageContext.getOut().write("<input list='events' name='event' id='event' autocomplete='off'>");
 
 				pageContext.getOut().write("<datalist id='events'>");
 				for (int i = 0; i < size; i++) {
