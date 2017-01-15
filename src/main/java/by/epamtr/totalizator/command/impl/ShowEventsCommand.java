@@ -42,14 +42,7 @@ public class ShowEventsCommand implements Command {
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();
-
-		try {
-			eventsList = clientService.showEvents();
-		} catch (ServiceException e) {
-			Logger.error(e);
-			page = PageName.USER_PAGE;
-			return page;
-		}
+		
 		
 		try {
 			game = clientService.getOpenedGame();
@@ -58,6 +51,16 @@ public class ShowEventsCommand implements Command {
 			page = PageName.USER_PAGE;
 			return page; 
 		}
+		
+
+		try {
+			eventsList = clientService.showEvents(game.getGameCupounId());
+		} catch (ServiceException e) {
+			Logger.error(e);
+			page = PageName.USER_PAGE;
+			return page;
+		}
+		
 		
 		JSPListBean jsp = new JSPListBean(eventsList);
 		request.setAttribute(EVENTS, jsp);

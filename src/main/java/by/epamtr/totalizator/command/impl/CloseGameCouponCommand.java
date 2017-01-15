@@ -11,12 +11,12 @@ import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class CloseGameCouponCommand implements Command {
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String LOCALHOST = "index.jsp";
 	private final static String GAME_COUPON_ID = "gameCouponId";
 	private final static String USER = "user";
 	private final static String ADMIN = "admin";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
-	private final static String GO_TO_EDIT_SEARCH = "http://localhost:8080/Totalizator/Controller?command=go-to-edit-search-event";
+	private final static String GO_TO_EDIT_SEARCH = "Controller?command=go-to-edit-search-event";
 	private final static String SUCCESS_CLOSE_MSG = "successCloseMsg";
 	private final static String CANSELLED_MSG = "canselledMsg";
 	private final static String ROLLBACK_MSG = "rollbackMsg";

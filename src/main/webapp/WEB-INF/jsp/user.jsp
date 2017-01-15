@@ -60,11 +60,7 @@
 					<div>
 						<input type="hidden" name="command" value="go-to-bet-submit" />
 					</div>
-
-					<%-- 	<c:if test="${empty events.list}">
-						<c:out value="You can not make bet right now. There are no available coupons." />
-					</c:if> --%>
-
+					
 					<c:if test="${not empty events.list}">
 						<print:jsptable list="${events}" colunmName1="Date"
 							colunmName2="Event" colunmName3="1" colunmName4="X"

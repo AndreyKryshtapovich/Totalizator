@@ -16,7 +16,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class EditGameCouponCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(EditGameCouponCommand.class.getName());
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String LOCALHOST = "index.jsp";
 	private final static String START_DATE = "start-date";
 	private final static String START_TIME_HOURS = "start-time-hours";
 	private final static String START_TIME_MINUTES = "start-time-minutes";
@@ -24,7 +24,7 @@ public class EditGameCouponCommand implements Command {
 	private final static String END_TIME_HOURS = "end-time-hours";
 	private final static String END_TIME_MINUTES = "end-time-minutes";
 	private final static String STATUS = "status";
-	private final static String GO_TO_ERROR_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-error-page";
+	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String GAME_EVENTS_URL = "gameEventsUrl";
 	private final static String PARAM_RESULT = "param_result";
@@ -85,7 +85,7 @@ public class EditGameCouponCommand implements Command {
 			boolean result = adminService.updateGame(gameDTO);
 			if (result) {
 				request.getSession(false).setAttribute(PARAM_RESULT, true);
-				url = LOCALHOST + gameEventsUrl;
+				url = gameEventsUrl;
 			} else {
 				request.getSession(false).setAttribute(PARAM_RESULT, false);
 				url = request.getSession(false).getAttribute(CURRENT_URL).toString();

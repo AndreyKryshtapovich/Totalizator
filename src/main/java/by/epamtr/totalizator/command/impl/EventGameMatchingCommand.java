@@ -18,8 +18,8 @@ public class EventGameMatchingCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(EventGameMatchingCommand.class.getName());
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String EVENT = "event";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
-	private final static String G0_TO_ADMIN_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
+	private final static String LOCALHOST = "index.jsp";
+	private final static String G0_TO_ADMIN_PAGE = "Controller?command=go-to-admin-page";
 	private final static String RESULT = "result";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	
@@ -49,7 +49,7 @@ public class EventGameMatchingCommand implements Command {
 		try {
 			boolean result = adminService.matchEventAndGame(selectedGameCupounId, selectedEventId);
 			if (result) {
-				url = LOCALHOST + prevUrl;
+				url = prevUrl;
 			} else {
 				boolean registrationResult = false;
 				request.getSession(false).setAttribute(RESULT, registrationResult);

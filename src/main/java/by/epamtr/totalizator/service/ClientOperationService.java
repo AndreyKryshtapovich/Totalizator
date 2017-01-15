@@ -11,7 +11,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 public interface ClientOperationService {
 	boolean registrationUser(UserDTO userDTO, byte[] password, byte[] repPassword) throws ServiceException;
 
-	List<Event> showEvents() throws ServiceException;
+	List<Event> showEvents(int gameCouponId) throws ServiceException;
 	GameCupoun getOpenedGame () throws ServiceException;
 	boolean makeBet(MakeBetDTO makeBetDTO,byte[] creditCardNumber ) throws ServiceException;
 }

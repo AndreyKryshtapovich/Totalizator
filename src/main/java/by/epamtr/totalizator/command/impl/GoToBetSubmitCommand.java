@@ -37,6 +37,7 @@ public class GoToBetSubmitCommand implements Command {
 	private final static String BET_AMOUNT_ATTR = "betAmount";
 	private final static String GAME_COUPON_ID_PARAM = "&game-coupon-id=";
 	private final static String BET_AMOUNT_RESULT = "betAmountResult";
+	private final static String NULL = "null";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -72,9 +73,8 @@ public class GoToBetSubmitCommand implements Command {
 
 			for (int i = 1; i < 16; i++) {
 				String str = userResultMap.get(RESULT + new Integer(i).toString());
-				if (str == null) {
+				if (str == null || str.equals(NULL)) {
 					flag = false;
-
 					break;
 				}
 			}
@@ -83,6 +83,7 @@ public class GoToBetSubmitCommand implements Command {
 			ClientOperationService clientService = factory.getClientOperationService();
 
 			GameCupoun gameCupoun = new GameCupoun();
+			
 			try {
 				gameCupoun = clientService.getOpenedGame();
 			} catch (ServiceException e1) {
@@ -101,7 +102,7 @@ public class GoToBetSubmitCommand implements Command {
 			request.getSession(false).setAttribute(RESULT, flag);
 
 			try {
-				eventsList = clientService.showEvents();
+				eventsList = clientService.showEvents(gameCupoun.getGameCupounId());
 			} catch (ServiceException e) {
 				Logger.error(e);
 				page = PageName.ERROR_PAGE;

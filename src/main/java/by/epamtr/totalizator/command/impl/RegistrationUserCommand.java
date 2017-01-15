@@ -26,11 +26,10 @@ public class RegistrationUserCommand implements Command {
 	private final static String COUNTRY = "country";
 	private final static String CITY = "city";
 	private final static String ADDRESS = "address";
-	private final static String GO_TO_INDEX_PAGE = "http://localhost:8080/Totalizator/index.jsp";
-	private final static String GO_TO_REGISTRATION_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-registration";
+	private final static String GO_TO_INDEX_PAGE = "index.jsp";
+	private final static String GO_TO_REGISTRATION_PAGE = "Controller?command=go-to-registration";
 	private final static String RESULT = "result";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
 	
 	
 	@Override
@@ -39,7 +38,7 @@ public class RegistrationUserCommand implements Command {
 		
 		String url = null;
 		if(request.getSession(false) == null){
-			url = LOCALHOST;
+			url = GO_TO_INDEX_PAGE;
 			return url;
 		}
 		ServiceFactory factory = ServiceFactory.getInstance();

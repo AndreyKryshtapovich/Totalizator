@@ -1,0 +1,4 @@
+14:43:35.594 ERROR by.epamtr.totalizator.command.impl.ShowEventsCommand - by.epamtr.totalizator.service.exception.ServiceException: Failed showing events.
+14:43:37.844 ERROR by.epamtr.totalizator.command.impl.ShowEventsCommand - by.epamtr.totalizator.service.exception.ServiceException: Failed showing events.
+14:45:24.527 ERROR by.epamtr.totalizator.command.impl.ShowEventsCommand - by.epamtr.totalizator.service.exception.ServiceException: Failed showing events.
+14:45:24.527 ERROR by.epamtr.totalizator.command.impl.ShowEventsCommand - by.epamtr.totalizator.service.exception.ServiceException: Failed showing events.

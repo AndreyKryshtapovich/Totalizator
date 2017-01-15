@@ -20,9 +20,9 @@ public class SignInCommand implements Command {
 	private final static String LOGIN = "login";
 	private final static String PASSWORD = "password";
 	private final static String USER = "user";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
-	private final static String SHOW_EVENTS_COMMAND_URL = "http://localhost:8080/Totalizator/Controller?command=show-events";
-	private final static String GO_TO_ADMIN_PAGE = "http://localhost:8080/Totalizator/Controller?command=go-to-admin-page";
+	private final static String LOCALHOST = "index.jsp";
+	private final static String SHOW_EVENTS_COMMAND_URL = "Controller?command=show-events";
+	private final static String GO_TO_ADMIN_PAGE = "Controller?command=go-to-admin-page";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

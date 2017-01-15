@@ -32,6 +32,7 @@ public class GoToGameCouponDetailsCommand implements Command {
 	private final static String JACKPOT = "jackpot";
 	private final static String MIN_BET_AMOUNT = "minBetAmount";
 	private final static String SELECTED_STATUS = "selectedStatus";
+	private final static int CLOSED = 3;
 
 	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
 
@@ -82,6 +83,7 @@ public class GoToGameCouponDetailsCommand implements Command {
 			return page;
 		}
 		
+		status.remove(CLOSED);
 		
 		String fullStartDate = game.getStartDate().toString();
 		

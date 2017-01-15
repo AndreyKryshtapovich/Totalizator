@@ -22,7 +22,7 @@ import by.epamtr.totalizator.util.Utils;
 public class MakeBetCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(MakeBetCommand.class.getName());
 	private final static String USER = "user";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String LOCALHOST = "index.jsp";
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	private final static String SHOW_EVENTS_URL = "Controller?command=show-events";
@@ -58,8 +58,10 @@ public class MakeBetCommand implements Command {
 			ServiceFactory factory = ServiceFactory.getInstance();
 			ClientOperationService clientService = factory.getClientOperationService();
 			
+			int gameId = Integer.valueOf(gameCouponId);
+			
 			try {
-				eventsList = clientService.showEvents();
+				eventsList = clientService.showEvents(gameId);
 			} catch (ServiceException e1) {
 				Logger.error(e1);
 				url = GO_TO_ERROR_PAGE;

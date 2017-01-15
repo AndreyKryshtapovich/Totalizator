@@ -109,7 +109,7 @@
 	</c:if>
 	
 	
-	<c:if test="${sessionScope.local eq 'en' }">
+	<c:if test="${ sessionScope.local eq 'en' }">
 		<c:import url="PageContent/rules_en.jsp"></c:import>
 	</c:if>
 	

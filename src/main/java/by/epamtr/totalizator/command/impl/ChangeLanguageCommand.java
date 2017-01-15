@@ -11,7 +11,7 @@ public class ChangeLanguageCommand implements Command {
 
 	private final static String LOCAL = "local";
 	private final static String CURRENT_URL = "currentUrl";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String LOCALHOST = "index.jsp";
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -24,7 +24,7 @@ public class ChangeLanguageCommand implements Command {
 		}
 		session.setAttribute(LOCAL, request.getParameter(LOCAL));
 		if (session.getAttribute(CURRENT_URL) != null) {
-			url = LOCALHOST + session.getAttribute(CURRENT_URL);
+			url = session.getAttribute(CURRENT_URL).toString();
 		} else {
 			url = LOCALHOST;
 		}

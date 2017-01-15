@@ -69,14 +69,14 @@ public class ClientOperation implements ClientOperationService {
 	}
 
 	@Override
-	public List<Event> showEvents() throws ServiceException {
+	public List<Event> showEvents(int gameCouponId) throws ServiceException {
 
 		List<Event> eventsList = null;
 		DAOFactory factory = DAOFactory.getInstance();
 		ClientDAO clientDAO = factory.getDBClientDAO();
 
 		try {
-			eventsList = clientDAO.getCurrentEvents();
+			eventsList = clientDAO.getCurrentEvents(gameCouponId);
 		} catch (DAOException e) {
 			throw new ServiceException("Failed showing events.", e);
 		}

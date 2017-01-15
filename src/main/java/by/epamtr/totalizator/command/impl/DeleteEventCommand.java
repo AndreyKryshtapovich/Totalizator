@@ -19,7 +19,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 public class DeleteEventCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(DeleteEventCommand.class.getName());
 	private final static String EVENT = "eventId";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String LOCALHOST = "index.jsp";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	private final static String GAME_EVENTS_URL = "gameEventsUrl";
 	private final static String IN_DEVELOPING = "In developing";
@@ -82,7 +82,7 @@ public class DeleteEventCommand implements Command {
 		try {
 			boolean result = adminService.deleteEvent(selectedEventId);
 			if (result) {
-				url = LOCALHOST + gameEventsUrl;
+				url = gameEventsUrl;
 			} else {
 				url = GO_TO_ERROR_PAGE;
 			}

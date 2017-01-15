@@ -35,8 +35,11 @@ USE totalizator;
 	VALUES
 	('2016-10-10','2016-10-14',30,0,0,1),
 	('2016-12-03 14:14:00','2016-12-03 15:15:00',15,0,0,5), -- added
-	('2016-11-21 00:00:00','2016-11-25 23:59:00',100,0,0,5) -- added
+	('2016-11-21 00:00:00','2016-11-25 23:59:00',100,0,0,5), -- added
+    
+    ('2017-01-16 00:00:00','2017-01-20 23:59:00',50,0,0,5) -- added
 	;
+    
         
 	-- bet population
 	INSERT INTO `bet` (user_id,game_cupon_id,credit_card_number,bet_money_amount,transaction_date,win_event_count,win_bet_amount)
@@ -45,7 +48,6 @@ USE totalizator;
     (2,1,'4567342367893476',200,CURRENT_TIMESTAMP(),null,null),
     (1,1,'1234567890123456',300,CURRENT_TIMESTAMP(),null,null);
     
-    -- event population
     INSERT INTO `event`(event_name,game_cupon_id,team_one,team_two,result_id,start_date,end_date,status_id)
     VALUES
     ('Elche - Alcorcon football match',1,'Elche','Alcorcon',1,'2016-10-15 20:11:07','2016-10-15 21:41:07',3),
@@ -77,7 +79,23 @@ USE totalizator;
 	('Liverpool - AC Milan football match',NULL,'Liverpool','AC Milan',NULL,'2016-11-26 08:05:00','2016-11-26 12:30:00',3), -- added
 	('Juventus - Dinamo Kiev football match',NULL,'Juventus','Dinamo Kiev',NULL,'2016-11-27 07:00:00','2016-11-27 12:30:00',3), -- added
 	('Celta Vigo - Espanyol football match',3,'Celta Vigo','Espanyol',NULL,'2016-11-27 18:00:00','2016-11-27 19:30:00',3), -- added
-	('Sevilla - Valencia football match',3,'Sevilla','Valencia',1,'2016-11-27 18:00:00','2016-11-27 19:30:00',3) -- added
+	('Sevilla - Valencia football match',3,'Sevilla','Valencia',1,'2016-11-27 18:00:00','2016-11-27 19:30:00',3), -- added
+    
+	('Tunisia - Senegal football match',4,'Tunisia','Senegal',1,'2017-01-21 13:30:00','2017-01-21 15:00:00',1), -- added
+	('El Salvador - Honduras football match',4,'El Salvador','Honduras',1,'2017-01-21 15:30:00','2017-01-21 17:00:00',1), -- added
+	('Real Sociedad Honduras - Olimpia CD football match',4,'Real Sociedad Honduras','Olimpia CD',1,'2017-01-21 13:00:00','2017-01-21 14:30:00',1), -- added
+	('CDS Vida - Real Espana football match',4,'CDS Vida','Real Espana',1,'2017-01-21 20:11:07','2017-01-21 21:41:07',1), -- added
+	('Motagua - CD Honduras football match',4,'Motagua','CD Honduras',1,'2017-01-21 10:11:07','2017-01-21 12:41:07',1), -- added
+	('Sevilla - Real Madrid football match',4,'Sevilla','Real Madrid',1,'2017-01-21 10:11:07','2017-01-21 12:41:07',1), -- added
+	('Toluca - Club America football match',4,'Toluca','Club America',1,'2017-01-21 08:00:00','2017-01-21 09:30:00',1), -- added
+	('Santa Gema - SD Atletico Nacional football match',4,'Santa Gema','SD Atletico Nacional',2,'2017-01-21 09:00:00','2017-01-21 10:30:00',1), -- added
+	('Arabe Unido - San Francisco football match',4,'Arabe Unido','San Francisco',2,'2017-01-22 07:00:00','2017-01-22 08:30:00',1), -- added
+	('Belenenses - Rio Ave football match',4,'Belenenses','Rio Ave',2,'2017-01-22 07:00:00','2017-01-22 08:30:00',1), -- added
+	('Chalatenango - AD Isidro Metapan football match',4,'Chalatenango','AD Isidro Metapan',2,'2017-01-22 11:00:00','2017-01-22 12:30:00',1), -- added
+	('Dragon San Miguel - Municipal Limeno football match',4,'Dragon San Miguel','Municipal Limeno',2,'2017-01-22 08:05:00','2017-01-22 12:30:00',1), -- added
+	('Marseilles - Monaco football match',4,'Marseilles','Monaco',1,'2017-01-22 07:00:00','2017-01-22 12:30:00',1), -- added
+	('Magallanes - Union San Felipe football match',4,'Magallanes','Union San Felipe',2,'2017-01-22 18:00:00','2017-01-22 19:30:00',1), -- added
+	('Sevilla - Valencia football match',4,'Sevilla','Valencia',3,'2017-01-22 18:00:00','2017-01-22 19:30:00',1) -- added
 	;	
    
     -- user_bet_detail population

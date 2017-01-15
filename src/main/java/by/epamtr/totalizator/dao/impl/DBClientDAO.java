@@ -84,9 +84,8 @@ public class DBClientDAO implements ClientDAO {
 	}
 
 	@Override
-	public List<Event> getCurrentEvents() throws DAOException {
+	public List<Event> getCurrentEvents(int gameCouponId) throws DAOException {
 		Connection con = null;
-		Statement st = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -97,34 +96,10 @@ public class DBClientDAO implements ClientDAO {
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection failed.", e);
 		}
+		
 		try {
-			st = con.createStatement();
 			ps = con.prepareStatement(GET_EVENTS_INFO);
-			rs = st.executeQuery(GET_OPENED_GAMES_COUNT);
-			rs.next();
-			int openedGamesCount = rs.getInt(1);
-
-			if (openedGamesCount != 1) {
-				return eventsList;
-			}
-		} catch (SQLException e1) {
-			throw new DAOException("Database access error. Failed data obtaining.", e1);
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					Logger.error(e);
-				}
-			}
-		}
-
-		try {
-			rs = st.executeQuery(GET_OPENED_GAME);
-			rs.next();
-			int openedGameCupounId = rs.getInt(1);
-
-			ps.setInt(1, openedGameCupounId);
+			ps.setInt(1, gameCouponId);
 
 			rs = ps.executeQuery();
 
@@ -143,7 +118,7 @@ public class DBClientDAO implements ClientDAO {
 		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed data obtaining.", e1);
 		} finally {
-			connectionPool.closeConnection(con, ps, st, rs);
+			connectionPool.closeConnection(con, ps, rs);
 		}
 		return eventsList;
 	}

@@ -25,9 +25,9 @@ public class EventCreationCommand implements Command {
 	private final static String END_TIME_HOURS = "end-time-hours";
 	private final static String END_TIME_MINUTES = "end-time-minutes";
 	private final static String RESULT = "result";
-	private final static String GO_TO_EVENT_CREATION = "http://localhost:8080/Totalizator/Controller?command=go-to-event-creation";
+	private final static String GO_TO_EVENT_CREATION = "Controller?command=go-to-event-creation";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
-	private final static String LOCALHOST = "http://localhost:8080/Totalizator/";
+	private final static String LOCALHOST = "index.jsp";
 	
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
