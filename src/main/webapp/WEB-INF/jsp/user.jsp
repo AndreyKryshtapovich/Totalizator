@@ -21,6 +21,8 @@
 <fmt:message bundle="${loc}" key="local.minBetAmount" var="minBetAmount" />
 <fmt:message bundle="${loc}" key="local.drawing" var="drawing" />
 <fmt:message bundle="${loc}" key="local.betAmount" var="betAmount" />
+<fmt:message bundle="${loc}" key="local.eventName" var="eventName" />
+<fmt:message bundle="${loc}" key="local.gameDates" var="gameDates" />
 </head>
 <body>
 
@@ -62,8 +64,8 @@
 					</div>
 					
 					<c:if test="${not empty events.list}">
-						<print:jsptable list="${events}" colunmName1="Date"
-							colunmName2="Event" colunmName3="1" colunmName4="X"
+						<print:jsptable list="${events}" colunmName1="${gameDates }"
+							colunmName2="${eventName }" colunmName3="1" colunmName4="X"
 							colunmName5="2" />
 
 						<div class='form-row'>

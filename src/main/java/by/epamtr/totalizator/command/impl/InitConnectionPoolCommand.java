@@ -17,6 +17,7 @@ public class InitConnectionPoolCommand {
 		
 		try {
 			initService.initConnectionPoolData();
+			Logger.info("Source was initializad");
 		} catch (ServiceException e) {
 			Logger.error(e);
 			throw new CommandException();

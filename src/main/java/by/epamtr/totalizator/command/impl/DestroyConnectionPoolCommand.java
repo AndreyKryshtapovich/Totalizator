@@ -16,6 +16,7 @@ public class DestroyConnectionPoolCommand {
 		InitOperationService initService = factory.getInitOperationService();
 		try {
 			initService.destroyConnectionPoolData();
+			Logger.info("Source was destroyed.");
 		} catch (ServiceException e) {
 			Logger.error(e);
 			throw new CommandException();

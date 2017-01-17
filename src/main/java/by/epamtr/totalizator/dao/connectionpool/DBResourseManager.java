@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 public class DBResourseManager {
 
 	private final static DBResourseManager instance = new DBResourseManager();
-	private ResourceBundle bundle = ResourceBundle.getBundle("by.epamtr.totalizator.dao.connectionpool.bd");
+	private ResourceBundle bundle = ResourceBundle.getBundle("bd");
 	
 	public static DBResourseManager getInstance(){
 		return instance;
