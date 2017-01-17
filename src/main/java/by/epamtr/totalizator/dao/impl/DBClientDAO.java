@@ -44,6 +44,7 @@ public class DBClientDAO implements ClientDAO {
 
 	private final static String INSERT_INTO_USER_BET_DETAIL = "INSERT INTO `totalizator`.`user_bet_detail`"
 			+ " (`bet_id`," + " `event_id`," + " `result_id`)" + "VALUES (?,?,?);";
+	
 	private final static String GET_LAST_INSERTED_ID = "SELECT LAST_INSERT_ID();";
 
 	@Override

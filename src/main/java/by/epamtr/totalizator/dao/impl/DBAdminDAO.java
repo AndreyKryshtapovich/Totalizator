@@ -75,8 +75,10 @@ public class DBAdminDAO implements AdminDAO {
 
 	public final static String GET_STATUS_DICTIONARY_DATA = "SELECT `status`.`status_id`,"
 			+ " `status`.`status_description`" + " FROM `totalizator`.`status`;";
+	
 	private final static String UNMATCH_EVENT_AND_GAME = "UPDATE `totalizator`.`event`" + " SET"
 			+ " `game_cupon_id` = null" + " WHERE `event_id` = ?;";
+	
 	private final static String DELETE_EVENT = "DELETE FROM `totalizator`.`event`"
 			+ " WHERE `totalizator`.`event`.event_id = ?;";
 
