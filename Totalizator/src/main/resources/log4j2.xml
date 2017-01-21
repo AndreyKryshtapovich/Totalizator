@@ -6,7 +6,7 @@
 	<Appenders>
 
 		<file append="false"
-			filename="D:\Andrey\work\java\epamtr\FinalTask\FinalTask_v2\FinalTaskMaven\Totalizator\logs\Totalizator.log"
+			filename="D:\Andrey\work\java\epamtr\FinalTask\FinalTask_v2\FinalTaskMaven\Totalizator_Kryshtapovich\Totalizator\logs\Totalizator.log"
 			name="log">
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n" />
 		</file>

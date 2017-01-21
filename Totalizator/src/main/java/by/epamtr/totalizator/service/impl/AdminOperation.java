@@ -139,12 +139,22 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public boolean matchEventAndGame(int selectedGameCupounId, int selectedEventId) throws ServiceException {
+	public boolean matchEventAndGame(String gameCupounId, String eventId) throws ServiceException {
 		boolean result = true;
-		// TODO
-		// validation is not required all parameters are preselected by another
-		// commands
-
+		
+		if (!Validator.digitParameterValidation(gameCupounId)) {
+			result = false;
+			return result;
+		}
+		
+		if (!Validator.digitParameterValidation(gameCupounId)) {
+			result = false;
+			return result;
+		}
+		
+		int selectedEventId = Integer.valueOf(eventId);
+		int selectedGameCupounId = Integer.valueOf(gameCupounId);
+		
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -249,9 +259,16 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public boolean unmatchEventAndGame(int selectedEventId) throws ServiceException {
+	public boolean unmatchEventAndGame(String eventId) throws ServiceException {
 		boolean result = true;
-
+		
+		if (!Validator.digitParameterValidation(eventId)) {
+			result = false;
+			return result;
+		}
+		
+		int selectedEventId = Integer.valueOf(eventId);
+		
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -266,9 +283,14 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public boolean deleteEvent(int selectedEventId) throws ServiceException {
+	public boolean deleteEvent(String eventId) throws ServiceException {
 		boolean result = true;
-
+		if (!Validator.digitParameterValidation(eventId)) {
+			result = false;
+			return result;
+		}
+		
+		int selectedEventId = Integer.valueOf(eventId);
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -296,13 +318,18 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public int closeGameCoupon(int gameCouponId) throws ServiceException {
+	public int closeGameCoupon(String gameCouponId) throws ServiceException {
 		int spResult = 0;
+		if (!Validator.digitParameterValidation(gameCouponId)) {
+			throw new ServiceException("Invalid parameters.");
+		}
+		
+		int selectedGameCouponId = Integer.valueOf(gameCouponId);
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
 		
 		try {
-			spResult = adminDAO.closeGameCoupon(gameCouponId);
+			spResult = adminDAO.closeGameCoupon(selectedGameCouponId);
 		} catch (DAOException e) {
 			throw new ServiceException("Failed to close game coupon.", e);
 		}

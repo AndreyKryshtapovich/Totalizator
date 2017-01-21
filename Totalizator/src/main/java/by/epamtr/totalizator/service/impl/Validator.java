@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import by.epamtr.totalizator.bean.dto.EventDTO;
 import by.epamtr.totalizator.bean.dto.GameCupounDTO;
@@ -23,7 +25,8 @@ public class Validator {
 	private final static String CANSELLED = "Canselled";
 	private final static int UNKNOWN = 4;
 	private final static int EVENTS_COUNT = 15;
-	
+	private final static String IS_DIGITS = "\\d+";
+
 	public static boolean loginValidation(String login, byte[] password) {
 
 		if (login.isEmpty()) {
@@ -90,6 +93,25 @@ public class Validator {
 		if (gameCupounDTO.getMinBetAmount().isEmpty()) {
 			return false;
 		}
+
+		String correctStartDate = Utils.concatStringDate(gameCupounDTO.getStartDate(),
+				gameCupounDTO.getStartTimeHours(), gameCupounDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(gameCupounDTO.getEndDate(), gameCupounDTO.getEndTimeHours(),
+				gameCupounDTO.getEndTimeMinutes());
+
+		Timestamp gameStartDate = Timestamp.valueOf(correctStartDate);
+		Timestamp gameEndDate = Timestamp.valueOf(correctEndDate);
+
+		if (gameEndDate.before(gameStartDate)) {
+			return false;
+		}
+
+		int minBetAmount = Integer.valueOf(gameCupounDTO.getMinBetAmount());
+
+		if (minBetAmount <= 0) {
+
+			return false;
+		}
 		return true;
 	}
 
@@ -122,11 +144,24 @@ public class Validator {
 		if (eventDTO.getTeamTwo().isEmpty()) {
 			return false;
 		}
+
+		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(),
+				eventDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(),
+				eventDTO.getEndTimeMinutes());
+
+		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
+		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
+
+		if (eventEndDate.before(eventStartDate)) {
+			return false;
+		}
+
 		return true;
 	}
 
 	public static boolean updateEventValidation(EventDTO eventDTO) {
-		
+
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO = factory.getDBAdminDAO();
 		List<GameCupoun> gamesList = null;
@@ -171,13 +206,15 @@ public class Validator {
 		if (eventDTO.getStatus().isEmpty()) {
 			return false;
 		}
-		
-		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(), eventDTO.getStartTimeMinutes());
-		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(), eventDTO.getEndTimeMinutes());
-		
+
+		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(),
+				eventDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(),
+				eventDTO.getEndTimeMinutes());
+
 		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
-		
+
 		Event event = new Event();
 		event.setEventId(Integer.valueOf(eventDTO.getEventId()));
 		event.setEventName(eventDTO.getEventName());
@@ -200,7 +237,7 @@ public class Validator {
 		} catch (DAOException e) {
 			return false;
 		}
-		
+
 		GameCupoun game = gamesList.get(0);
 		String eventStatus = status.get(event.getStatus());
 
@@ -224,10 +261,11 @@ public class Validator {
 
 		cal = Calendar.getInstance();
 		Timestamp currentTimestamp = new Timestamp(cal.getTime().getTime());
-	
-		// if event has passed we are able to set statuses Closed(result can not be Unknown-4) or Canselled(result should be Unknown-4)
+
+		// if event has passed we are able to set statuses Closed(result can not
+		// be Unknown-4) or Canselled(result should be Unknown-4)
 		if (event.getEndDate().before(currentTimestamp)) {
-			if (! eventStatus.equals(CLOSED) && ! eventStatus.equals(CANSELLED)) {
+			if (!eventStatus.equals(CLOSED) && !eventStatus.equals(CANSELLED)) {
 				return false;
 			}
 			if (eventStatus.equals(CLOSED)) {
@@ -242,7 +280,8 @@ public class Validator {
 			}
 		}
 
-		//event has't passed yet w are able to set any statuses except Closed(result - Unknown-4 only)
+		// event has't passed yet w are able to set any statuses except
+		// Closed(result - Unknown-4 only)
 		if (event.getEndDate().after(currentTimestamp)) {
 			if (eventStatus.equals(CLOSED)) {
 				return false;
@@ -251,17 +290,16 @@ public class Validator {
 				return false;
 			}
 		}
-		
-		
+
 		return true;
 	}
-	
-	public static boolean updateGameCouponValidation(GameCupounDTO gameDTO){
-		
-		if(gameDTO.getGameCupounId().isEmpty()){
+
+	public static boolean updateGameCouponValidation(GameCupounDTO gameDTO) {
+
+		if (gameDTO.getGameCupounId().isEmpty()) {
 			return false;
 		}
-		
+
 		if (gameDTO.getStartDate().isEmpty()) {
 			return false;
 		}
@@ -289,26 +327,28 @@ public class Validator {
 		if (gameDTO.getJackpot().isEmpty()) {
 			return false;
 		}
-		
+
 		int jackpot = Integer.parseInt(gameDTO.getJackpot());
 		int minBetAmount = Integer.parseInt(gameDTO.getMinBetAmount());
-		
-		if(jackpot < 0 || minBetAmount < 0){
+
+		if (jackpot < 0 || minBetAmount <= 0) {
 			return false;
 		}
-		
-		String correctStartDate = Utils.concatStringDate(gameDTO.getStartDate(), gameDTO.getStartTimeHours(), gameDTO.getStartTimeMinutes());
-		String correctEndDate = Utils.concatStringDate(gameDTO.getEndDate(), gameDTO.getEndTimeHours(), gameDTO.getEndTimeMinutes());
-		
+
+		String correctStartDate = Utils.concatStringDate(gameDTO.getStartDate(), gameDTO.getStartTimeHours(),
+				gameDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(gameDTO.getEndDate(), gameDTO.getEndTimeHours(),
+				gameDTO.getEndTimeMinutes());
+
 		Timestamp gameStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp gameEndDate = Timestamp.valueOf(correctEndDate);
-	
-			if (gameEndDate.before(gameStartDate)) {
-				return false;
+
+		if (gameEndDate.before(gameStartDate)) {
+			return false;
 		}
-		
+
 		return true;
-		
+
 	}
 
 	public static boolean dropDownValidation(String parameters) {
@@ -327,6 +367,28 @@ public class Validator {
 		if (makeBetDTO.getUserResultMap().size() < EVENTS_COUNT) {
 			return false;
 		}
+		return true;
+	}
+
+	public static boolean digitParameterValidation(String parameter) {
+
+		if (parameter.isEmpty()) {
+			return false;
+		}
+
+		Pattern p = Pattern.compile(IS_DIGITS);
+		Matcher m = p.matcher(parameter);
+
+		if (!m.matches()) {
+			return false;
+		}
+
+		int selectedParameter = Integer.valueOf(parameter);
+
+		if (selectedParameter <= 0) {
+			return false;
+		}
+
 		return true;
 	}
 }

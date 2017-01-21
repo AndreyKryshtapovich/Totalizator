@@ -54,11 +54,6 @@ public class BetSubmitTableTag extends TagSupport {
 			pageContext.getOut().write("</tr>");
 			pageContext.getOut().write("</table>");
 			
-			/*pageContext.getOut().write("<div class='form-row'>");
-			pageContext.getOut().write("<label> Bet Amount:</label>");
-			pageContext.getOut().write("<input type='number' min='1' name='bet-amount'" + "value='" + betAmount.toString() +  "' readonly/>");
-			pageContext.getOut().write("</div>");*/
-			
 			return SKIP_BODY;
 		
 		} catch (IOException e) {

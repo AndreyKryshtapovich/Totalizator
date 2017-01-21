@@ -33,7 +33,7 @@ public class EventGameMatchingCommand implements Command {
 		}
 		HttpSession session = request.getSession(false);
 		String prevUrl = session.getAttribute(CURRENT_URL).toString();
-		int selectedGameCupounId = Integer.valueOf(prevUrl.substring(prevUrl.lastIndexOf("=") + 1, prevUrl.lastIndexOf("=") + 2));
+		String gameCupounId = prevUrl.substring(prevUrl.lastIndexOf("=") + 1, prevUrl.lastIndexOf("=") + 2);
 		String event = request.getParameter(EVENT).toString();
 		
 		if(event.isEmpty()){
@@ -41,13 +41,11 @@ public class EventGameMatchingCommand implements Command {
 			return url;
 		}
 		
-		int selectedEventId = Integer.valueOf(event);
-		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
 		
 		try {
-			boolean result = adminService.matchEventAndGame(selectedGameCupounId, selectedEventId);
+			boolean result = adminService.matchEventAndGame(gameCupounId, event);
 			if (result) {
 				url = prevUrl;
 			} else {

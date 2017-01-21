@@ -9,6 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 public class CharsetFilter implements Filter {
 	private final static String CHARACTER_ENCODING = "characterEncoding";
 	private String encoding;

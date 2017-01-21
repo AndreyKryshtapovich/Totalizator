@@ -49,13 +49,13 @@ public class TableTag extends TagSupport {
 				pageContext.getOut().write(event.getEventName());
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("<td>");
-				pageContext.getOut().write("<input type='checkbox' name = 'result" + new Integer(i+1).toString()+"' value='1'>");
+				pageContext.getOut().write("<input type='radio' name = 'result" + new Integer(i+1).toString()+"' value='1'>");
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("<td>");
-				pageContext.getOut().write("<input type='checkbox' name = 'result" + new Integer(i+1).toString()+"' value='X'>");
+				pageContext.getOut().write("<input type='radio' name = 'result" + new Integer(i+1).toString()+"' value='X'>");
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("<td>");
-				pageContext.getOut().write("<input type='checkbox' name = 'result" + new Integer(i+1).toString()+"' value='2'>");
+				pageContext.getOut().write("<input type='radio' name = 'result" + new Integer(i+1).toString()+"' value='2'>");
 				pageContext.getOut().write("</td>");
 				pageContext.getOut().write("</tr>");
 			}

@@ -44,7 +44,7 @@ public class DeleteEventCommand implements Command {
 			return url;
 		}
 		
-		int selectedEventId = Integer.valueOf(event);
+	//	int selectedEventId = Integer.valueOf(event);
 		
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
@@ -80,7 +80,7 @@ public class DeleteEventCommand implements Command {
 		if (gameStatus.equals(IN_DEVELOPING)) {
 		
 		try {
-			boolean result = adminService.deleteEvent(selectedEventId);
+			boolean result = adminService.deleteEvent(event);
 			if (result) {
 				url = gameEventsUrl;
 			} else {

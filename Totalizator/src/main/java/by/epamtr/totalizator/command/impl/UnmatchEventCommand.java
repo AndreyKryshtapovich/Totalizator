@@ -44,8 +44,6 @@ public class UnmatchEventCommand implements Command {
 			return url;
 		}
 
-		int selectedEventId = Integer.valueOf(event);
-
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
 
@@ -79,7 +77,7 @@ public class UnmatchEventCommand implements Command {
 		
 		if (gameStatus.equals(IN_DEVELOPING)) {
 			try {
-				boolean result = adminService.unmatchEventAndGame(selectedEventId);
+				boolean result = adminService.unmatchEventAndGame(event);
 				if (result) {
 					url = gameEventsUrl;
 				} else {

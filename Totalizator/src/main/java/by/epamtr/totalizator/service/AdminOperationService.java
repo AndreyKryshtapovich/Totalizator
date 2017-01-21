@@ -15,12 +15,12 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 public interface AdminOperationService {
 	boolean createNewGameCupoun(GameCupounDTO gameCupounDTO) throws ServiceException ;
 	boolean createNewEvent(EventDTO eventDTO) throws ServiceException ;
-	boolean matchEventAndGame(int selectedGameCupounId, int selectedEventId) throws ServiceException;
+	boolean matchEventAndGame(String gameCupounId, String eventId) throws ServiceException;
 	boolean updateEvent(EventDTO eventDTO) throws ServiceException;
 	boolean updateGame(GameCupounDTO gameDTO) throws ServiceException;
-	boolean unmatchEventAndGame(int selectedEventId) throws ServiceException;
-	boolean deleteEvent(int selectedEventId) throws ServiceException;
-	int closeGameCoupon(int gameCouponId) throws ServiceException;
+	boolean unmatchEventAndGame(String eventId) throws ServiceException;
+	boolean deleteEvent(String eventId) throws ServiceException;
+	int closeGameCoupon(String gameCouponId) throws ServiceException;
 	List<GameCupoun> getGamesInDevelopment() throws ServiceException;
 	List<GameCupoun> getAllGames() throws ServiceException;
 	GameCupoun getGameByGameCupounId(int gameCupounId) throws ServiceException; 

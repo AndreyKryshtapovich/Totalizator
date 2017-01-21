@@ -39,7 +39,7 @@ public class CloseGameCouponCommand implements Command {
 
 		if (user != null && user.getRole().equals(ADMIN)) {
 			
-			int gameCouponId = Integer.valueOf(request.getParameter(GAME_COUPON_ID));
+			String gameCouponId = request.getParameter(GAME_COUPON_ID);
 
 			ServiceFactory factory = ServiceFactory.getInstance();
 			AdminOperationService adminService = factory.getAdminOperationService();
