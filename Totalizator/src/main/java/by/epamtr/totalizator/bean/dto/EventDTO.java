@@ -3,7 +3,7 @@ package by.epamtr.totalizator.bean.dto;
 import java.io.Serializable;
 
 /**
- * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.Event} object.
+ * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.Event } object.
  * 
  * @author Andrey
  *
