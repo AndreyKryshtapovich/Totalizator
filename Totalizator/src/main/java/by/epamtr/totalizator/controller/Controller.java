@@ -14,7 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
-
+/**
+ * Controller of web-application. It receives HTTP GET and HTTP POST requests from client and process them.
+ * Processing of the request ends with {@code forward} method for GET requests and {@code sendRedirect} method 
+ * for POST ones.
+ */
 
 public final class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,8 +46,6 @@ public final class Controller extends HttpServlet {
 		} catch (CommandException e) {
 			Logger.error(e);
 		}
-
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -59,7 +61,6 @@ public final class Controller extends HttpServlet {
 		} catch (CommandException e) {
 			Logger.error(e);
 		}
- 
 	}
 
 }

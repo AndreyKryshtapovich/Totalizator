@@ -17,6 +17,13 @@ import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 import by.epamtr.totalizator.util.Utils;
 
+/**
+ * Class is designed to process request for forwarding administrator to the page where he can
+ * view all info about event and edit it.
+ * 
+ * @author Andrey
+ *
+ */
 public class GoToEventEditCommand implements Command {
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String GO_TO_EVENT_EDIT_WITH_PARAMS = "Controller?command=go-to-event-edit&eventId=";
@@ -51,7 +58,10 @@ public class GoToEventEditCommand implements Command {
 
 
 	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
-
+	/**
+	 * Method saves current URL in session. Gets all parameters from request, calls required service method.
+	 * Returns required path to the page.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 

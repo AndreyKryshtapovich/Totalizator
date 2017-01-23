@@ -7,11 +7,19 @@ import javax.servlet.http.HttpServletResponse;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.controller.PageName;
-
+/**
+ * Class is designed to process a request for forwarding user to the administrators page.
+ * 
+ * @author Andrey
+ *
+ */
 
 public class GoToAdminPageCommand implements Command {
 	private final static String GO_TO_ADMIN_PAGE = "Controller?command=go-to-admin-page";
 	private final static String CURRENT_URL = "currentUrl";
+	/**
+	 * Saves current URL in session and return required path to the page.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		

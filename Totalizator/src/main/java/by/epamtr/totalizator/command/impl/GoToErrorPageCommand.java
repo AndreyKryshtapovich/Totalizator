@@ -6,11 +6,16 @@ import javax.servlet.http.HttpServletResponse;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.controller.PageName;
-
+/**
+ * Class is designed to process a request for forwarding user to the error page.
+ *
+ */
 public class GoToErrorPageCommand implements Command {
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	private final static String CURRENT_URL = "currentUrl";
-
+	/**
+	 * Method saves current URL in session and return required path to the page.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 

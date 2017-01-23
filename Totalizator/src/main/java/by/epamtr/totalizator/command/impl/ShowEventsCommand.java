@@ -18,6 +18,12 @@ import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
+/**
+ * Class is designed to show user all events available for betting.
+ * 
+ * @author Andrey
+ *
+ */
 
 public class ShowEventsCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(ShowEventsCommand.class.getName());
@@ -26,32 +32,35 @@ public class ShowEventsCommand implements Command {
 	private final static String SHOW_EVENTS_URL = "Controller?command=show-events";
 	private final static String MIN_BET_AMOUNT = "minBetAmount";
 	private final static String DRAWING = "drawing";
+
+	/**
+	 * Method saves current URL in session. Gets all info and returns path to
+	 * the required page.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
 		String url = SHOW_EVENTS_URL;
 		String page = null;
-		if(request.getSession(false) == null){
+		if (request.getSession(false) == null) {
 			page = PageName.INDEX_PAGE;
 			return page;
 		}
 		request.getSession(false).setAttribute(CURRENT_URL, url);
-		
+
 		List<Event> eventsList = null;
 		GameCupoun game = new GameCupoun();
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();
-		
-		
+
 		try {
 			game = clientService.getOpenedGame();
 		} catch (ServiceException e) {
 			Logger.error(e);
 			page = PageName.USER_PAGE;
-			return page; 
+			return page;
 		}
-		
 
 		try {
 			eventsList = clientService.showEvents(game.getGameCupounId());
@@ -60,8 +69,7 @@ public class ShowEventsCommand implements Command {
 			page = PageName.USER_PAGE;
 			return page;
 		}
-		
-		
+
 		JSPListBean jsp = new JSPListBean(eventsList);
 		request.setAttribute(EVENTS, jsp);
 		request.setAttribute(MIN_BET_AMOUNT, game.getMinBetAmount());

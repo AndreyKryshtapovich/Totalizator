@@ -1,6 +1,9 @@
 package by.epamtr.totalizator.controller;
 
-
+/**
+ * This class contains constants representing paths to the jsp pages.
+ *
+ */
 public class PageName {
 
 	private PageName(){}

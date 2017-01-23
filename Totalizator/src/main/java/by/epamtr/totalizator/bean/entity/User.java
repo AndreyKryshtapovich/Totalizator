@@ -2,6 +2,13 @@ package by.epamtr.totalizator.bean.entity;
 
 import java.io.Serializable;
 
+/**
+ * This class is designed to represent user's entity.
+ * 
+ * @author Andrey
+ *
+ */
+
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -14,68 +21,92 @@ public class User implements Serializable {
 	private String address;
 	private String role;
 	private int userId;
-	
-	public User(){
-		
+
+	/**
+	 * Initializes a newly created user's object. It represents a user with out
+	 * any exact information about him.
+	 */
+
+	public User() {
+
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getSex() {
 		return sex;
 	}
+
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
 	public String geteMail() {
 		return eMail;
 	}
+
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
+
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	public int getUserId() {
 		return userId;
 	}
+
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -91,6 +122,7 @@ public class User implements Serializable {
 		result = prime * result + userId;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -144,13 +176,12 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "User [firstName=" + firstName + ", lastName=" + lastName + ", sex=" + sex + ", eMail=" + eMail
 				+ ", country=" + country + ", city=" + city + ", address=" + address + ", role=" + role + ", userId="
 				+ userId + "]";
 	}
-
-	
 
 }

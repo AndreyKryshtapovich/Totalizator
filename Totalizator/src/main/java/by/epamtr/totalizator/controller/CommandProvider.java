@@ -31,7 +31,10 @@ import by.epamtr.totalizator.command.impl.SignInCommand;
 import by.epamtr.totalizator.command.impl.SignOutCommand;
 import by.epamtr.totalizator.command.impl.UnknownCommand;
 import by.epamtr.totalizator.command.impl.UnmatchEventCommand;
-
+/**
+ * This class is designed to get a particular implementation of {@code Command} by it's name.
+ *
+ */
 public class CommandProvider {
 	private Map<CommandName, Command> commands = new HashMap<CommandName, Command>();
 	
@@ -64,7 +67,13 @@ public class CommandProvider {
 		commands.put(CommandName.GO_TO_GAME_COUPON_DETAILS, new GoToGameCouponDetailsCommand());
 		commands.put(CommandName.EDIT_GAME_COUPON, new EditGameCouponCommand());
 	}
-
+	
+/**
+ * Returns a particular {@link Command} implementation by it's name.
+ * 
+ * @param commandName a {@code String} representing command's name.
+ * @return Particular implementation of {@link Command} interface.
+ */
 	public Command getCommand(String commandName) {
 
 		Command command = null;

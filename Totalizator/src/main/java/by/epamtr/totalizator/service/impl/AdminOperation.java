@@ -141,20 +141,20 @@ public class AdminOperation implements AdminOperationService {
 	@Override
 	public boolean matchEventAndGame(String gameCupounId, String eventId) throws ServiceException {
 		boolean result = true;
-		
+
 		if (!Validator.digitParameterValidation(gameCupounId)) {
 			result = false;
 			return result;
 		}
-		
+
 		if (!Validator.digitParameterValidation(gameCupounId)) {
 			result = false;
 			return result;
 		}
-		
+
 		int selectedEventId = Integer.valueOf(eventId);
 		int selectedGameCupounId = Integer.valueOf(gameCupounId);
-		
+
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -203,13 +203,15 @@ public class AdminOperation implements AdminOperationService {
 
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
-		
-		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(), eventDTO.getStartTimeMinutes());
-		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(), eventDTO.getEndTimeMinutes());
-		
+
+		String correctStartDate = Utils.concatStringDate(eventDTO.getStartDate(), eventDTO.getStartTimeHours(),
+				eventDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(eventDTO.getEndDate(), eventDTO.getEndTimeHours(),
+				eventDTO.getEndTimeMinutes());
+
 		Timestamp eventStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp eventEndDate = Timestamp.valueOf(correctEndDate);
-		
+
 		Event event = new Event();
 		event.setEventId(Integer.valueOf(eventDTO.getEventId()));
 		event.setEventName(eventDTO.getEventName());
@@ -261,14 +263,14 @@ public class AdminOperation implements AdminOperationService {
 	@Override
 	public boolean unmatchEventAndGame(String eventId) throws ServiceException {
 		boolean result = true;
-		
+
 		if (!Validator.digitParameterValidation(eventId)) {
 			result = false;
 			return result;
 		}
-		
+
 		int selectedEventId = Integer.valueOf(eventId);
-		
+
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -289,7 +291,7 @@ public class AdminOperation implements AdminOperationService {
 			result = false;
 			return result;
 		}
-		
+
 		int selectedEventId = Integer.valueOf(eventId);
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
@@ -323,17 +325,17 @@ public class AdminOperation implements AdminOperationService {
 		if (!Validator.digitParameterValidation(gameCouponId)) {
 			throw new ServiceException("Invalid parameters.");
 		}
-		
+
 		int selectedGameCouponId = Integer.valueOf(gameCouponId);
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
-		
+
 		try {
 			spResult = adminDAO.closeGameCoupon(selectedGameCouponId);
 		} catch (DAOException e) {
 			throw new ServiceException("Failed to close game coupon.", e);
 		}
-		
+
 		return spResult;
 	}
 
@@ -347,13 +349,15 @@ public class AdminOperation implements AdminOperationService {
 
 		DAOFactory factory = DAOFactory.getInstance();
 		DBAdminDAO adminDAO = factory.getDBAdminDAO();
-		
-		String correctStartDate = Utils.concatStringDate(gameDTO.getStartDate(), gameDTO.getStartTimeHours(), gameDTO.getStartTimeMinutes());
-		String correctEndDate = Utils.concatStringDate(gameDTO.getEndDate(), gameDTO.getEndTimeHours(), gameDTO.getEndTimeMinutes());
-		
+
+		String correctStartDate = Utils.concatStringDate(gameDTO.getStartDate(), gameDTO.getStartTimeHours(),
+				gameDTO.getStartTimeMinutes());
+		String correctEndDate = Utils.concatStringDate(gameDTO.getEndDate(), gameDTO.getEndTimeHours(),
+				gameDTO.getEndTimeMinutes());
+
 		Timestamp gameStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp gameEndDate = Timestamp.valueOf(correctEndDate);
-		
+
 		GameCupoun game = new GameCupoun();
 		game.setGameCupounId(Integer.valueOf(gameDTO.getGameCupounId()));
 		game.setStartDate(gameStartDate);

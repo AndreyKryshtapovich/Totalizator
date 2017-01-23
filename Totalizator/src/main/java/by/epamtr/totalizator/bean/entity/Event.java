@@ -3,8 +3,15 @@ package by.epamtr.totalizator.bean.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * This class is designed to represent the event's entity. Event is a football
+ * match available for betting.
+ * 
+ * @author Andrey
+ *
+ */
 public class Event implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private int eventId;
 	private String eventName;
@@ -17,77 +24,103 @@ public class Event implements Serializable {
 	private String teamTwo;
 	private Timestamp startDate;
 	private Timestamp endDate;
-	
-	public Event(){
-		
+
+	/**
+	 * Initializes a newly created Event object so that it represents an event
+	 * with out any exact information about it.
+	 */
+	public Event() {
+
 	}
-	
+
 	public int getEventId() {
 		return eventId;
 	}
+
 	public void setEventId(int eventId) {
 		this.eventId = eventId;
 	}
+
 	public String getEventName() {
 		return eventName;
 	}
+
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
+
 	public int getGameCuponId() {
 		return gameCuponId;
 	}
+
 	public void setGameCuponId(int gameCuponId) {
 		this.gameCuponId = gameCuponId;
 	}
+
 	public int getResultId() {
 		return resultId;
 	}
+
 	public void setResultId(int resultId) {
 		this.resultId = resultId;
 	}
+
 	public int getStatus() {
 		return status;
 	}
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 	public String getResultAbbreviation() {
 		return resultAbbreviation;
 	}
+
 	public void setResultAbbreviation(String resultAbbreviation) {
 		this.resultAbbreviation = resultAbbreviation;
 	}
+
 	public String getStatusDescription() {
 		return statusDescription;
 	}
+
 	public void setStatusDescription(String statusDescription) {
 		this.statusDescription = statusDescription;
 	}
+
 	public String getTeamOne() {
 		return teamOne;
 	}
+
 	public void setTeamOne(String teamOne) {
 		this.teamOne = teamOne;
 	}
+
 	public String getTeamTwo() {
 		return teamTwo;
 	}
+
 	public void setTeamTwo(String teamTwo) {
 		this.teamTwo = teamTwo;
 	}
+
 	public Timestamp getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
+
 	public Timestamp getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -105,6 +138,7 @@ public class Event implements Serializable {
 		result = prime * result + ((teamTwo == null) ? 0 : teamTwo.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -159,6 +193,7 @@ public class Event implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Event [eventId=" + eventId + ", eventName=" + eventName + ", gameCuponId=" + gameCuponId + ", resultId="
@@ -166,15 +201,5 @@ public class Event implements Serializable {
 				+ ", statusDescription=" + statusDescription + ", teamOne=" + teamOne + ", teamTwo=" + teamTwo
 				+ ", startDate=" + startDate + ", endDate=" + endDate + "]";
 	}
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
 
 }

@@ -7,8 +7,14 @@ import java.util.Map;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.User;
 
+/**
+ * A Data Transfer Object that represents the bet of a particular user.
+ * 
+ * @author Andrey
+ *
+ */
 public class MakeBetDTO implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private List<Event> eventsList;
 	private Map<String, String> userResultMap;
@@ -16,50 +22,63 @@ public class MakeBetDTO implements Serializable {
 	private String gameCouponId;
 	private User user;
 	private int minBetAmount;
-	
-	public MakeBetDTO(){
-		
+
+	public MakeBetDTO() {
+
 	}
-	
+
 	public List<Event> getEventsList() {
 		return eventsList;
 	}
+
 	public void setEventsList(List<Event> eventsList) {
 		this.eventsList = eventsList;
 	}
+
 	public Map<String, String> getUserResultMap() {
 		return userResultMap;
 	}
+
 	public void setUserResultMap(Map<String, String> userResultMap) {
 		this.userResultMap = userResultMap;
 	}
+
 	public String getBetAmount() {
 		return betAmount;
 	}
+
 	public void setBetAmount(String betAmount) {
 		this.betAmount = betAmount;
 	}
+
 	public String getGameCouponId() {
 		return gameCouponId;
 	}
+
 	public void setGameCouponId(String gameCouponId) {
 		this.gameCouponId = gameCouponId;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public int getMinBetAmount() {
 		return minBetAmount;
 	}
+
 	public void setMinBetAmount(int minBetAmount) {
 		this.minBetAmount = minBetAmount;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,6 +91,7 @@ public class MakeBetDTO implements Serializable {
 		result = prime * result + ((userResultMap == null) ? 0 : userResultMap.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -110,15 +130,11 @@ public class MakeBetDTO implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "MakeBetDTO [eventsList=" + eventsList + ", userResultMap=" + userResultMap + ", betAmount=" + betAmount
 				+ ", gameCouponId=" + gameCouponId + ", user=" + user + ", minBetAmount=" + minBetAmount + "]";
 	}
-
-	
-	
-	
-	
 
 }

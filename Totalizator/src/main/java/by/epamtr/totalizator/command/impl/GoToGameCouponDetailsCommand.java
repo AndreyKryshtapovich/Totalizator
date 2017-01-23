@@ -17,6 +17,13 @@ import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 import by.epamtr.totalizator.util.Utils;
 
+/**
+ * Class is designed to process a request for forwarding administrator to the
+ * page where he can view the game coupons's info in details and edit it.
+ * 
+ * @author Andrey
+ *
+ */
 public class GoToGameCouponDetailsCommand implements Command {
 	private final static String GO_TO_GAME_COUPON_DETAILS_WITH_PARAMS = "Controller?command=go-to-game-coupon-details&gameCouponId=";
 	private final static String GAME_COUPON_ID = "gameCouponId";
@@ -35,7 +42,10 @@ public class GoToGameCouponDetailsCommand implements Command {
 	private final static int CLOSED = 3;
 
 	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
-
+	/**
+	 * Method saves current URL in session. Gets all parameters.
+	 * Returns required path to the page.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String page = null;
@@ -44,7 +54,7 @@ public class GoToGameCouponDetailsCommand implements Command {
 			page = PageName.INDEX_PAGE;
 			return page;
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append(GO_TO_GAME_COUPON_DETAILS_WITH_PARAMS);
 		sb.append(request.getParameter(GAME_COUPON_ID));
@@ -52,7 +62,7 @@ public class GoToGameCouponDetailsCommand implements Command {
 		String url = sb.toString();
 
 		request.getSession(false).setAttribute(CURRENT_URL, url);
-		
+
 		String gameCouponId = request.getParameter(GAME_COUPON_ID).toString();
 
 		if (gameCouponId.isEmpty()) {
@@ -82,42 +92,42 @@ public class GoToGameCouponDetailsCommand implements Command {
 			page = PageName.ERROR_PAGE;
 			return page;
 		}
-		
+
 		status.remove(CLOSED);
-		
+
 		String fullStartDate = game.getStartDate().toString();
-		
+
 		String startDate = Utils.parseDateFromFullDate(fullStartDate);
 		String startTimeHours = Utils.parseHoursFromFullDate(fullStartDate);
 		String startTimeMinutes = Utils.parseMinutesFromFullDate(fullStartDate);
-		
+
 		String fullEndDate = game.getEndDate().toString();
-		
+
 		String endDate = Utils.parseDateFromFullDate(fullEndDate);
 		String endTimeHours = Utils.parseHoursFromFullDate(fullEndDate);
 		String endTimeMinutes = Utils.parseMinutesFromFullDate(fullEndDate);
 		String gameStatus = status.get(game.getStatus());
-		
+
 		String minBetAmount = String.valueOf(game.getMinBetAmount());
 		String jackpot = String.valueOf(game.getJackpot());
-		
+
 		request.setAttribute(STATUS_MAP, status);
 		request.setAttribute(JACKPOT, jackpot);
 		request.setAttribute(MIN_BET_AMOUNT, minBetAmount);
 		request.setAttribute(GAME_COUPON_ID, selectedGameCouponId);
 		request.setAttribute(GAME_STATUS, gameStatus);
 		request.setAttribute(SELECTED_STATUS, game.getStatus());
-		
+
 		request.setAttribute(START_DATE, startDate);
 		request.setAttribute(START_TIME_HOURS, startTimeHours);
 		request.setAttribute(START_TIME_MINUTES, startTimeMinutes);
-		
+
 		request.setAttribute(END_DATE, endDate);
 		request.setAttribute(END_TIME_HOURS, endTimeHours);
 		request.setAttribute(END_TIME_MINUTES, endTimeMinutes);
-		
+
 		page = PageName.GAME_COUPON_DETAILS;
-		
+
 		return page;
 	}
 

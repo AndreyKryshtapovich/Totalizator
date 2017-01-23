@@ -1,9 +1,18 @@
 package by.epamtr.totalizator.bean.entity;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * This class is designed to represent the game coupon's entity. Game coupon
+ * represents the drawing of the totalizator that lasts for a week. Users are
+ * allowed to make bets on particular game coupons.
+ * 
+ * @author Andrey
+ *
+ */
 public class GameCupoun implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private int gameCupounId;
 	private Timestamp startDate;
@@ -12,56 +21,76 @@ public class GameCupoun implements Serializable {
 	private int gameCuponPull;
 	private int jackpot;
 	private int status = 5;
-	
-	public GameCupoun(){
-		
+
+	/**
+	 * Initializes a newly created game coupon's object. It represents a game
+	 * coupon with out any exact information about it.
+	 */
+
+	public GameCupoun() {
+
 	}
-	
+
 	public int getGameCupounId() {
 		return gameCupounId;
 	}
+
 	public void setGameCupounId(int gameCupounId) {
 		this.gameCupounId = gameCupounId;
 	}
+
 	public Timestamp getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
+
 	public Timestamp getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
+
 	public int getMinBetAmount() {
 		return minBetAmount;
 	}
+
 	public void setMinBetAmount(int minBetAmount) {
 		this.minBetAmount = minBetAmount;
 	}
+
 	public int getGameCuponPull() {
 		return gameCuponPull;
 	}
+
 	public void setGameCuponPull(int gameCuponPull) {
 		this.gameCuponPull = gameCuponPull;
 	}
+
 	public int getJackpot() {
 		return jackpot;
 	}
+
 	public void setJackpot(int jackpot) {
 		this.jackpot = jackpot;
 	}
+
 	public int getStatus() {
 		return status;
 	}
+
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,6 +104,7 @@ public class GameCupoun implements Serializable {
 		result = prime * result + status;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -106,15 +136,12 @@ public class GameCupoun implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "GameCupoun [gameCupounId=" + gameCupounId + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", minBetAmount=" + minBetAmount + ", gameCuponPull=" + gameCuponPull + ", jackpot=" + jackpot
 				+ ", status=" + status + "]";
 	}
-	
-	
-
-	
 
 }

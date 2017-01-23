@@ -6,45 +6,62 @@ import java.util.List;
 
 import by.epamtr.totalizator.bean.entity.Event;
 
+/**
+ * A Data Transfer Object that represents {@link List} of {@link by.epamtr.totalizator.bean.entity.Event} objects.
+ * Also represents start and end date of the {@link by.epamtr.totalizator.bean.entity.GameCupoun} to which events
+ * are matched.
+ * 
+ * @author Andrey
+ *
+ */
 public class EventsListDTO implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private int gameCupounId;
 	private List<Event> eventList;
 	private Timestamp gameStartDate;
 	private Timestamp gameEndDate;
-	
-	public EventsListDTO(){
-		
+
+	public EventsListDTO() {
+
 	}
-	
+
 	public int getGameCupounId() {
 		return gameCupounId;
 	}
+
 	public void setGameCupounId(int gameCupounId) {
 		this.gameCupounId = gameCupounId;
 	}
+
 	public List<Event> getEventList() {
 		return eventList;
 	}
+
 	public void setEventList(List<Event> eventList) {
 		this.eventList = eventList;
 	}
+
 	public Timestamp getGameStartDate() {
 		return gameStartDate;
 	}
+
 	public void setGameStartDate(Timestamp gameStartDate) {
 		this.gameStartDate = gameStartDate;
 	}
+
 	public Timestamp getGameEndDate() {
 		return gameEndDate;
 	}
+
 	public void setGameEndDate(Timestamp gameEndDate) {
 		this.gameEndDate = gameEndDate;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -55,6 +72,7 @@ public class EventsListDTO implements Serializable {
 		result = prime * result + ((gameStartDate == null) ? 0 : gameStartDate.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,13 +101,11 @@ public class EventsListDTO implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "UnmatchedEventsDTO [gameCupounId=" + gameCupounId + ", eventList=" + eventList + ", gameStartDate="
 				+ gameStartDate + ", gameEndDate=" + gameEndDate + "]";
 	}
-	
-	
-	
 
 }

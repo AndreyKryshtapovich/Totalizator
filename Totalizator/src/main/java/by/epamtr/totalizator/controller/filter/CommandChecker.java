@@ -2,7 +2,13 @@ package by.epamtr.totalizator.controller.filter;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * This class contains {@link Map} of Strings. The key is the command's url-pattern and 
+ * the value is the name of the method by which the particular command should be send.
+ * 
+ * @author Andrey
+ *
+ */
 public class CommandChecker {
 	private Map<String, String> correctCommandsMethods = new HashMap<String, String>();
 
@@ -34,7 +40,12 @@ public class CommandChecker {
 		correctCommandsMethods.put("go-to-game-coupon-details", "get");
 		correctCommandsMethods.put("edit-game-coupon", "post");
 	}
-	
+	/**
+	 * Gets the method's name.
+	 * 
+	 * @param key commands url-pattern.
+	 * @return method's name.
+	 */
 	public String getMethod(String key){
 		String method = null;
 		method = correctCommandsMethods.get(key);

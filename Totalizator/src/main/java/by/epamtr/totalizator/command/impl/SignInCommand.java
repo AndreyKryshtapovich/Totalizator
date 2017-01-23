@@ -13,8 +13,12 @@ import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.GeneralOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
-
-
+/**
+ * Class is designed to authenticate a user and create a session for him.
+ * 
+ * @author Andrey
+ *
+ */
 public class SignInCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(SignInCommand.class.getName());
 	private final static String LOGIN = "login";
@@ -24,6 +28,11 @@ public class SignInCommand implements Command {
 	private final static String SHOW_EVENTS_COMMAND_URL = "Controller?command=show-events";
 	private final static String GO_TO_ADMIN_PAGE = "Controller?command=go-to-admin-page";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
+	/**
+	 * Method calls required service method and returns a path to the user page for person with role "user" or
+	 * to the administrator page for person with pole "admin". In case of incorrect credentials returns path to the index 
+	 * page. 
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;

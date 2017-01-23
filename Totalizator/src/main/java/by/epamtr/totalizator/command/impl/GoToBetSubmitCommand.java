@@ -21,7 +21,11 @@ import by.epamtr.totalizator.controller.PageName;
 import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
-
+/**
+ * Class is designed to process a request for forwarding user to the page where he can submit his bet
+ * and enter a credit card number. Command is available for users only.
+ *
+ */
 public class GoToBetSubmitCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(GoToBetSubmitCommand.class.getName());
 	private final static String USER = "user";
@@ -38,7 +42,10 @@ public class GoToBetSubmitCommand implements Command {
 	private final static String GAME_COUPON_ID_PARAM = "&game-coupon-id=";
 	private final static String BET_AMOUNT_RESULT = "betAmountResult";
 	private final static String NULL = "null";
-
+	/**
+	 * Method checks user's role and bet details(number of provided results in the bet). Gets all parameters
+	 * and calls required service method. Saves current URL in session.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		StringBuilder sb = new StringBuilder();

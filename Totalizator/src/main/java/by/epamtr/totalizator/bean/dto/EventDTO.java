@@ -2,6 +2,12 @@ package by.epamtr.totalizator.bean.dto;
 
 import java.io.Serializable;
 
+/**
+ * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.Event} object.
+ * 
+ * @author Andrey
+ *
+ */
 public class EventDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,104 +26,135 @@ public class EventDTO implements Serializable {
 	private String endDate;
 	private String endTimeHours;
 	private String endTimeMinutes;
-	
-	public EventDTO(){
-		
+
+	public EventDTO() {
+
 	}
-	
+
 	public String getEventId() {
 		return eventId;
 	}
+
 	public void setEventId(String eventId) {
 		this.eventId = eventId;
 	}
+
 	public String getEventName() {
 		return eventName;
 	}
+
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
+
 	public String getGameCuponId() {
 		return gameCuponId;
 	}
+
 	public void setGameCuponId(String gameCuponId) {
 		this.gameCuponId = gameCuponId;
 	}
+
 	public String getResultId() {
 		return resultId;
 	}
+
 	public void setResultId(String resultId) {
 		this.resultId = resultId;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public String getResultAbbreviation() {
 		return resultAbbreviation;
 	}
+
 	public void setResultAbbreviation(String resultAbbreviation) {
 		this.resultAbbreviation = resultAbbreviation;
 	}
+
 	public String getStatusDescription() {
 		return statusDescription;
 	}
+
 	public void setStatusDescription(String statusDescription) {
 		this.statusDescription = statusDescription;
 	}
+
 	public String getTeamOne() {
 		return teamOne;
 	}
+
 	public void setTeamOne(String teamOne) {
 		this.teamOne = teamOne;
 	}
+
 	public String getTeamTwo() {
 		return teamTwo;
 	}
+
 	public void setTeamTwo(String teamTwo) {
 		this.teamTwo = teamTwo;
 	}
+
 	public String getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
 	public String getStartTimeHours() {
 		return startTimeHours;
 	}
+
 	public void setStartTimeHours(String startTimeHours) {
 		this.startTimeHours = startTimeHours;
 	}
+
 	public String getStartTimeMinutes() {
 		return startTimeMinutes;
 	}
+
 	public void setStartTimeMinutes(String startTimeMinutes) {
 		this.startTimeMinutes = startTimeMinutes;
 	}
+
 	public String getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
 	public String getEndTimeHours() {
 		return endTimeHours;
 	}
+
 	public void setEndTimeHours(String endTimeHours) {
 		this.endTimeHours = endTimeHours;
 	}
+
 	public String getEndTimeMinutes() {
 		return endTimeMinutes;
 	}
+
 	public void setEndTimeMinutes(String endTimeMinutes) {
 		this.endTimeMinutes = endTimeMinutes;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -139,6 +176,7 @@ public class EventDTO implements Serializable {
 		result = prime * result + ((teamTwo == null) ? 0 : teamTwo.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -225,6 +263,7 @@ public class EventDTO implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "EventDTO [eventId=" + eventId + ", eventName=" + eventName + ", gameCuponId=" + gameCuponId

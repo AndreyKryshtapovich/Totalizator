@@ -18,7 +18,13 @@ import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 import by.epamtr.totalizator.util.Utils;
-
+/**
+ * Class is designed to process a request for making a bet.
+ * Available for user only.
+ * 
+ * @author Andrey
+ *
+ */
 public class MakeBetCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(MakeBetCommand.class.getName());
 	private final static String USER = "user";
@@ -28,7 +34,9 @@ public class MakeBetCommand implements Command {
 	private final static String SHOW_EVENTS_URL = "Controller?command=show-events";
 	private final static String RESULT = "result";
 	private final static String CREDIT_CARD = "credit-card";
-	
+	/**
+	 * Method checks user's role. Gets all parameters, creates DTO object and calls required service method.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;

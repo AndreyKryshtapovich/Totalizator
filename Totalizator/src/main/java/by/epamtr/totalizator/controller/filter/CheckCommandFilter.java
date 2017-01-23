@@ -15,6 +15,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import by.epamtr.totalizator.controller.PageName;
 
+/**
+ * This filter is designed to check which method was used to sent a particular command. If user 
+ * tries to send a POST-based command using GET method he is forwarded to the error page.
+ * 
+ * @author Andrey
+ *
+ */
 public class CheckCommandFilter implements Filter {
 
 	private static final String COMMAND_NAME = "command";
@@ -24,7 +31,9 @@ public class CheckCommandFilter implements Filter {
 	public void destroy() {
 
 	}
-
+	/**
+	 * Checks the method which where used to sent a command.
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;

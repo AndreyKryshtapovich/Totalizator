@@ -16,6 +16,8 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 public class ClientOperation implements ClientOperationService {
 
+	private final static String USER = "user";
+	
 	@Override
 	public boolean registrationUser(UserDTO userDTO, byte[] password, byte[] repPassword)throws ServiceException {
 
@@ -65,7 +67,7 @@ public class ClientOperation implements ClientOperationService {
 		} else {
 			user.setAddress(userDTO.getAddress());
 		}
-		user.setRole("user");
+		user.setRole(USER);
 	}
 
 	@Override

@@ -2,6 +2,13 @@ package by.epamtr.totalizator.bean.dto;
 
 import java.io.Serializable;
 
+/**
+ * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
+ * 
+ * @author Andrey
+ *
+ */
+
 public class GameCupounDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,80 +23,103 @@ public class GameCupounDTO implements Serializable {
 	private String gameCuponPull;
 	private String jackpot;
 	private String status;
-	
-	public GameCupounDTO(){
-		
+
+	public GameCupounDTO() {
+
 	}
-	
+
 	public String getGameCupounId() {
 		return gameCupounId;
 	}
+
 	public void setGameCupounId(String gameCupounId) {
 		this.gameCupounId = gameCupounId;
 	}
+
 	public String getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
 	public String getStartTimeHours() {
 		return startTimeHours;
 	}
+
 	public void setStartTimeHours(String startTimeHours) {
 		this.startTimeHours = startTimeHours;
 	}
+
 	public String getStartTimeMinutes() {
 		return startTimeMinutes;
 	}
+
 	public void setStartTimeMinutes(String startTimeMinutes) {
 		this.startTimeMinutes = startTimeMinutes;
 	}
+
 	public String getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
 	public String getEndTimeHours() {
 		return endTimeHours;
 	}
+
 	public void setEndTimeHours(String endTimeHours) {
 		this.endTimeHours = endTimeHours;
 	}
+
 	public String getEndTimeMinutes() {
 		return endTimeMinutes;
 	}
+
 	public void setEndTimeMinutes(String endTimeMinutes) {
 		this.endTimeMinutes = endTimeMinutes;
 	}
+
 	public String getMinBetAmount() {
 		return minBetAmount;
 	}
+
 	public void setMinBetAmount(String minBetAmount) {
 		this.minBetAmount = minBetAmount;
 	}
+
 	public String getGameCuponPull() {
 		return gameCuponPull;
 	}
+
 	public void setGameCuponPull(String gameCuponPull) {
 		this.gameCuponPull = gameCuponPull;
 	}
+
 	public String getJackpot() {
 		return jackpot;
 	}
+
 	public void setJackpot(String jackpot) {
 		this.jackpot = jackpot;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,6 +137,7 @@ public class GameCupounDTO implements Serializable {
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -173,6 +204,7 @@ public class GameCupounDTO implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "GameCupounDTO [gameCupounId=" + gameCupounId + ", startDate=" + startDate + ", startTimeHours="
@@ -180,6 +212,5 @@ public class GameCupounDTO implements Serializable {
 				+ endTimeHours + ", endTimeMinutes=" + endTimeMinutes + ", minBetAmount=" + minBetAmount
 				+ ", gameCuponPull=" + gameCuponPull + ", jackpot=" + jackpot + ", status=" + status + "]";
 	}
-	
-	
+
 }

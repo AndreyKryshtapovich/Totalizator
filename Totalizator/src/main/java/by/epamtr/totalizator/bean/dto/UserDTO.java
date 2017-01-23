@@ -2,6 +2,13 @@ package by.epamtr.totalizator.bean.dto;
 
 import java.io.Serializable;
 
+/**
+ * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.User} object.
+ * 
+ * @author Andrey
+ *
+ */
+
 public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -14,68 +21,87 @@ public class UserDTO implements Serializable {
 	private String address;
 	private String role;
 	private String registerLogin;
-	
-	public UserDTO(){
-		
+
+	public UserDTO() {
+
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getSex() {
 		return sex;
 	}
+
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+
 	public String geteMail() {
 		return eMail;
 	}
+
 	public void seteMail(String eMail) {
 		this.eMail = eMail;
 	}
+
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	public String getRegisterLogin() {
 		return registerLogin;
 	}
+
 	public void setRegisterLogin(String registerLogin) {
 		this.registerLogin = registerLogin;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -91,6 +117,7 @@ public class UserDTO implements Serializable {
 		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -147,14 +174,12 @@ public class UserDTO implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "UserDTO [firstName=" + firstName + ", lastName=" + lastName + ", sex=" + sex + ", eMail=" + eMail
 				+ ", country=" + country + ", city=" + city + ", address=" + address + ", role=" + role
 				+ ", registerLogin=" + registerLogin + "]";
 	}
-	
-	
-	
-	
+
 }

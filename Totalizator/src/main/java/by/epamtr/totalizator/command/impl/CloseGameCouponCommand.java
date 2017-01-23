@@ -10,6 +10,10 @@ import by.epamtr.totalizator.service.AdminOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
+/**
+ * This class is designed to process close game coupon request. 
+ * This command is available for administrator only.
+ */
 public class CloseGameCouponCommand implements Command {
 	private final static String LOCALHOST = "index.jsp";
 	private final static String GAME_COUPON_ID = "gameCouponId";
@@ -24,7 +28,10 @@ public class CloseGameCouponCommand implements Command {
 	private final static int LESS_THEN_15_APPR_EVENTS = -1;
 	private final static int CANSELLED = -2;
 	private final static int ROLLBACK = -3;
-
+	
+	/**
+	 * Method checks user's role, calls required service method and provides user with a message.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;

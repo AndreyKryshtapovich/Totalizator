@@ -12,7 +12,13 @@ import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
-
+/**
+ * Class is designed to process a request for registration new user with role "user".
+ * Available for every person.
+ * 
+ * @author Andrey
+ *
+ */
 
 public class RegistrationUserCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(RegistrationUserCommand.class.getName());
@@ -31,7 +37,9 @@ public class RegistrationUserCommand implements Command {
 	private final static String RESULT = "result";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	
-	
+	/**
+	 * Method gets all parameters, creates DTO and calls required service method.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 

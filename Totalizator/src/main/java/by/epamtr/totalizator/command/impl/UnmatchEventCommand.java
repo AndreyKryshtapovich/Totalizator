@@ -10,12 +10,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.AdminOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
+/**
+ * This class is designed to process a request for unmatching event and game
+ * coupon. Event will no longer being associated with particular game coupon.
+ * Available for administrator only.
+ * 
+ * @author Andrey
+ *
+ */
 public class UnmatchEventCommand implements Command {
 	private final static Logger Logger = LogManager.getLogger(UnmatchEventCommand.class.getName());
 	private final static String EVENT = "eventId";
@@ -26,70 +35,83 @@ public class UnmatchEventCommand implements Command {
 	private final static String IN_DEVELOPING = "In developing";
 	private final static String RESULT = "result";
 	private final static String CURRENT_URL = "currentUrl";
+	private final static String USER = "user";
+	private final static String ADMIN = "admin";
 
+	/**
+	 * Method checks user's role. Gets all parameters and calls required service
+	 * method. Events could be unmatched only if the game coupon status is In
+	 * developing. Otherwise an error message is shown.
+	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
 		Map<Integer, String> status = null;
 		String event = request.getParameter(EVENT).toString();
 		GameCupoun game = null;
-		
+
 		if (request.getSession(false) == null) {
 			url = LOCALHOST;
 			return url;
 		}
-		
-		if (event.isEmpty()) {
-			url = GO_TO_ERROR_PAGE;
-			return url;
-		}
+		User user = (User) request.getSession(false).getAttribute(USER);
 
-		ServiceFactory factory = ServiceFactory.getInstance();
-		AdminOperationService adminService = factory.getAdminOperationService();
+		if (user != null && user.getRole().equals(ADMIN)) {
 
-		String gameEventsUrl = null;
-		Cookie[] cookies = request.getCookies();
+			if (event.isEmpty()) {
+				url = GO_TO_ERROR_PAGE;
+				return url;
+			}
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(GAME_EVENTS_URL)) {
-					gameEventsUrl = cookie.getValue();
+			ServiceFactory factory = ServiceFactory.getInstance();
+			AdminOperationService adminService = factory.getAdminOperationService();
+
+			String gameEventsUrl = null;
+			Cookie[] cookies = request.getCookies();
+
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals(GAME_EVENTS_URL)) {
+						gameEventsUrl = cookie.getValue();
+					}
 				}
 			}
-		}
 
-		try {
-			status = adminService.getStatusDictionaryData();
-		} catch (ServiceException e) {
-			url = GO_TO_ERROR_PAGE;
-			return url;
-		}
-
-		try {
-			int gameCupounId = Integer.valueOf(request.getParameter(GAME_ID));
-			game = adminService.getGameByGameCupounId(gameCupounId);
-		} catch (ServiceException e) {
-			url = GO_TO_ERROR_PAGE;
-			return url;
-		}		
-		
-		String gameStatus = status.get(game.getStatus());
-		
-		if (gameStatus.equals(IN_DEVELOPING)) {
 			try {
-				boolean result = adminService.unmatchEventAndGame(event);
-				if (result) {
-					url = gameEventsUrl;
-				} else {
+				status = adminService.getStatusDictionaryData();
+			} catch (ServiceException e) {
+				url = GO_TO_ERROR_PAGE;
+				return url;
+			}
+
+			try {
+				int gameCupounId = Integer.valueOf(request.getParameter(GAME_ID));
+				game = adminService.getGameByGameCupounId(gameCupounId);
+			} catch (ServiceException e) {
+				url = GO_TO_ERROR_PAGE;
+				return url;
+			}
+
+			String gameStatus = status.get(game.getStatus());
+
+			if (gameStatus.equals(IN_DEVELOPING)) {
+				try {
+					boolean result = adminService.unmatchEventAndGame(event);
+					if (result) {
+						url = gameEventsUrl;
+					} else {
+						url = GO_TO_ERROR_PAGE;
+					}
+				} catch (ServiceException e) {
+					Logger.error(e);
 					url = GO_TO_ERROR_PAGE;
 				}
-			} catch (ServiceException e) {
-				Logger.error(e);
-				url = GO_TO_ERROR_PAGE;
+			} else {
+				request.getSession(false).setAttribute(RESULT, false);
+				url = request.getSession(false).getAttribute(CURRENT_URL).toString();
 			}
 		} else {
-			request.getSession(false).setAttribute(RESULT, false);
-			url = request.getSession(false).getAttribute(CURRENT_URL).toString();
+			url = LOCALHOST;
 		}
 		return url;
 	}
