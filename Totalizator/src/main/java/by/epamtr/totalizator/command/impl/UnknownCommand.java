@@ -10,7 +10,7 @@ import by.epamtr.totalizator.controller.PageName;
  * This class is designed to handle an unknown command. Used when user tries to
  * send an incorrect URL.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 

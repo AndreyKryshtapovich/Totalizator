@@ -1,6 +1,5 @@
 package by.epamtr.totalizator.controller;
 
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -14,10 +13,15 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
+
 /**
- * Controller of web-application. It receives HTTP GET and HTTP POST requests from client and process them.
- * Processing of the request ends with {@code forward} method for GET requests and {@code sendRedirect} method 
- * for POST ones.
+ * Controller of web-application. It receives HTTP GET and HTTP POST requests
+ * from client and process them. Processing of the request ends with
+ * {@code forward} method for GET requests and {@code sendRedirect} method for
+ * POST ones.
+ * 
+ * @author Andrey Kryshtapovich
+ *
  */
 
 public final class Controller extends HttpServlet {
@@ -30,7 +34,8 @@ public final class Controller extends HttpServlet {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String commandName = null;
 		Command command = null;
 		String page = null;
@@ -56,8 +61,8 @@ public final class Controller extends HttpServlet {
 		commandName = request.getParameter(COMMAND_NAME);
 		command = provider.getCommand(commandName);
 		try {
-		url = command.execute(request, response);
-		response.sendRedirect(url);
+			url = command.execute(request, response);
+			response.sendRedirect(url);
 		} catch (CommandException e) {
 			Logger.error(e);
 		}

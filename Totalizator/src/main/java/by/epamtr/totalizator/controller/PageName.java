@@ -2,11 +2,15 @@ package by.epamtr.totalizator.controller;
 
 /**
  * This class contains constants representing paths to the jsp pages.
+ * 
+ * @author Andrey Kryshtapovich
  *
  */
 public class PageName {
 
-	private PageName(){}
+	private PageName() {
+	}
+
 	public static final String INDEX_PAGE = "index.jsp";
 	public static final String ERROR_PAGE = "WEB-INF/jsp/error.jsp";
 	public static final String USER_PAGE = "WEB-INF/jsp/user.jsp";

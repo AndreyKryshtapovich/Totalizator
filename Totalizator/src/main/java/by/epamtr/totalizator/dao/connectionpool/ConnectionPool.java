@@ -28,6 +28,18 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 
+/**
+ * This class is designed to store opened database connections for reusing them.
+ * It contains two queues {@code connectionQueue} which store free connections
+ * and {@code givenAwayConQueue} which store connections that are currently in
+ * use. Connection objects are wrapped in the PooledConnection instance in order
+ * to use override method {@code close} that doesn't really close the connection
+ * but offers it to the {@code connectionQueue}. To really close the connection
+ * use method {@code reallyClose}.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public final class ConnectionPool {
 	private BlockingQueue<Connection> connectionQueue;
 	private BlockingQueue<Connection> givenAwayConQueue;
@@ -40,6 +52,10 @@ public final class ConnectionPool {
 
 	private static ConnectionPool instance;
 
+	/**
+	 * Initializes a ConnectionPool instance that stores connections for working
+	 * with DB.
+	 */
 	private ConnectionPool() {
 		DBResourseManager dbResourseManager = DBResourseManager.getInstance();
 		this.driverName = dbResourseManager.getValue(DBParameter.DB_DRIVER);
@@ -53,6 +69,11 @@ public final class ConnectionPool {
 		}
 	}
 
+	/**
+	 * Gets the instance of the ConnectionPool.
+	 * 
+	 * @return {@code ConnectionPool instance}.
+	 */
 	public final static ConnectionPool getInstance() {
 		if (instance == null) {
 			instance = new ConnectionPool();
@@ -61,6 +82,13 @@ public final class ConnectionPool {
 
 	}
 
+	/**
+	 * Opens the connections for working with database. Connections are wrapped
+	 * in the PooledConnection instance.
+	 * 
+	 * @throws ConnectionPoolException
+	 *             if connection fails.
+	 */
 	public void initPoolData() throws ConnectionPoolException {
 		try {
 			Class.forName(driverName);
@@ -68,7 +96,6 @@ public final class ConnectionPool {
 			connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
 			for (int i = 0; i < poolSize; i++) {
 				Connection connection = DriverManager.getConnection(url, user, password);
-				// wrapping to use override method close() which returns connection to the pool
 				PooledConnection pooledConnection = new PooledConnection(connection);
 				connectionQueue.add(pooledConnection);
 			}
@@ -79,10 +106,22 @@ public final class ConnectionPool {
 		}
 	}
 
+	/**
+	 * Closes all the connections stored by the ConnectionPool.
+	 * 
+	 * @throws ConnectionPoolException
+	 *             if disposing fails.
+	 */
 	public void dispose() throws ConnectionPoolException {
 		clearConnectionQueue();
 	}
 
+	/**
+	 * Clears {@code givenAwayConQueue} and {@code connectionQueue}. Closes all
+	 * the connections stored by the queues.
+	 * 
+	 * @throws ConnectionPoolException
+	 */
 	private void clearConnectionQueue() throws ConnectionPoolException {
 		try {
 			closeConnectionsQueue(givenAwayConQueue);
@@ -92,7 +131,15 @@ public final class ConnectionPool {
 			throw new ConnectionPoolException();
 		}
 	}
-	
+
+	/**
+	 * Really closes all the connections stored in the queue.
+	 * 
+	 * @param queue
+	 *            {@link BlockingQueue} that stores opened connections.
+	 * @throws SQLException
+	 *             if closing fails.
+	 */
 	private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
 		Connection connection;
 		while ((connection = queue.poll()) != null) {
@@ -103,7 +150,13 @@ public final class ConnectionPool {
 		}
 	}
 
-
+	/**
+	 * Gets a connection for working with database.
+	 * 
+	 * @return free {@link Connection} from the {@code connectionQueue}.
+	 * @throws ConnectionPoolException
+	 *             if taking a connection fails.
+	 */
 	public Connection takeConnection() throws ConnectionPoolException {
 		Connection connection = null;
 		try {
@@ -114,7 +167,17 @@ public final class ConnectionPool {
 		}
 		return connection;
 	}
-	
+
+	/**
+	 * Closes the resources. Connection is added to the {@code connectionQueue}.
+	 * 
+	 * @param con
+	 *            {@link Connection} instance.
+	 * @param ps
+	 *            {@link PreparedStatement} instance.
+	 * @param rs
+	 *            {@link ResultSet} instance.
+	 */
 	public void closeConnection(Connection con, PreparedStatement ps, ResultSet rs) {
 		try {
 			con.close();
@@ -132,7 +195,19 @@ public final class ConnectionPool {
 			Logger.error("PreparedStatement isn't closed.");
 		}
 	}
-	
+
+	/**
+	 * Closes the resources. Connection is added to the {@code connectionQueue}.
+	 * 
+	 * @param con
+	 *            {@link Connection} instance.
+	 * @param ps
+	 *            {@link PreparedStatement} instance.
+	 * @param st
+	 *            {@link Statement} instance.
+	 * @param rs
+	 *            {@link ResultSet} instance.
+	 */
 	public void closeConnection(Connection con, PreparedStatement ps, Statement st, ResultSet rs) {
 		try {
 			con.close();
@@ -149,7 +224,7 @@ public final class ConnectionPool {
 		} catch (SQLException e) {
 			Logger.error("PreparedStatement isn't closed.");
 		}
-		
+
 		try {
 			st.close();
 		} catch (SQLException e) {
@@ -157,7 +232,16 @@ public final class ConnectionPool {
 		}
 	}
 
-
+	/**
+	 * Closes the resources. Connection is added to the {@code connectionQueue}.
+	 * 
+	 * @param con
+	 *            {@link Connection} instance.
+	 * @param st
+	 *            {@link Statement} instance.
+	 * @param rs
+	 *            {@link ResultSet} instance.
+	 */
 	public void closeConnection(Connection con, Statement st, ResultSet rs) {
 		try {
 			con.close();
@@ -176,6 +260,14 @@ public final class ConnectionPool {
 		}
 	}
 
+	/**
+	 * Closes the resources. Connection is added to the {@code connectionQueue}.
+	 * 
+	 * @param con
+	 *            {@link Connection} instance.
+	 * @param st
+	 *            {@link Statement} instance.
+	 */
 	public void closeConnection(Connection con, Statement st) {
 		try {
 			con.close();
@@ -188,7 +280,13 @@ public final class ConnectionPool {
 			Logger.error("Statement isn't closed.");
 		}
 	}
-	
+
+	/**
+	 * Closes the resources. Connection is added to the {@code connectionQueue}.
+	 * 
+	 * @param con
+	 *            {@link Connection} instance.
+	 */
 	public void closeConnection(Connection con) {
 		try {
 			con.close();
@@ -197,6 +295,14 @@ public final class ConnectionPool {
 		}
 	}
 
+	/**
+	 * Closes the resources. Connection is added to the {@code connectionQueue}.
+	 * 
+	 * @param con
+	 *            {@link Connection} instance.
+	 * @param ps
+	 *            {@link PreparedStatement} instance.
+	 */
 	public void closeConnection(Connection con, PreparedStatement ps) {
 		try {
 			con.close();
@@ -210,16 +316,32 @@ public final class ConnectionPool {
 		}
 	}
 
-	
-
+	/**
+	 * Class is designed to override {@code close} method of the
+	 * {@link Connection} interface.
+	 * 
+	 * @author Andrey Kryshtapovich
+	 *
+	 */
 	private class PooledConnection implements Connection {
 		private Connection connection;
-
+		/**
+		 * Initializes a new instance of PooledConnection and sets auto commit: true.
+		 * 
+		 * @param c {@link Connection} instance.
+		 * @throws SQLException if setting auto commit mode fails.
+		 */
 		public PooledConnection(Connection c) throws SQLException {
 			this.connection = c;
 			this.connection.setAutoCommit(true);
 		}
 
+		/**
+		 * Really closes the connection.
+		 * 
+		 * @throws SQLException
+		 *             if closing fails.
+		 */
 		public void reallyClose() throws SQLException {
 			connection.close();
 		}
@@ -229,6 +351,10 @@ public final class ConnectionPool {
 			connection.clearWarnings();
 		}
 
+		/**
+		 * Removes the connection from the {@code givenAwayConQueue} and offers
+		 * it to the {@code connectionQueue}
+		 */
 		@Override
 		public void close() throws SQLException {
 

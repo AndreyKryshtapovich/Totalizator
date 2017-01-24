@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * This class is designed to represent user's entity.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 

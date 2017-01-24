@@ -8,17 +8,18 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
 /**
  * This filter sets encoding of requests and responses to UTF-8.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 
 public class CharsetFilter implements Filter {
 	private final static String CHARACTER_ENCODING = "characterEncoding";
 	private String encoding;
-	
+
 	@Override
 	public void destroy() {
 

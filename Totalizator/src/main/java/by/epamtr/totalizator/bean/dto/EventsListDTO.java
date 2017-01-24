@@ -7,11 +7,14 @@ import java.util.List;
 import by.epamtr.totalizator.bean.entity.Event;
 
 /**
- * A Data Transfer Object that represents {@link List} of {@link by.epamtr.totalizator.bean.entity.Event} objects.
- * Also represents start and end date of the {@link by.epamtr.totalizator.bean.entity.GameCupoun} to which events
- * are matched.
+ * A Data Transfer Object that represents {@link List} of
+ * {@link by.epamtr.totalizator.bean.entity.Event} objects. Also represents
+ * start and end date of the
+ * {@link by.epamtr.totalizator.bean.entity.GameCupoun} to which events are
+ * matched.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
+ * 
  *
  */
 public class EventsListDTO implements Serializable {

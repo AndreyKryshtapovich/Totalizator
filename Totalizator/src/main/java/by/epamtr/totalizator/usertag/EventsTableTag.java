@@ -5,7 +5,13 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.TagSupport;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
-
+/**
+ * This class is designed to print a table with information about event's while
+ * administrator is matching events and game coupon.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class EventsTableTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	

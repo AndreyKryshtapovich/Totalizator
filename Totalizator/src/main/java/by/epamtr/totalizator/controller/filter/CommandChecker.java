@@ -2,21 +2,23 @@ package by.epamtr.totalizator.controller.filter;
 
 import java.util.HashMap;
 import java.util.Map;
+
 /**
- * This class contains {@link Map} of Strings. The key is the command's url-pattern and 
- * the value is the name of the method by which the particular command should be send.
+ * This class contains {@link Map} of Strings. The key is the command's
+ * url-pattern and the value is the name of the method by which the particular
+ * command should be send.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class CommandChecker {
 	private Map<String, String> correctCommandsMethods = new HashMap<String, String>();
 
-	public CommandChecker(){
+	public CommandChecker() {
 		correctCommandsMethods.put("sign-in", "post");
-		correctCommandsMethods.put("show-events", "get"); 
+		correctCommandsMethods.put("show-events", "get");
 		correctCommandsMethods.put("go-to-admin-page", "get");
-		correctCommandsMethods.put("sign-out", "post"); 
+		correctCommandsMethods.put("sign-out", "post");
 		correctCommandsMethods.put("go-to-registration", "get");
 		correctCommandsMethods.put("registration-user", "post");
 		correctCommandsMethods.put("go-to-game-creation", "get");
@@ -40,16 +42,18 @@ public class CommandChecker {
 		correctCommandsMethods.put("go-to-game-coupon-details", "get");
 		correctCommandsMethods.put("edit-game-coupon", "post");
 	}
+
 	/**
 	 * Gets the method's name.
 	 * 
-	 * @param key commands url-pattern.
+	 * @param key
+	 *            commands url-pattern.
 	 * @return method's name.
 	 */
-	public String getMethod(String key){
+	public String getMethod(String key) {
 		String method = null;
 		method = correctCommandsMethods.get(key);
-		
+
 		return method;
 	}
 }

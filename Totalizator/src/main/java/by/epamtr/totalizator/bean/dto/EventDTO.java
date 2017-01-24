@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.Event } object.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class EventDTO implements Serializable {

@@ -21,9 +21,13 @@ import by.epamtr.totalizator.controller.PageName;
 import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
+
 /**
- * Class is designed to process a request for forwarding user to the page where he can submit his bet
- * and enter a credit card number. Command is available for users only.
+ * Class is designed to process a request for forwarding user to the page where
+ * he can submit his bet and enter a credit card number. Command is available
+ * for users only.
+ * 
+ * @author Andrey Kryshtapovich
  *
  */
 public class GoToBetSubmitCommand implements Command {
@@ -42,20 +46,22 @@ public class GoToBetSubmitCommand implements Command {
 	private final static String GAME_COUPON_ID_PARAM = "&game-coupon-id=";
 	private final static String BET_AMOUNT_RESULT = "betAmountResult";
 	private final static String NULL = "null";
+
 	/**
-	 * Method checks user's role and bet details(number of provided results in the bet). Gets all parameters
-	 * and calls required service method. Saves current URL in session.
+	 * Method checks user's role and bet details(number of provided results in
+	 * the bet). Gets all parameters and calls required service method. Saves
+	 * current URL in session.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		StringBuilder sb = new StringBuilder();
 		String page = null;
-		
-		if(request.getSession(false) == null){
+
+		if (request.getSession(false) == null) {
 			page = PageName.INDEX_PAGE;
 			return page;
 		}
-		
+
 		sb.append(GO_TO_BET_SUBMIT_URL);
 		for (int i = 1; i < 16; i++) {
 			sb.append(RESULT_PARAM + new Integer(i).toString() + EQUAL_SYMBOL);
@@ -64,7 +70,6 @@ public class GoToBetSubmitCommand implements Command {
 		sb.append(BET_AMOUNT_PARAM);
 		sb.append(request.getParameter(BET_AMOUNT));
 
-		
 		List<Event> eventsList = null;
 		Map<String, String> userResultMap = new HashMap<>();
 		User user = (User) request.getSession(false).getAttribute(USER);
@@ -90,7 +95,7 @@ public class GoToBetSubmitCommand implements Command {
 			ClientOperationService clientService = factory.getClientOperationService();
 
 			GameCupoun gameCupoun = new GameCupoun();
-			
+
 			try {
 				gameCupoun = clientService.getOpenedGame();
 			} catch (ServiceException e1) {

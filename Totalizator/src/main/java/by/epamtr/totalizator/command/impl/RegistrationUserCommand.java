@@ -12,11 +12,12 @@ import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
+
 /**
- * Class is designed to process a request for registration new user with role "user".
- * Available for every person.
+ * Class is designed to process a request for registration new user with role
+ * "user". Available for every person.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 
@@ -36,33 +37,32 @@ public class RegistrationUserCommand implements Command {
 	private final static String GO_TO_REGISTRATION_PAGE = "Controller?command=go-to-registration";
 	private final static String RESULT = "result";
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
-	
+
 	/**
-	 * Method gets all parameters, creates DTO and calls required service method.
+	 * Method gets all parameters, creates DTO and calls required service
+	 * method.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-		
 		String url = null;
-		if(request.getSession(false) == null){
+		if (request.getSession(false) == null) {
 			url = GO_TO_INDEX_PAGE;
 			return url;
 		}
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();
-		
+
 		UserDTO userDTO = new UserDTO();
-		
+
 		userDTO.setFirstName(request.getParameter(FIRST_NAME));
 		userDTO.setLastName(request.getParameter(LAST_NAME));
 		userDTO.setRegisterLogin(request.getParameter(REGISTER_LOGIN));
 		userDTO.setSex(request.getParameter(SEX));
 		userDTO.seteMail(request.getParameter(E_MAIL));
 		userDTO.setCountry(request.getParameter(COUNTRY));
-		userDTO.setCity( request.getParameter(CITY));
+		userDTO.setCity(request.getParameter(CITY));
 		userDTO.setAddress(request.getParameter(ADDRESS));
-		
 
 		try {
 			boolean result = clientService.registrationUser(userDTO, request.getParameter(REGISTER_PASSWORD).getBytes(),

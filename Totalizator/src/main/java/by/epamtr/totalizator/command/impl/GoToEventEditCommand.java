@@ -18,10 +18,10 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 import by.epamtr.totalizator.util.Utils;
 
 /**
- * Class is designed to process request for forwarding administrator to the page where he can
- * view all info about event and edit it.
+ * Class is designed to process request for forwarding administrator to the page
+ * where he can view all info about event and edit it.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class GoToEventEditCommand implements Command {
@@ -56,11 +56,11 @@ public class GoToEventEditCommand implements Command {
 	private final static String SELECTED_STATUS = "selectedStatus";
 	private final static String STATUS_MAP = "statusMap";
 
-
 	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
+
 	/**
-	 * Method saves current URL in session. Gets all parameters from request, calls required service method.
-	 * Returns required path to the page.
+	 * Method saves current URL in session. Gets all parameters from request,
+	 * calls required service method. Returns required path to the page.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -71,7 +71,7 @@ public class GoToEventEditCommand implements Command {
 			page = PageName.INDEX_PAGE;
 			return page;
 		}
-		
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(GO_TO_EVENT_EDIT_WITH_PARAMS);
@@ -127,13 +127,13 @@ public class GoToEventEditCommand implements Command {
 			page = PageName.ERROR_PAGE;
 			return page;
 		}
-		
-		String fullStartDate = request.getParameter(START_DATE);
 
+		String fullStartDate = request.getParameter(START_DATE);
+		
 		String startDate = Utils.parseDateFromFullDate(fullStartDate);
 		String startTimeHours = Utils.parseHoursFromFullDate(fullStartDate);
 		String startTimeMinutes = Utils.parseMinutesFromFullDate(fullStartDate);
- 
+
 		String fullEndDate = request.getParameter(END_DATE);
 
 		String endDate = Utils.parseDateFromFullDate(fullEndDate);
@@ -149,11 +149,11 @@ public class GoToEventEditCommand implements Command {
 		request.setAttribute(TEAM_TWO, request.getParameter(TEAM_TWO));
 
 		String selectedRes = request.getParameter(RESULT_ID);
-		
-		if(selectedRes.equals(ZERO)){
+
+		if (selectedRes.equals(ZERO)) {
 			selectedRes = FOUR;
 		}
-		
+
 		request.setAttribute(SELECTED_RES, selectedRes);
 		request.setAttribute(RESULT_MAP, results);
 

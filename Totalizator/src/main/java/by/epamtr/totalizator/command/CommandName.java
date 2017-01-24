@@ -1,116 +1,140 @@
 package by.epamtr.totalizator.command;
 
+/**
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public enum CommandName {
 	/**
 	 * Represents {@link by.epamtr.totalizator.command.impl.SignInCommand}
 	 */
-	SIGN_IN, 
+	SIGN_IN,
 	/**
-	 * Represents {@link by.epamtr.totalizator.command.impl.GoToRegistrationCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToRegistrationCommand}
 	 */
-	GO_TO_REGISTRATION, 
+	GO_TO_REGISTRATION,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.RegistrationUserCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.RegistrationUserCommand}
 	 */
-	REGISTRATION_USER, 
+	REGISTRATION_USER,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.SignOutCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.SignOutCommand}
 	 */
 	SIGN_OUT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.ShowEventsCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.ShowEventsCommand}
 	 */
 	SHOW_EVENTS,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.UnknownCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.UnknownCommand}
 	 */
-	UNKNOWN, 
+	UNKNOWN,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToGameCreationCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToGameCreationCommand}
 	 */
 	GO_TO_GAME_CREATION,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GameCreationCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.GameCreationCommand}
 	 */
 	GAME_CREATION,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToAdminPageCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToAdminPageCommand}
 	 */
 	GO_TO_ADMIN_PAGE,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToErrorPageCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToErrorPageCommand}
 	 */
-	 GO_TO_ERROR_PAGE, 
-	 /**
-	  * Represents {@link  by.epamtr.totalizator.command.impl.ChangeLanguageCommand}
-	  */
-	 CHANGE_LANGUAGE, 
-	 /**
-	  *  Represents {@link  by.epamtr.totalizator.command.impl.GoToEventCreationCommand}
-	  */
-	 GO_TO_EVENT_CREATION, 
-	 /**
-	  * Represents {@link  by.epamtr.totalizator.command.impl.EventCreationCommand}
-	  */
+	GO_TO_ERROR_PAGE,
+	/**
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.ChangeLanguageCommand}
+	 */
+	CHANGE_LANGUAGE,
+	/**
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToEventCreationCommand}
+	 */
+	GO_TO_EVENT_CREATION,
+	/**
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.EventCreationCommand}
+	 */
 	EVENT_CREATION,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToSearchEventCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToSearchEventCommand}
 	 */
 	GO_TO_SEARCH_EVENT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.SearchMatchingEventsCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.SearchMatchingEventsCommand}
 	 */
 	SEARCH_MATCHING_EVENTS,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.EventGameMatchingCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.EventGameMatchingCommand}
 	 */
-	EVENT_GAME_MATCHING, 
+	EVENT_GAME_MATCHING,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToEditSearchEventCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToEditSearchEventCommand}
 	 */
 	GO_TO_EDIT_SEARCH_EVENT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.SearchAllGameEventsCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.SearchAllGameEventsCommand}
 	 */
 	SEARCH_ALL_EVENTS,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToEventEditCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToEventEditCommand}
 	 */
-	GO_TO_EVENT_EDIT, 
+	GO_TO_EVENT_EDIT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.EditEventCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.EditEventCommand}
 	 */
-	EDIT_EVENT, 
+	EDIT_EVENT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.InitConnectionPoolCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.InitConnectionPoolCommand}
 	 */
-	INIT_CONNECTION_POOL, 
+	INIT_CONNECTION_POOL,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.MakeBetCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.MakeBetCommand}
 	 */
-	MAKE_BET, 
+	MAKE_BET,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToBetSubmitCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToBetSubmitCommand}
 	 */
 	GO_TO_BET_SUBMIT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.UnmatchEventCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.UnmatchEventCommand}
 	 */
 	UNMATCH_EVENT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.DeleteEventCommand}
+	 * Represents {@link by.epamtr.totalizator.command.impl.DeleteEventCommand}
 	 */
-	DELETE_EVENT, 
+	DELETE_EVENT,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.CloseGameCouponCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.CloseGameCouponCommand}
 	 */
-	CLOSE_GAME_COUPON, 
+	CLOSE_GAME_COUPON,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.GoToGameCouponDetailsCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.GoToGameCouponDetailsCommand}
 	 */
-	GO_TO_GAME_COUPON_DETAILS, 
+	GO_TO_GAME_COUPON_DETAILS,
 	/**
-	 * Represents {@link  by.epamtr.totalizator.command.impl.EditGameCouponCommand}
+	 * Represents
+	 * {@link by.epamtr.totalizator.command.impl.EditGameCouponCommand}
 	 */
 	EDIT_GAME_COUPON
 }

@@ -21,7 +21,7 @@ import by.epamtr.totalizator.util.Utils;
  * Class is designed to process a request for forwarding administrator to the
  * page where he can view the game coupons's info in details and edit it.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class GoToGameCouponDetailsCommand implements Command {
@@ -42,9 +42,10 @@ public class GoToGameCouponDetailsCommand implements Command {
 	private final static int CLOSED = 3;
 
 	private final static Logger Logger = LogManager.getLogger(GoToEventEditCommand.class.getName());
+
 	/**
-	 * Method saves current URL in session. Gets all parameters.
-	 * Returns required path to the page.
+	 * Method saves current URL in session. Gets all parameters. Returns
+	 * required path to the page.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

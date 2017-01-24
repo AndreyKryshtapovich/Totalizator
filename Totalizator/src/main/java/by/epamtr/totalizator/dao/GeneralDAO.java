@@ -18,8 +18,8 @@ public interface GeneralDAO {
 	 *            user's login.
 	 * @param password
 	 *            encrypted user's password.
-	 * @return {@link by.epamtr.totalizator.bean.entity.User} if the credentials
-	 *         are correct.
+	 * @return {@link by.epamtr.totalizator.bean.entity.User } if the
+	 *         credentials are correct.
 	 * @throws DAOException
 	 *             if obtaining information from the data storage fails.
 	 */

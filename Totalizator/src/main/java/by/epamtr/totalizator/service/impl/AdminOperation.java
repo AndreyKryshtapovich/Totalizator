@@ -17,6 +17,14 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is the implementation of the
+ * {@link by.epamtr.totalizator.service.AdminOperationService} for working with
+ * database.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class AdminOperation implements AdminOperationService {
 
 	@Override

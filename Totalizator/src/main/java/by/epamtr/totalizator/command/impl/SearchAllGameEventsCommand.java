@@ -26,7 +26,7 @@ import by.epamtr.totalizator.util.Utils;
  * Class is designed to process a request for searching events that are matched
  * to the particular game coupon. Available for administrator only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class SearchAllGameEventsCommand implements Command {
@@ -73,7 +73,7 @@ public class SearchAllGameEventsCommand implements Command {
 				page = PageName.ERROR_PAGE;
 				return page;
 			}
-
+			
 			int gameCupounId = Integer.valueOf(Utils.parseParamGameCupounId(parameters));
 			Timestamp gameStartDate = Timestamp.valueOf(Utils.parseParamGameCupounStartDate(parameters));
 			Timestamp gameEndDate = Timestamp.valueOf(Utils.parseParamGameCupounEndDate(parameters));

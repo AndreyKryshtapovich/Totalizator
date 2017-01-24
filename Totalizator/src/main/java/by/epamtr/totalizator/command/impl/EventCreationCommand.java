@@ -17,7 +17,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 /**
  * Class is designed to create a new event. Available for administrator only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class EventCreationCommand implements Command {
@@ -37,8 +37,10 @@ public class EventCreationCommand implements Command {
 	private final static String LOCALHOST = "index.jsp";
 	private final static String USER = "user";
 	private final static String ADMIN = "admin";
+
 	/**
-	 * Method checks user's role. Gets all parameters from request and calls required service method.
+	 * Method checks user's role. Gets all parameters from request and calls
+	 * required service method.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

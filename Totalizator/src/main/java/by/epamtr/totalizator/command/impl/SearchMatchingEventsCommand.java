@@ -24,7 +24,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
  * could be matched to the particular game coupon. Available for administrator
  * only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class SearchMatchingEventsCommand implements Command {

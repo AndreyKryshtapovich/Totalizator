@@ -19,7 +19,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
  * Class is designed to edit game coupon's info. Available for administrator
  * only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class EditGameCouponCommand implements Command {

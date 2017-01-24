@@ -23,7 +23,7 @@ public interface AdminOperationService {
 	 * Creates new game coupon in the system.
 	 * 
 	 * @param gameCupounDTO
-	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO} object
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO } object
 	 *            that represents new game coupon.
 	 * @return {@code true} if new game coupon was created successfully.
 	 *         {@code false} if validation or DAO method fails.

@@ -10,7 +10,14 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 import java.util.Arrays;
 
 import org.apache.commons.codec.digest.DigestUtils;
-
+/**
+ * This class is the implementation of the
+ * {@link by.epamtr.totalizator.service.GeneralOperationService} for working with
+ * database.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class GeneralOperation implements GeneralOperationService {
 
 	@Override

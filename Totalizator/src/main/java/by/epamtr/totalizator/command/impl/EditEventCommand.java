@@ -18,7 +18,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 /**
  * Class is designed to edit event's info. Available for administrator only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class EditEventCommand implements Command {

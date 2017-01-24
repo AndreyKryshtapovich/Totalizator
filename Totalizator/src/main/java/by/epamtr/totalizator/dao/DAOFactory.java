@@ -29,7 +29,7 @@ public class DAOFactory {
 
 	/**
 	 * 
-	 * @return {@link by.epamtr.totalizator.dao.GeneralDAO} object.
+	 * @return {@link by.epamtr.totalizator.dao.GeneralDAO } object.
 	 */
 	public DBGeneralDAO getDBGeneralDAO() {
 		return generalDAO;

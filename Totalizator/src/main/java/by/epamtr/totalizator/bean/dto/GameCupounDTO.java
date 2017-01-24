@@ -3,9 +3,10 @@ package by.epamtr.totalizator.bean.dto;
 import java.io.Serializable;
 
 /**
- * A Data Transfer Object representing {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
+ * A Data Transfer Object representing
+ * {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 

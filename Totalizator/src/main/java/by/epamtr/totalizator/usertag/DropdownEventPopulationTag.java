@@ -8,11 +8,24 @@ import javax.servlet.jsp.tagext.TagSupport;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 
+/**
+ * Class is designed to print a dropdown for the administrator. Dropdown
+ * contains Id's of events that could be matched to a particular game coupon.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class DropdownEventPopulationTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * List of events.
+	 */
 	private JSPListBean eventsList;
+	/**
+	 * Text to be displayed on the submit button.
+	 */
 	private String submitMatching;
-	
+
 	public int doStartTag() throws JspTagException {
 		if (eventsList.getSize() == 0) {
 			try {
@@ -30,14 +43,18 @@ public class DropdownEventPopulationTag extends TagSupport {
 				pageContext.getOut().write("<datalist id='events'>");
 				for (int i = 0; i < size; i++) {
 					Event currentEvent = eventsList.getElement();
-					
-					pageContext.getOut().write("<option value='" + new Integer(currentEvent.getEventId()).toString()+ "'>");
-					pageContext.getOut().write( new Integer(currentEvent.getEventId()).toString() + " " + currentEvent.getStartDate().toString() + " - " + currentEvent.getEndDate().toString());
+
+					pageContext.getOut()
+							.write("<option value='" + new Integer(currentEvent.getEventId()).toString() + "'>");
+					pageContext.getOut().write(new Integer(currentEvent.getEventId()).toString() + " "
+							+ currentEvent.getStartDate().toString() + " - " + currentEvent.getEndDate().toString());
 					pageContext.getOut().write("</option>");
 				}
 				pageContext.getOut().write("</datalist>");
-				
-				pageContext.getOut().write("<button onclick='return validateDropdown()' type='submit' class='addEmailBtn'>" + submitMatching + "</button>");
+
+				pageContext.getOut()
+						.write("<button onclick='return validateDropdown()' type='submit' class='addEmailBtn'>"
+								+ submitMatching + "</button>");
 			} catch (IOException e) {
 				throw new JspTagException(e.getMessage());
 			}
@@ -52,7 +69,7 @@ public class DropdownEventPopulationTag extends TagSupport {
 	public void setEventsList(JSPListBean eventsList) {
 		this.eventsList = eventsList;
 	}
-	
+
 	public String getSubmitMatching() {
 		return submitMatching;
 	}
@@ -64,6 +81,5 @@ public class DropdownEventPopulationTag extends TagSupport {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 }

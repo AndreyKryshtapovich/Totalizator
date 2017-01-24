@@ -4,7 +4,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 /**
  * Interface contains methods to provide initialization and destroying of the
- * data source.
+ * data source. Data Source contains resources that are required for connecting to the data storage.
  * 
  * @author Andrey Kryshtapovich
  *

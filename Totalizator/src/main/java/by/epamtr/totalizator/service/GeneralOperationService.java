@@ -18,8 +18,8 @@ public interface GeneralOperationService {
 	 *            user's login.
 	 * @param password
 	 *            user's password.
-	 * @return {@link by.epamtr.totalizator.bean.entity.User} if the credentials
-	 *         are correct.
+	 * @return {@link by.epamtr.totalizator.bean.entity.User } if the
+	 *         credentials are correct.
 	 * @throws ServiceException
 	 *             if authentication fails.
 	 */

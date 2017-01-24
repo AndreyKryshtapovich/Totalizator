@@ -14,12 +14,20 @@ import by.epamtr.totalizator.dao.exception.DAOException;
 import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
+/**
+ * This class is the implementation of the
+ * {@link by.epamtr.totalizator.service.ClientOperationService} for working with
+ * database.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class ClientOperation implements ClientOperationService {
 
 	private final static String USER = "user";
-	
+
 	@Override
-	public boolean registrationUser(UserDTO userDTO, byte[] password, byte[] repPassword)throws ServiceException {
+	public boolean registrationUser(UserDTO userDTO, byte[] password, byte[] repPassword) throws ServiceException {
 
 		boolean result = true;
 		if (!Validator.userInfoValidation(userDTO, password, repPassword)) {
@@ -86,7 +94,7 @@ public class ClientOperation implements ClientOperationService {
 	}
 
 	@Override
-	public boolean makeBet(MakeBetDTO makeBetDTO,byte[] creditCardNumber) throws ServiceException {
+	public boolean makeBet(MakeBetDTO makeBetDTO, byte[] creditCardNumber) throws ServiceException {
 		boolean result = true;
 		if (!Validator.makeBetValidation(makeBetDTO, creditCardNumber)) {
 			result = false;
@@ -94,15 +102,15 @@ public class ClientOperation implements ClientOperationService {
 		}
 		String encryptedCardNumber = DigestUtils.md5Hex(creditCardNumber);
 		Arrays.fill(creditCardNumber, (byte) 0);
-		
+
 		DAOFactory factory = DAOFactory.getInstance();
 		ClientDAO clientDAO = factory.getDBClientDAO();
-		
+
 		try {
 			result = clientDAO.makeBet(makeBetDTO, encryptedCardNumber);
 		} catch (DAOException e) {
-			throw new ServiceException("Failed making bet.",e);
-		}		
+			throw new ServiceException("Failed making bet.", e);
+		}
 		return result;
 	}
 
@@ -116,7 +124,7 @@ public class ClientOperation implements ClientOperationService {
 		} catch (DAOException e) {
 			throw new ServiceException("Failed showing events.", e);
 		}
-		
+
 		return game;
 	}
 

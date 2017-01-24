@@ -16,9 +16,10 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 
 /**
  * Class is designed to process request for matching event and particular game
- * coupon. The event will be associated with particular game coupon. Available for administrator only.
+ * coupon. The event will be associated with particular game coupon. Available
+ * for administrator only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class EventGameMatchingCommand implements Command {

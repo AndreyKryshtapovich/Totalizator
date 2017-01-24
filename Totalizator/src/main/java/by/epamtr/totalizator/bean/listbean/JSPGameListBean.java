@@ -6,7 +6,14 @@ import java.util.List;
 
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 
-public class JSPGameListBean  implements Serializable{
+/**
+ * This is a java bean class designed to transfer a List of
+ * {@link by.epamtr.totalizator.bean.entity.GameCupoun} objects to the jsp page.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
+public class JSPGameListBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Iterator<GameCupoun> it;
 	private List<GameCupoun> list;

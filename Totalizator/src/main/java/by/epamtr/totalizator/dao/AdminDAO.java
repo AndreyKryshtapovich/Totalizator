@@ -9,10 +9,10 @@ import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
 /**
- * Interface contains methods which are required to provide administrator's
- * work with the data storage.
+ * Interface contains methods which are required to provide administrator's work
+ * with the data storage.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public interface AdminDAO {
@@ -124,7 +124,8 @@ public interface AdminDAO {
 	 * 
 	 * @return {@link List} of {@link GameCupoun} objects.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	List<GameCupoun> getGamesInDevelopment() throws DAOException;
 
@@ -134,7 +135,8 @@ public interface AdminDAO {
 	 * 
 	 * @return {@link List} of {@link GameCupoun} objects.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	List<GameCupoun> getAllGames() throws DAOException;
 
@@ -150,7 +152,8 @@ public interface AdminDAO {
 	 *            end date
 	 * @return {@link List} of {@link Event} objects.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	List<Event> getUnmatchedEvents(Timestamp gameStartDate, Timestamp gameEndDate) throws DAOException;
 
@@ -161,7 +164,8 @@ public interface AdminDAO {
 	 *            Id of the particular game coupon in the data storage.
 	 * @return {@link List} of {@link Event} objects.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	List<Event> getEventsByGameCupounId(int gameCupounId) throws DAOException;
 
@@ -172,7 +176,8 @@ public interface AdminDAO {
 	 *            Id of the game coupon in the data storage.
 	 * @return {@link List} containing {@link GameCupoun} object.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	List<GameCupoun> getGameByGameCupounId(int gameCupounId) throws DAOException;
 
@@ -182,7 +187,8 @@ public interface AdminDAO {
 	 * @return {@link Map} {@code key} - number of result. {@code value} -
 	 *         result's description.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	Map<Integer, String> getResultDictionaryData() throws DAOException;
 
@@ -192,7 +198,8 @@ public interface AdminDAO {
 	 * @return {@link Map} {@code key} - number of status. {@code value} -
 	 *         status's description.
 	 * @throws DAOException
-	 *             if obtaining information from the data storage fails due to the data storage issues.
+	 *             if obtaining information from the data storage fails due to
+	 *             the data storage issues.
 	 */
 	Map<Integer, String> getStatusDictionaryData() throws DAOException;
 }

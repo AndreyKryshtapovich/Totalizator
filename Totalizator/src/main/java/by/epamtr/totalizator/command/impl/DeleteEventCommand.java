@@ -18,8 +18,11 @@ import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
 /**
- * This class is designed to process delete event request.
- * This command available for administrator only.
+ * This class is designed to process delete event request. This command
+ * available for administrator only.
+ * 
+ * @author Andrey Kryshtapovich
+ *
  */
 
 public class DeleteEventCommand implements Command {
@@ -36,7 +39,8 @@ public class DeleteEventCommand implements Command {
 	private final static String ADMIN = "admin";
 
 	/**
-	 * Gets all required dictionary data and calls service method to delete an event.
+	 * Gets all required dictionary data and calls service method to delete an
+	 * event.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -51,62 +55,62 @@ public class DeleteEventCommand implements Command {
 		}
 		User user = (User) request.getSession(false).getAttribute(USER);
 
-		if (user != null && user.getRole().equals(ADMIN)){
-			
-		if (event.isEmpty()) {
-			url = GO_TO_ERROR_PAGE;
-			return url;
-		}
+		if (user != null && user.getRole().equals(ADMIN)) {
 
-		ServiceFactory factory = ServiceFactory.getInstance();
-		AdminOperationService adminService = factory.getAdminOperationService();
+			if (event.isEmpty()) {
+				url = GO_TO_ERROR_PAGE;
+				return url;
+			}
 
-		String gameEventsUrl = null;
-		Cookie[] cookies = request.getCookies();
+			ServiceFactory factory = ServiceFactory.getInstance();
+			AdminOperationService adminService = factory.getAdminOperationService();
 
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(GAME_EVENTS_URL)) {
-					gameEventsUrl = cookie.getValue();
+			String gameEventsUrl = null;
+			Cookie[] cookies = request.getCookies();
+
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals(GAME_EVENTS_URL)) {
+						gameEventsUrl = cookie.getValue();
+					}
 				}
 			}
-		}
-
-		try {
-			status = adminService.getStatusDictionaryData();
-		} catch (ServiceException e) {
-			url = GO_TO_ERROR_PAGE;
-			return url;
-		}
-
-		try {
-			int gameCupounId = Integer.valueOf(request.getParameter(GAME_ID));
-			game = adminService.getGameByGameCupounId(gameCupounId);
-		} catch (ServiceException e) {
-			url = GO_TO_ERROR_PAGE;
-			return url;
-		}
-
-		String gameStatus = status.get(game.getStatus());
-
-		if (gameStatus.equals(IN_DEVELOPING)) {
 
 			try {
-				boolean result = adminService.deleteEvent(event);
-				if (result) {
-					url = gameEventsUrl;
-				} else {
+				status = adminService.getStatusDictionaryData();
+			} catch (ServiceException e) {
+				url = GO_TO_ERROR_PAGE;
+				return url;
+			}
+
+			try {
+				int gameCupounId = Integer.valueOf(request.getParameter(GAME_ID));
+				game = adminService.getGameByGameCupounId(gameCupounId);
+			} catch (ServiceException e) {
+				url = GO_TO_ERROR_PAGE;
+				return url;
+			}
+
+			String gameStatus = status.get(game.getStatus());
+
+			if (gameStatus.equals(IN_DEVELOPING)) {
+
+				try {
+					boolean result = adminService.deleteEvent(event);
+					if (result) {
+						url = gameEventsUrl;
+					} else {
+						url = GO_TO_ERROR_PAGE;
+					}
+				} catch (ServiceException e) {
+					Logger.error(e);
 					url = GO_TO_ERROR_PAGE;
 				}
-			} catch (ServiceException e) {
-				Logger.error(e);
-				url = GO_TO_ERROR_PAGE;
+			} else {
+				request.getSession(false).setAttribute(RESULT, true);
+				url = request.getSession(false).getAttribute(CURRENT_URL).toString();
 			}
 		} else {
-			request.getSession(false).setAttribute(RESULT, true);
-			url = request.getSession(false).getAttribute(CURRENT_URL).toString();
-		}
-		}else{
 			url = LOCALHOST;
 		}
 		return url;

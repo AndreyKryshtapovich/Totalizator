@@ -18,11 +18,12 @@ import by.epamtr.totalizator.service.ClientOperationService;
 import by.epamtr.totalizator.service.ServiceFactory;
 import by.epamtr.totalizator.service.exception.ServiceException;
 import by.epamtr.totalizator.util.Utils;
+
 /**
- * Class is designed to process a request for making a bet.
- * Available for user only.
+ * Class is designed to process a request for making a bet. Available for user
+ * only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class MakeBetCommand implements Command {
@@ -34,13 +35,15 @@ public class MakeBetCommand implements Command {
 	private final static String SHOW_EVENTS_URL = "Controller?command=show-events";
 	private final static String RESULT = "result";
 	private final static String CREDIT_CARD = "credit-card";
+
 	/**
-	 * Method checks user's role. Gets all parameters, creates DTO object and calls required service method.
+	 * Method checks user's role. Gets all parameters, creates DTO object and
+	 * calls required service method.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
-		if(request.getSession(false) == null){
+		if (request.getSession(false) == null) {
 			url = LOCALHOST;
 			return url;
 		}
@@ -51,13 +54,14 @@ public class MakeBetCommand implements Command {
 			String prevUrl = request.getSession(false).getAttribute(CURRENT_URL).toString();
 			Map<String, String> userResultMap = null;
 			List<Event> eventsList = null;
+			
 			userResultMap = Utils.parseUserResultMap(prevUrl);
 
 			String betAmount = Utils.parseBetAmount(prevUrl);
 			String gameCouponId = Utils.parseGameCouponId(prevUrl);
 
 			MakeBetDTO makeBetDTO = new MakeBetDTO();
-			
+
 			makeBetDTO.setUser(user);
 			makeBetDTO.setGameCouponId(gameCouponId);
 			makeBetDTO.setUserResultMap(userResultMap);
@@ -65,9 +69,9 @@ public class MakeBetCommand implements Command {
 
 			ServiceFactory factory = ServiceFactory.getInstance();
 			ClientOperationService clientService = factory.getClientOperationService();
-			
+
 			int gameId = Integer.valueOf(gameCouponId);
-			
+
 			try {
 				eventsList = clientService.showEvents(gameId);
 			} catch (ServiceException e1) {
@@ -76,7 +80,7 @@ public class MakeBetCommand implements Command {
 				return url;
 			}
 			makeBetDTO.setEventsList(eventsList);
-			
+
 			boolean result;
 
 			try {

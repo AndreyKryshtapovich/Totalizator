@@ -20,7 +20,7 @@ public interface ClientOperationService {
 	 * Creates a new user in the system with role "user".
 	 * 
 	 * @param userDTO
-	 *            {@link by.epamtr.totalizator.bean.dto.UserDTO} object
+	 *            {@link by.epamtr.totalizator.bean.dto.UserDTO } object
 	 *            representing new user with all information about him.
 	 * @param password
 	 *            user's password for encrypting.

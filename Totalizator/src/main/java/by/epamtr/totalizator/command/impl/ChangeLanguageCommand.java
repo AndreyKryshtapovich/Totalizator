@@ -8,24 +8,26 @@ import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 
 /**
- * Class is designed for localization. 
- * @author Andrey
+ * Class is designed for localization.
+ * 
+ * @author Andrey Kryshtapovich
  *
  */
 public class ChangeLanguageCommand implements Command {
-	
+
 	private final static String LOCAL = "local";
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String LOCALHOST = "index.jsp";
+
 	/**
-	 *  Changes the session's attribute "local" and exceeds previous URL.
-	 *  Available for every user.
+	 * Changes the session's attribute "local" and exceeds previous URL.
+	 * Available for every user.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 		String url = null;
 		HttpSession session = request.getSession(false);
-	
+
 		if (session == null) {
 			url = LOCALHOST;
 			return url;

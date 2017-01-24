@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * represents the drawing of the totalizator that lasts for a week. Users are
  * allowed to make bets on particular game coupons.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class GameCupoun implements Serializable {

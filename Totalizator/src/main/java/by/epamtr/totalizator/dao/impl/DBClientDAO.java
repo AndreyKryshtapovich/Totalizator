@@ -21,8 +21,17 @@ import by.epamtr.totalizator.dao.ClientDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
+/**
+ * This class is the implementation of the
+ * {@link by.epamtr.totalizator.dao.ClientDAO} for working with database.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class DBClientDAO implements ClientDAO {
+
 	private final static Logger Logger = LogManager.getLogger(DBClientDAO.class.getName());
+
 	private final static String REGISTRATION_USER = " INSERT INTO `user` (first_name,last_name,login,password,sex,e_mail,country,city,address,role)"
 			+ "VALUES" + "(?,?,?,?,?,?,?,?,?,'user');";
 
@@ -44,7 +53,7 @@ public class DBClientDAO implements ClientDAO {
 
 	private final static String INSERT_INTO_USER_BET_DETAIL = "INSERT INTO `totalizator`.`user_bet_detail`"
 			+ " (`bet_id`," + " `event_id`," + " `result_id`)" + "VALUES (?,?,?);";
-	
+
 	private final static String GET_LAST_INSERTED_ID = "SELECT LAST_INSERT_ID();";
 
 	@Override
@@ -97,7 +106,7 @@ public class DBClientDAO implements ClientDAO {
 		} catch (ConnectionPoolException e) {
 			throw new DAOException("Connection failed.", e);
 		}
-		
+
 		try {
 			ps = con.prepareStatement(GET_EVENTS_INFO);
 			ps.setInt(1, gameCouponId);
@@ -189,7 +198,6 @@ public class DBClientDAO implements ClientDAO {
 		PreparedStatement ps = null;
 		Statement st = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		
 
 		try {
 			con = connectionPool.takeConnection();
@@ -204,7 +212,7 @@ public class DBClientDAO implements ClientDAO {
 			ps = con.prepareStatement(INSERT_INTO_BET);
 			ps.setInt(1, makeBetDTO.getUser().getUserId());
 			ps.setInt(2, Integer.valueOf(makeBetDTO.getGameCouponId()));
-			
+
 			ps.setString(3, encryptedCardNumber);
 			ps.setInt(4, Integer.valueOf(makeBetDTO.getBetAmount()));
 			ps.setTimestamp(5, currentTime);
@@ -219,13 +227,12 @@ public class DBClientDAO implements ClientDAO {
 			rs = st.executeQuery(GET_LAST_INSERTED_ID);
 			rs.next();
 			int lastInsertedBetId = rs.getInt(1);
-			
+
 			rs.close();
 			st.close();
 
 			ps = con.prepareStatement(INSERT_INTO_USER_BET_DETAIL);
 			ps.setInt(1, lastInsertedBetId);
-			
 
 			int eventId = 0;
 			int resultId = 0;
@@ -235,27 +242,27 @@ public class DBClientDAO implements ClientDAO {
 				resultId = Integer.valueOf(makeBetDTO.getUserResultMap().get("result" + new Integer(i).toString()));
 				ps.setInt(2, eventId);
 				ps.setInt(3, resultId);
-				
+
 				if (ps.executeUpdate() == 0) {
 					result = false;
 					return result;
 				}
 			}
-			
+
 			con.commit();
 
 		} catch (SQLException e1) {
 			try {
 				con.rollback();
 			} catch (SQLException e) {
-				Logger.error("Failed rollback a transaction.",e);
+				Logger.error("Failed rollback a transaction.", e);
 			}
 			throw new DAOException("Database access error. Failed inserting bet data.", e1);
 		} finally {
 			try {
 				con.setAutoCommit(true);
 			} catch (SQLException e) {
-				Logger.error("Failed setting AutoCommit = true.",e);
+				Logger.error("Failed setting AutoCommit = true.", e);
 			}
 			if (rs != null) {
 				try {

@@ -19,6 +19,12 @@ import by.epamtr.totalizator.dao.DAOFactory;
 import by.epamtr.totalizator.dao.exception.DAOException;
 import by.epamtr.totalizator.util.Utils;
 
+/**
+ * This class is designed to validate service method's parameters.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class Validator {
 
 	private final static String CLOSED = "Closed";
@@ -27,6 +33,17 @@ public class Validator {
 	private final static int EVENTS_COUNT = 15;
 	private final static String IS_DIGITS = "\\d+";
 
+	/**
+	 * Validates user's login and password for authentication. Parameters
+	 * shouldn't be empty.
+	 * 
+	 * @param login
+	 *            user's login.
+	 * @param password
+	 *            user's password.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean loginValidation(String login, byte[] password) {
 
 		if (login.isEmpty()) {
@@ -39,6 +56,21 @@ public class Validator {
 		return true;
 	}
 
+	/**
+	 * Validates information about new user before registration. Required
+	 * information: first name, last name, login, sex, e-mail and country.
+	 * Password and repeated password should be equals.
+	 * 
+	 * @param userDTO
+	 *            {@link by.epamtr.totalizator.bean.dto.UserDTO} object that
+	 *            represents information about new user.
+	 * @param password
+	 *            user's password.
+	 * @param repPassword
+	 *            user's repeated password.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean userInfoValidation(UserDTO userDTO, byte[] password, byte[] repPassword) {
 
 		if (userDTO.getFirstName().isEmpty()) {
@@ -69,6 +101,17 @@ public class Validator {
 		return true;
 
 	}
+
+	/**
+	 * Parameters shouldn't be empty. Game coupon's end date should be after
+	 * it's start date. Minimum bet amount should be greater then zero.
+	 * 
+	 * @param gameCupounDTO
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO} object
+	 *            that represents particular game coupon.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 
 	public static boolean newGameCupounInfoValidation(GameCupounDTO gameCupounDTO) {
 
@@ -115,6 +158,16 @@ public class Validator {
 		return true;
 	}
 
+	/**
+	 * Fields that represent information about new event shouldn't be empty.
+	 * Event's end date should be after it's start date.
+	 * 
+	 * @param eventDTO
+	 *            {@link by.epamtr.totalizator.bean.dto.EventDTO} object that
+	 *            represents new event.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean newEventInfoValidation(EventDTO eventDTO) {
 
 		if (eventDTO.getEventName().isEmpty()) {
@@ -160,6 +213,22 @@ public class Validator {
 		return true;
 	}
 
+	/**
+	 * Validates new information about event which is going to be updated.
+	 * Fields that represent information about event shouldn't be empty. Event's
+	 * end date should be after it's start date. Event's start date should be
+	 * after game coupon's end date. Event should end in 2 days since game
+	 * coupon's end date. If event has passed we are able to set statuses Closed
+	 * (result can not be Unknown-4) or Cancelled (result should be Unknown-4).
+	 * If event has't passed yet we are able to set any statuses except Closed
+	 * (result - Unknown-4 only).
+	 * 
+	 * @param eventDTO
+	 *            {@link by.epamtr.totalizator.bean.dto.EventDTO} object that
+	 *            represents new event.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean updateEventValidation(EventDTO eventDTO) {
 
 		DAOFactory factory = DAOFactory.getInstance();
@@ -250,7 +319,8 @@ public class Validator {
 		}
 
 		Calendar cal = Calendar.getInstance();
-		// event should end in 2 days since game cupoun end date
+
+		// Event should end in 2 days since game coupon's end date.
 		cal.setTimeInMillis(game.getEndDate().getTime());
 		cal.add(Calendar.DAY_OF_MONTH, 2);
 		Timestamp gameEndDatePlus2 = new Timestamp(cal.getTime().getTime());
@@ -294,6 +364,20 @@ public class Validator {
 		return true;
 	}
 
+	/**
+	 * Validates new information about game coupon which is going to be updated.
+	 * Fields that represent information about game coupon shouldn't be empty.
+	 * Jackpot should be greater then zero or equal to it. Minimum bet amount
+	 * should be greater then zero. Game coupon's end date should be after it's
+	 * start date.
+	 * 
+	 * @param gameDTO
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO} object
+	 *            that represents particular game coupon.
+	 * 
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean updateGameCouponValidation(GameCupounDTO gameDTO) {
 
 		if (gameDTO.getGameCupounId().isEmpty()) {
@@ -351,6 +435,15 @@ public class Validator {
 
 	}
 
+	/**
+	 * Validates value provided by the dropdown. Empty dropdown should't be
+	 * submitted.
+	 * 
+	 * @param parameters
+	 *            value provided by the dropdown.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean dropDownValidation(String parameters) {
 		boolean result = true;
 
@@ -360,6 +453,18 @@ public class Validator {
 		return result;
 	}
 
+	/**
+	 * Validates information about user's bet. Credit card number shouldn't be
+	 * empty. User should suggest results for all 15 events.
+	 * 
+	 * @param makeBetDTO
+	 *            {@link by.epamtr.totalizator.bean.dto.MakeBetDTO} object that
+	 *            represents information about user's bet.
+	 * @param creditCardNumber
+	 *            user's credit card number.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean makeBetValidation(MakeBetDTO makeBetDTO, byte[] creditCardNumber) {
 		if (creditCardNumber.length == 0) {
 			return false;
@@ -370,6 +475,14 @@ public class Validator {
 		return true;
 	}
 
+	/**
+	 * Validates a parameter that should be a number that is greater than zero.
+	 * 
+	 * @param parameter
+	 *            {@link String} that represents a parameter for validation.
+	 * @return {@code true} if validation passed successfully. {@code false}
+	 *         otherwise.
+	 */
 	public static boolean digitParameterValidation(String parameter) {
 
 		if (parameter.isEmpty()) {

@@ -8,7 +8,14 @@ import by.epamtr.totalizator.dao.exception.DAOException;
 import by.epamtr.totalizator.dao.impl.DBInitDAO;
 import by.epamtr.totalizator.service.InitOperationService;
 import by.epamtr.totalizator.service.exception.ServiceException;
-
+/**
+ * This class is the implementation of the
+ * {@link by.epamtr.totalizator.service.InitOperationService} for working with
+ * database.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 
 public class InitOperation implements InitOperationService {
 	private final static Logger Logger = LogManager.getLogger(InitOperation.class.getName());

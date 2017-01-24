@@ -22,7 +22,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
  * coupon. Event will no longer being associated with particular game coupon.
  * Available for administrator only.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class UnmatchEventCommand implements Command {

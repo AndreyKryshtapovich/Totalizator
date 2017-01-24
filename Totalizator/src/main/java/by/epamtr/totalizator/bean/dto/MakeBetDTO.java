@@ -10,7 +10,7 @@ import by.epamtr.totalizator.bean.entity.User;
 /**
  * A Data Transfer Object that represents the bet of a particular user.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class MakeBetDTO implements Serializable {

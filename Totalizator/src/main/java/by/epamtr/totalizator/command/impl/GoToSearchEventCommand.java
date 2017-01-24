@@ -19,7 +19,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
  * page where he can select a game coupon (only in the In developing status) and
  * search for it's events.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class GoToSearchEventCommand implements Command {
@@ -27,9 +27,10 @@ public class GoToSearchEventCommand implements Command {
 	private final static String GO_TO_SEARCH_EVENT = "Controller?command=go-to-search-event";
 	private final static String CURRENT_URL = "currentUrl";
 	private final static String GAMES = "games";
+
 	/**
-	 * Method saves current URL in session. Gets all parameters. Returns required path 
-	 * to the page.
+	 * Method saves current URL in session. Gets all parameters. Returns
+	 * required path to the page.
 	 */
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

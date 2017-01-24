@@ -8,6 +8,13 @@ import javax.servlet.jsp.tagext.TagSupport;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 
+/**
+ * This class is designed to print a table with the information about events and
+ * the buttons to edit events.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class EventDetailsTableTag extends TagSupport {
 	private static final long serialVersionUID = 1L;
 	private String eventName;
@@ -19,87 +26,95 @@ public class EventDetailsTableTag extends TagSupport {
 	private String status;
 	private String edit;
 	private JSPListBean eventsList;
-	
+
 	public int doStartTag() throws JspTagException {
-		
-		if(eventsList.getSize() == 0){
+
+		if (eventsList.getSize() == 0) {
 			try {
 				pageContext.getOut().write("<p> There are no events matched to this game.</p>");
 				return SKIP_BODY;
 			} catch (IOException e) {
 				throw new JspTagException(e.getMessage());
 			}
-		}else{
-		int size = new Integer(eventsList.getSize());
-		try {
-			pageContext.getOut().write("<table border='1' cellpadding='5' cellspacing='3'>");
-			pageContext.getOut().write("<tr><th>");
-			pageContext.getOut().write("#" +"</th>");
-			
-			pageContext.getOut().write("<th>" + eventName + "</th>");
-			pageContext.getOut().write("<th>" + teamOne + "</th>");
-			pageContext.getOut().write("<th>" + teamTwo + "</th>");
-			pageContext.getOut().write("<th>" + result + "</th>");
-			pageContext.getOut().write("<th>" + startDate + "</th>");
-			pageContext.getOut().write("<th>" + endDate + "</th>");
-			pageContext.getOut().write("<th>" + status + "</th>");
-			pageContext.getOut().write("</th></tr>");
+		} else {
+			int size = new Integer(eventsList.getSize());
+			try {
+				pageContext.getOut().write("<table border='1' cellpadding='5' cellspacing='3'>");
+				pageContext.getOut().write("<tr><th>");
+				pageContext.getOut().write("#" + "</th>");
 
-			for(int i=0; i<size; i++) {
-				Event event = eventsList.getElement();
-				pageContext.getOut().write("<tr>");
-				pageContext.getOut().write("<td>");
-				pageContext.getOut().write(new Integer(i+1).toString());
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<form action='Controller' method='get' name='go-to-event-edit'>");
-				pageContext.getOut().write("<input type='hidden' name='command' value='go-to-event-edit' />");
-				pageContext.getOut().write("<input type='hidden' name='eventId' value='" + new Integer(event.getEventId()).toString() + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='gameId' value='" + new Integer(event.getGameCuponId()).toString() + "'/>");
-				
-				pageContext.getOut().write("<input type='hidden' name='eventName' value='" + event.getEventName() + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='teamOne' value='" + event.getTeamOne() + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='teamTwo' value='" + event.getTeamTwo() + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='resultId' value='" + new Integer(event.getResultId()) + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='startDate' value='" + event.getStartDate().toString() + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='endDate' value='" + event.getEndDate().toString() + "'/>");
-				pageContext.getOut().write("<input type='hidden' name='statusId' value='" + new Integer(event.getStatus()).toString() + "'/>");
-				
-				
-				pageContext.getOut().write("<td>");
-				pageContext.getOut()
-						.write(event.getEventName());
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<td align='center'>");
-				pageContext.getOut().write(event.getTeamOne());
-				pageContext.getOut().write("</td align='center'>");
-				pageContext.getOut().write("<td align='center'>");
-				pageContext.getOut().write(event.getTeamTwo());
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<td align='center'>");
-				pageContext.getOut().write(event.getResultAbbreviation());
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<td align='center'>");
-				pageContext.getOut().write(event.getStartDate().toString());
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<td align='center'>");
-				pageContext.getOut().write(event.getEndDate().toString());
-				pageContext.getOut().write("</td>");
-				
-				pageContext.getOut().write("<td align='center'>");
-				pageContext.getOut().write(event.getStatusDescription());
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("<td>");
-				pageContext.getOut().write("<button type='submit' style='top:0px; left:0px;' class='addEmailBtn'>" + edit + "</button>");
-				pageContext.getOut().write("</td>");
-				pageContext.getOut().write("</form>");
+				pageContext.getOut().write("<th>" + eventName + "</th>");
+				pageContext.getOut().write("<th>" + teamOne + "</th>");
+				pageContext.getOut().write("<th>" + teamTwo + "</th>");
+				pageContext.getOut().write("<th>" + result + "</th>");
+				pageContext.getOut().write("<th>" + startDate + "</th>");
+				pageContext.getOut().write("<th>" + endDate + "</th>");
+				pageContext.getOut().write("<th>" + status + "</th>");
+				pageContext.getOut().write("</th></tr>");
+
+				for (int i = 0; i < size; i++) {
+					Event event = eventsList.getElement();
+					pageContext.getOut().write("<tr>");
+					pageContext.getOut().write("<td>");
+					pageContext.getOut().write(new Integer(i + 1).toString());
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("<form action='Controller' method='get' name='go-to-event-edit'>");
+					pageContext.getOut().write("<input type='hidden' name='command' value='go-to-event-edit' />");
+					pageContext.getOut().write("<input type='hidden' name='eventId' value='"
+							+ new Integer(event.getEventId()).toString() + "'/>");
+					pageContext.getOut().write("<input type='hidden' name='gameId' value='"
+							+ new Integer(event.getGameCuponId()).toString() + "'/>");
+
+					pageContext.getOut()
+							.write("<input type='hidden' name='eventName' value='" + event.getEventName() + "'/>");
+					pageContext.getOut()
+							.write("<input type='hidden' name='teamOne' value='" + event.getTeamOne() + "'/>");
+					pageContext.getOut()
+							.write("<input type='hidden' name='teamTwo' value='" + event.getTeamTwo() + "'/>");
+					pageContext.getOut().write(
+							"<input type='hidden' name='resultId' value='" + new Integer(event.getResultId()) + "'/>");
+					pageContext.getOut().write(
+							"<input type='hidden' name='startDate' value='" + event.getStartDate().toString() + "'/>");
+					pageContext.getOut().write(
+							"<input type='hidden' name='endDate' value='" + event.getEndDate().toString() + "'/>");
+					pageContext.getOut().write("<input type='hidden' name='statusId' value='"
+							+ new Integer(event.getStatus()).toString() + "'/>");
+
+					pageContext.getOut().write("<td>");
+					pageContext.getOut().write(event.getEventName());
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("<td align='center'>");
+					pageContext.getOut().write(event.getTeamOne());
+					pageContext.getOut().write("</td align='center'>");
+					pageContext.getOut().write("<td align='center'>");
+					pageContext.getOut().write(event.getTeamTwo());
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("<td align='center'>");
+					pageContext.getOut().write(event.getResultAbbreviation());
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("<td align='center'>");
+					pageContext.getOut().write(event.getStartDate().toString());
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("<td align='center'>");
+					pageContext.getOut().write(event.getEndDate().toString());
+					pageContext.getOut().write("</td>");
+
+					pageContext.getOut().write("<td align='center'>");
+					pageContext.getOut().write(event.getStatusDescription());
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("<td>");
+					pageContext.getOut().write("<button type='submit' style='top:0px; left:0px;' class='addEmailBtn'>"
+							+ edit + "</button>");
+					pageContext.getOut().write("</td>");
+					pageContext.getOut().write("</form>");
+					pageContext.getOut().write("</tr>");
+				}
 				pageContext.getOut().write("</tr>");
+				pageContext.getOut().write("</table>");
+			} catch (IOException e) {
+				throw new JspTagException(e.getMessage());
 			}
-			pageContext.getOut().write("</tr>");
-			pageContext.getOut().write("</table>");
-		} catch (IOException e) {
-			throw new JspTagException(e.getMessage());
-		}
-		return SKIP_BODY;
+			return SKIP_BODY;
 		}
 	}
 
@@ -178,6 +193,5 @@ public class EventDetailsTableTag extends TagSupport {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 }

@@ -11,7 +11,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
  * Class is designed to process request for initializing data source for working
  * with DB.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class InitConnectionPoolCommand {

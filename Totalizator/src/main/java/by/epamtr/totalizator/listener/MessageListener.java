@@ -6,6 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import by.epamtr.totalizator.controller.filter.CommandChecker;
 
+/**
+ * This listener is designed to delete messages that are stored in session.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class MessageListener implements ServletRequestListener {
 
 	private final static String COMMAND = "command";
@@ -21,6 +27,10 @@ public class MessageListener implements ServletRequestListener {
 
 	}
 
+	/**
+	 * When request is destroyed method checks the HTTP method used to send a
+	 * request and if it is GET removes messages from the session.
+	 */
 	public void requestDestroyed(ServletRequestEvent arg0) {
 		HttpServletRequest request = (HttpServletRequest) arg0.getServletRequest();
 		CommandChecker checker = new CommandChecker();
@@ -31,10 +41,10 @@ public class MessageListener implements ServletRequestListener {
 					request.getSession(false).removeAttribute(RESULT);
 					request.getSession(false).removeAttribute(BET_AMOUNT_RESULT);
 					request.getSession(false).removeAttribute(PARAM_RESULT);
-					
-					request.getSession(false).removeAttribute( SUCCESS_CLOSE_MSG );
-					request.getSession(false).removeAttribute( CANSELLED_MSG );
-					request.getSession(false).removeAttribute( ROLLBACK_MSG );
+
+					request.getSession(false).removeAttribute(SUCCESS_CLOSE_MSG);
+					request.getSession(false).removeAttribute(CANSELLED_MSG);
+					request.getSession(false).removeAttribute(ROLLBACK_MSG);
 				}
 			}
 		}

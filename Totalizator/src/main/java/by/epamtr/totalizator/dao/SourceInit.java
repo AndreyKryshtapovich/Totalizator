@@ -6,7 +6,7 @@ import by.epamtr.totalizator.dao.exception.DAOException;
  * Interface contains methods required for initialization of the data source for
  * working with data storage.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public interface SourceInit {

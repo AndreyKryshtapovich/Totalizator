@@ -21,7 +21,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
  * page where he can select a game coupon (except closed and cancelled ones) and
  * search for it's events.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class GoToEditSearchEventCommand implements Command {

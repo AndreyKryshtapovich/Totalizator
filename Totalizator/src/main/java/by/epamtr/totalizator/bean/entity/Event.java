@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  * This class is designed to represent the event's entity. Event is a football
  * match available for betting.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 public class Event implements Serializable {

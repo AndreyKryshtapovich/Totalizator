@@ -23,6 +23,13 @@ import by.epamtr.totalizator.dao.AdminDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
+/**
+ * This class is the implementation of the
+ * {@link by.epamtr.totalizator.dao.AdminDAO} for working with database.
+ * 
+ * @author Andrey Kryshtapovich
+ *
+ */
 public class DBAdminDAO implements AdminDAO {
 	private final static Logger Logger = LogManager.getLogger(DBClientDAO.class.getName());
 
@@ -75,23 +82,18 @@ public class DBAdminDAO implements AdminDAO {
 
 	public final static String GET_STATUS_DICTIONARY_DATA = "SELECT `status`.`status_id`,"
 			+ " `status`.`status_description`" + " FROM `totalizator`.`status`;";
-	
+
 	private final static String UNMATCH_EVENT_AND_GAME = "UPDATE `totalizator`.`event`" + " SET"
 			+ " `game_cupon_id` = null" + " WHERE `event_id` = ?;";
-	
+
 	private final static String DELETE_EVENT = "DELETE FROM `totalizator`.`event`"
 			+ " WHERE `totalizator`.`event`.event_id = ?;";
 
 	private final static String CLOSE_GAME_COUPON = "{ call close_game_coupon(?,?) }";
-	
-	private final static String UPDATE_GAME_COUPON = " UPDATE `totalizator`.`game_cupon`"
-			+ " SET"
-			+ " `start_date` = ?,"
-			+ " `end_date` = ?,"
-			+ " `min_bet_amount` = ?,"
-			+ " `jackpot` = ?,"
-			+ " `status_id` = ?"
-			+ " WHERE `game_cupon_id` = ?;";
+
+	private final static String UPDATE_GAME_COUPON = " UPDATE `totalizator`.`game_cupon`" + " SET"
+			+ " `start_date` = ?," + " `end_date` = ?," + " `min_bet_amount` = ?," + " `jackpot` = ?,"
+			+ " `status_id` = ?" + " WHERE `game_cupon_id` = ?;";
 
 	@Override
 	public boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException {
@@ -148,7 +150,10 @@ public class DBAdminDAO implements AdminDAO {
 			ps.setString(3, event.getTeamTwo());
 			ps.setTimestamp(4, event.getStartDate());
 			ps.setTimestamp(5, event.getEndDate());
-			ps.setInt(6, 1); // by default status = 1 (opened)
+			/**
+			 * by default status = 1 (opened)
+			 */
+			ps.setInt(6, 1);
 
 			if (ps.executeUpdate() == 0) {
 				result = false;
@@ -216,9 +221,11 @@ public class DBAdminDAO implements AdminDAO {
 
 		try {
 			Calendar cal = Calendar.getInstance();
-			// event should end in 2 days since game coupon end date
-			// gameCouponEndDate + 2
-			// event should start after gameCouponEndDate
+			/**
+			 * event should end in 2 days since game coupon end date
+			 * (gameCouponEndDate + 2 days). Event should start after
+			 * gameCouponEndDate.
+			 */
 			cal.setTimeInMillis(gameEndDate.getTime());
 			cal.add(Calendar.DAY_OF_MONTH, 2);
 			Timestamp gameEndDatePlus2 = new Timestamp(cal.getTime().getTime());
@@ -352,7 +359,6 @@ public class DBAdminDAO implements AdminDAO {
 
 	@Override
 	public List<GameCupoun> getAllGames() throws DAOException {
-		// all games exept closed and canseled games
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -615,7 +621,7 @@ public class DBAdminDAO implements AdminDAO {
 		} catch (SQLException e1) {
 			throw new DAOException("Database access error. Failed to close game coupon.", e1);
 		} finally {
-			
+
 			if (cs != null) {
 				try {
 					cs.close();
@@ -623,7 +629,7 @@ public class DBAdminDAO implements AdminDAO {
 					Logger.error(e);
 				}
 			}
-			
+
 			connectionPool.closeConnection(con);
 		}
 	}
@@ -642,7 +648,7 @@ public class DBAdminDAO implements AdminDAO {
 			} catch (ConnectionPoolException e) {
 				throw new DAOException("Connection failed.", e);
 			}
-			
+
 			ps = con.prepareStatement(UPDATE_GAME_COUPON);
 			ps.setTimestamp(1, game.getStartDate());
 			ps.setTimestamp(2, game.getEndDate());

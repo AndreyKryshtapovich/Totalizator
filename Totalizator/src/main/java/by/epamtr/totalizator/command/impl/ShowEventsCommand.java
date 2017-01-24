@@ -21,7 +21,7 @@ import by.epamtr.totalizator.service.exception.ServiceException;
 /**
  * Class is designed to show user all events available for betting.
  * 
- * @author Andrey
+ * @author Andrey Kryshtapovich
  *
  */
 
