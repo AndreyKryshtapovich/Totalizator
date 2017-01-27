@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import by.epamtr.totalizator.bean.entity.User;
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.GeneralDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.exception.DAOException;
 /**
  * This class is the implementation of the

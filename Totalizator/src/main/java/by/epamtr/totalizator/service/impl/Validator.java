@@ -313,22 +313,23 @@ public class Validator {
 		if (event.getEndDate().before(event.getStartDate())) {
 			return false;
 		}
-
 		if (!(event.getStartDate().after(game.getEndDate()))) {
 			return false;
 		}
-
+	
 		Calendar cal = Calendar.getInstance();
 
 		// Event should end in 2 days since game coupon's end date.
 		cal.setTimeInMillis(game.getEndDate().getTime());
 		cal.add(Calendar.DAY_OF_MONTH, 2);
 		Timestamp gameEndDatePlus2 = new Timestamp(cal.getTime().getTime());
-
+		
+		
 		if (!(event.getEndDate().before(gameEndDatePlus2))) {
 			return false;
 		}
-
+		
+		
 		cal = Calendar.getInstance();
 		Timestamp currentTimestamp = new Timestamp(cal.getTime().getTime());
 
@@ -338,11 +339,13 @@ public class Validator {
 			if (!eventStatus.equals(CLOSED) && !eventStatus.equals(CANSELLED)) {
 				return false;
 			}
+			
 			if (eventStatus.equals(CLOSED)) {
 				if (event.getResultId() == UNKNOWN) {
 					return false;
 				}
 			}
+			
 			if (eventStatus.equals(CANSELLED)) {
 				if (event.getResultId() != UNKNOWN) {
 					return false;
@@ -352,6 +355,7 @@ public class Validator {
 
 		// event has't passed yet w are able to set any statuses except
 		// Closed(result - Unknown-4 only)
+		
 		if (event.getEndDate().after(currentTimestamp)) {
 			if (eventStatus.equals(CLOSED)) {
 				return false;

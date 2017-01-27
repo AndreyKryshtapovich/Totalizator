@@ -17,9 +17,9 @@ import org.junit.Test;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.command.impl.DestroyConnectionPoolCommand;
 import by.epamtr.totalizator.command.impl.InitConnectionPoolCommand;
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.DAOFactory;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.exception.DAOException;
 import by.epamtr.totalizator.dao.impl.DBAdminDAO;
 
@@ -62,6 +62,7 @@ public class UpdateGameCouponTest {
 		command.execute();
 	}
 
+	
 	@Test
 	public void test() {
 		

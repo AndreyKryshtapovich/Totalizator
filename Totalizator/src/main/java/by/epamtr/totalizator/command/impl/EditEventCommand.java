@@ -80,6 +80,7 @@ public class EditEventCommand implements Command {
 
 			EventDTO eventDTO = new EventDTO();
 
+			
 			eventDTO.setEventId(eventId);
 			eventDTO.setEventName(eventName);
 			eventDTO.setTeamOne(teamOne);

@@ -3,9 +3,9 @@ package by.epamtr.totalizator.dao.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.SourceInit;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.exception.DAOException;
 /**
  * This class is the implementation of the

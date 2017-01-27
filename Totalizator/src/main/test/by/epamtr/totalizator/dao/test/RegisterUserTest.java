@@ -20,9 +20,9 @@ import org.junit.Test;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.impl.DestroyConnectionPoolCommand;
 import by.epamtr.totalizator.command.impl.InitConnectionPoolCommand;
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.DAOFactory;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.exception.DAOException;
 import by.epamtr.totalizator.dao.impl.DBClientDAO;
 import junit.framework.Assert;
@@ -61,7 +61,7 @@ public class RegisterUserTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
 	@Test
 	public void test() {
 		int rowCountBeforeTest = 0;

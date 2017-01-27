@@ -26,7 +26,7 @@ import java.util.concurrent.Executor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 
 /**
  * This class is designed to store opened database connections for reusing them.
@@ -179,20 +179,26 @@ public final class ConnectionPool {
 	 *            {@link ResultSet} instance.
 	 */
 	public void closeConnection(Connection con, PreparedStatement ps, ResultSet rs) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			Logger.error("Connection isn't return to the pool.");
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Logger.error("Connection isn't return to the pool.");
+			}
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			Logger.error("ResultSet isn't closed.");
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				Logger.error("ResultSet isn't closed.");
+			}
 		}
-		try {
-			ps.close();
-		} catch (SQLException e) {
-			Logger.error("PreparedStatement isn't closed.");
+		if (ps != null) {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				Logger.error("PreparedStatement isn't closed.");
+			}
 		}
 	}
 
@@ -209,26 +215,34 @@ public final class ConnectionPool {
 	 *            {@link ResultSet} instance.
 	 */
 	public void closeConnection(Connection con, PreparedStatement ps, Statement st, ResultSet rs) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			Logger.error("Connection isn't return to the pool.");
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Logger.error("Connection isn't return to the pool.");
+			}
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			Logger.error("ResultSet isn't closed.");
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				Logger.error("ResultSet isn't closed.");
+			}
 		}
-		try {
-			ps.close();
-		} catch (SQLException e) {
-			Logger.error("PreparedStatement isn't closed.");
+		if (ps != null) {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				Logger.error("PreparedStatement isn't closed.");
+			}
 		}
+		if (st != null) {
 
-		try {
-			st.close();
-		} catch (SQLException e) {
-			Logger.error("Statement isn't closed.");
+			try {
+				st.close();
+			} catch (SQLException e) {
+				Logger.error("Statement isn't closed.");
+			}
 		}
 	}
 
@@ -243,20 +257,26 @@ public final class ConnectionPool {
 	 *            {@link ResultSet} instance.
 	 */
 	public void closeConnection(Connection con, Statement st, ResultSet rs) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			Logger.error("Connection isn't return to the pool.");
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Logger.error("Connection isn't return to the pool.");
+			}
 		}
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			Logger.error("ResultSet isn't closed.");
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				Logger.error("ResultSet isn't closed.");
+			}
 		}
-		try {
-			st.close();
-		} catch (SQLException e) {
-			Logger.error("Statement isn't closed.");
+		if (st != null) {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				Logger.error("Statement isn't closed.");
+			}
 		}
 	}
 
@@ -269,15 +289,19 @@ public final class ConnectionPool {
 	 *            {@link Statement} instance.
 	 */
 	public void closeConnection(Connection con, Statement st) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			Logger.error("Connection isn't return to the pool.");
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Logger.error("Connection isn't return to the pool.");
+			}
 		}
-		try {
-			st.close();
-		} catch (SQLException e) {
-			Logger.error("Statement isn't closed.");
+		if (st != null) {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				Logger.error("Statement isn't closed.");
+			}
 		}
 	}
 
@@ -288,10 +312,12 @@ public final class ConnectionPool {
 	 *            {@link Connection} instance.
 	 */
 	public void closeConnection(Connection con) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			Logger.error("Connection isn't return to the pool.");
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Logger.error("Connection isn't return to the pool.");
+			}
 		}
 	}
 
@@ -304,15 +330,19 @@ public final class ConnectionPool {
 	 *            {@link PreparedStatement} instance.
 	 */
 	public void closeConnection(Connection con, PreparedStatement ps) {
-		try {
-			con.close();
-		} catch (SQLException e) {
-			Logger.error("Connection isn't return to the pool.");
+		if (con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				Logger.error("Connection isn't return to the pool.");
+			}
 		}
-		try {
-			ps.close();
-		} catch (SQLException e) {
-			Logger.error("Statement isn't closed.");
+		if (ps != null) {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				Logger.error("Statement isn't closed.");
+			}
 		}
 	}
 
@@ -325,11 +355,15 @@ public final class ConnectionPool {
 	 */
 	private class PooledConnection implements Connection {
 		private Connection connection;
+
 		/**
-		 * Initializes a new instance of PooledConnection and sets auto commit: true.
+		 * Initializes a new instance of PooledConnection and sets auto commit:
+		 * true.
 		 * 
-		 * @param c {@link Connection} instance.
-		 * @throws SQLException if setting auto commit mode fails.
+		 * @param c
+		 *            {@link Connection} instance.
+		 * @throws SQLException
+		 *             if setting auto commit mode fails.
 		 */
 		public PooledConnection(Connection c) throws SQLException {
 			this.connection = c;

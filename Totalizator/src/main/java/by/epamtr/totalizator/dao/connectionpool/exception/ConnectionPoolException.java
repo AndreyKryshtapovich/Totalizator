@@ -1,4 +1,4 @@
-package by.epamtr.totalizator.connectionpool.exception;
+package by.epamtr.totalizator.dao.connectionpool.exception;
 
 /**
  * Thrown when an issue occurred while working with

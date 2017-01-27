@@ -3,6 +3,7 @@ package by.epamtr.totalizator.command.impl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.controller.PageName;
@@ -18,6 +19,8 @@ import by.epamtr.totalizator.controller.PageName;
 public class GoToAdminPageCommand implements Command {
 	private final static String GO_TO_ADMIN_PAGE = "Controller?command=go-to-admin-page";
 	private final static String CURRENT_URL = "currentUrl";
+	private final static String USER = "user";
+	private final static String ADMIN = "admin";
 
 	/**
 	 * Saves current URL in session and return required path to the page.
@@ -31,7 +34,13 @@ public class GoToAdminPageCommand implements Command {
 			page = PageName.INDEX_PAGE;
 			return page;
 		}
-		request.getSession(false).setAttribute(CURRENT_URL, url);
+		User user = (User) request.getSession(false).getAttribute(USER);
+
+		if (user != null && user.getRole().equals(ADMIN)) {
+			request.getSession(false).setAttribute(CURRENT_URL, url);
+		} else {
+			page = PageName.INDEX_PAGE;
+		}
 
 		return page;
 	}

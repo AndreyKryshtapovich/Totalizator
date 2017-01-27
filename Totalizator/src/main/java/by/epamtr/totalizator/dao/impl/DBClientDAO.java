@@ -16,9 +16,9 @@ import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
 import by.epamtr.totalizator.bean.entity.User;
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.ClientDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
 /**
@@ -135,6 +135,7 @@ public class DBClientDAO implements ClientDAO {
 
 	@Override
 	public GameCupoun getOpenedGame() throws DAOException {
+
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -147,28 +148,14 @@ public class DBClientDAO implements ClientDAO {
 			throw new DAOException("Connection failed.", e);
 		}
 
-		try {
-			st = con.createStatement();
-			rs = st.executeQuery(GET_OPENED_GAMES_COUNT);
-			rs.next();
-			int openedGamesCount = rs.getInt(1);
+		int openedGamesCount = getOpenedGamesCount();
 
-			if (openedGamesCount != 1) {
-				throw new DAOException("Invalid number of currently opened games.");
-			}
-		} catch (SQLException e1) {
-			throw new DAOException("Database access error. Failed data obtaining.", e1);
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					Logger.error(e);
-				}
-			}
+		if (openedGamesCount != 1) {
+			throw new DAOException("Invalid number of currently opened games.");
 		}
 
 		try {
+			st = con.createStatement();
 			rs = st.executeQuery(GET_OPENED_GAME);
 
 			while (rs.next()) {
@@ -289,4 +276,43 @@ public class DBClientDAO implements ClientDAO {
 		}
 		return result;
 	}
+
+	/**
+	 * Gets quantity of currently opened game coupons in the system (game
+	 * coupon's status is Opened).
+	 * 
+	 * @return quantity of currently opened game coupons.
+	 * @throws DAOException
+	 *             if obtaining information from the data storage fails.
+	 */
+	private int getOpenedGamesCount() throws DAOException {
+
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ConnectionPool connectionPool = ConnectionPool.getInstance();
+
+		int openedGamesCount = 0;
+
+		try {
+			con = connectionPool.takeConnection();
+		} catch (ConnectionPoolException e) {
+			throw new DAOException("Connection failed.", e);
+		}
+
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(GET_OPENED_GAMES_COUNT);
+			rs.next();
+			openedGamesCount = rs.getInt(1);
+
+		} catch (SQLException e1) {
+			throw new DAOException("Database access error. Failed data obtaining.", e1);
+		} finally {
+			connectionPool.closeConnection(con, st, rs);
+		}
+
+		return openedGamesCount;
+	}
+
 }

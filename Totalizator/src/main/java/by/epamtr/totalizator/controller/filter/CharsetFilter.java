@@ -9,6 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import by.epamtr.totalizator.command.impl.GoToEditSearchEventCommand;
+
 /**
  * This filter sets encoding of requests and responses to UTF-8.
  * 

@@ -18,9 +18,9 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
 import by.epamtr.totalizator.bean.entity.GameCupoun;
-import by.epamtr.totalizator.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.AdminDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
+import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
 /**

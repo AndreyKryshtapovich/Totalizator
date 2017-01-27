@@ -58,7 +58,7 @@
 				</div>
 
 				<div class="form-row">
-					<label for="name">${eventName }</label> <input type="text"
+					<label for="name">${eventName }:</label> <input type="text"
 						name="name" id="name" />
 				</div>
 
