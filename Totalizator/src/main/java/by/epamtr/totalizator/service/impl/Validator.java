@@ -9,11 +9,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import by.epamtr.totalizator.bean.dto.EventDTO;
-import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.GameCouponDTO;
 import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.dao.AdminDAO;
 import by.epamtr.totalizator.dao.DAOFactory;
 import by.epamtr.totalizator.dao.exception.DAOException;
@@ -28,7 +28,7 @@ import by.epamtr.totalizator.util.Utils;
 public class Validator {
 
 	private final static String CLOSED = "Closed";
-	private final static String CANSELLED = "Canselled";
+	private final static String CANCELLED = "Canselled";
 	private final static int UNKNOWN = 4;
 	private final static int EVENTS_COUNT = 15;
 	private final static String IS_DIGITS = "\\d+";
@@ -107,13 +107,13 @@ public class Validator {
 	 * it's start date. Minimum bet amount should be greater then zero.
 	 * 
 	 * @param gameCupounDTO
-	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO} object
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCouponDTO} object
 	 *            that represents particular game coupon.
 	 * @return {@code true} if validation passed successfully. {@code false}
 	 *         otherwise.
 	 */
 
-	public static boolean newGameCupounInfoValidation(GameCupounDTO gameCupounDTO) {
+	public static boolean newGameCupounInfoValidation(GameCouponDTO gameCupounDTO) {
 
 		if (gameCupounDTO.getStartDate().isEmpty()) {
 			return false;
@@ -233,7 +233,7 @@ public class Validator {
 
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO = factory.getDBAdminDAO();
-		List<GameCupoun> gamesList = null;
+		List<GameCoupon> gamesList = null;
 		Map<Integer, String> status;
 
 		if (eventDTO.getEventId().isEmpty()) {
@@ -307,7 +307,7 @@ public class Validator {
 			return false;
 		}
 
-		GameCupoun game = gamesList.get(0);
+		GameCoupon game = gamesList.get(0);
 		String eventStatus = status.get(event.getStatus());
 
 		if (event.getEndDate().before(event.getStartDate())) {
@@ -336,7 +336,7 @@ public class Validator {
 		// if event has passed we are able to set statuses Closed(result can not
 		// be Unknown-4) or Canselled(result should be Unknown-4)
 		if (event.getEndDate().before(currentTimestamp)) {
-			if (!eventStatus.equals(CLOSED) && !eventStatus.equals(CANSELLED)) {
+			if (!eventStatus.equals(CLOSED) && !eventStatus.equals(CANCELLED)) {
 				return false;
 			}
 			
@@ -346,7 +346,7 @@ public class Validator {
 				}
 			}
 			
-			if (eventStatus.equals(CANSELLED)) {
+			if (eventStatus.equals(CANCELLED)) {
 				if (event.getResultId() != UNKNOWN) {
 					return false;
 				}
@@ -376,13 +376,13 @@ public class Validator {
 	 * start date.
 	 * 
 	 * @param gameDTO
-	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO} object
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCouponDTO} object
 	 *            that represents particular game coupon.
 	 * 
 	 * @return {@code true} if validation passed successfully. {@code false}
 	 *         otherwise.
 	 */
-	public static boolean updateGameCouponValidation(GameCupounDTO gameDTO) {
+	public static boolean updateGameCouponValidation(GameCouponDTO gameDTO) {
 
 		if (gameDTO.getGameCupounId().isEmpty()) {
 			return false;

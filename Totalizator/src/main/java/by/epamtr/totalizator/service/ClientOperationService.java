@@ -5,7 +5,7 @@ import java.util.List;
 import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
 /**
@@ -51,11 +51,11 @@ public interface ClientOperationService {
 	 * Gets all information about currently opened game coupon in the system
 	 * (status - Opened).
 	 * 
-	 * @return {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
+	 * @return {@link by.epamtr.totalizator.bean.entity.GameCoupon} object.
 	 * @throws ServiceException
 	 *             if obtaining information fails.
 	 */
-	GameCupoun getOpenedGame() throws ServiceException;
+	GameCoupon getOpenedGame() throws ServiceException;
 
 	/**
 	 * Creates a bet of the particular user in the system. Provides encryption

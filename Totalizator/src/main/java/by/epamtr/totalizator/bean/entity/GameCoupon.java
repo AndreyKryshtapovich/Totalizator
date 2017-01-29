@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * @author Andrey Kryshtapovich
  *
  */
-public class GameCupoun implements Serializable {
+public class GameCoupon implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int gameCupounId;
@@ -27,7 +27,7 @@ public class GameCupoun implements Serializable {
 	 * coupon with out any exact information about it.
 	 */
 
-	public GameCupoun() {
+	public GameCoupon() {
 
 	}
 
@@ -113,7 +113,7 @@ public class GameCupoun implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GameCupoun other = (GameCupoun) obj;
+		GameCoupon other = (GameCoupon) obj;
 		if (endDate == null) {
 			if (other.endDate != null)
 				return false;

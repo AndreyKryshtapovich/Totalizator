@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.controller.PageName;
@@ -104,7 +104,7 @@ public class GoToEventEditCommand implements Command {
 
 		Map<Integer, String> results = null;
 		Map<Integer, String> status = null;
-		GameCupoun game = null;
+		GameCoupon game = null;
 
 		try {
 			results = adminService.getResultDictionaryData();

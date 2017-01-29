@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -48,7 +48,7 @@ public class UnmatchEventCommand implements Command {
 		String url = null;
 		Map<Integer, String> status = null;
 		String event = request.getParameter(EVENT).toString();
-		GameCupoun game = null;
+		GameCoupon game = null;
 
 		if (request.getSession(false) == null) {
 			url = LOCALHOST;

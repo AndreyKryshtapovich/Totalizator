@@ -25,11 +25,11 @@ public class CloseGameCouponCommand implements Command {
 	private final static String GO_TO_ERROR_PAGE = "Controller?command=go-to-error-page";
 	private final static String GO_TO_EDIT_SEARCH = "Controller?command=go-to-edit-search-event";
 	private final static String SUCCESS_CLOSE_MSG = "successCloseMsg";
-	private final static String CANSELLED_MSG = "canselledMsg";
+	private final static String CANCELLED_MSG = "canselledMsg";
 	private final static String ROLLBACK_MSG = "rollbackMsg";
 	private final static int CLOSED_SUCCESSFULLY = 1;
 	private final static int LESS_THEN_15_APPR_EVENTS = -1;
-	private final static int CANSELLED = -2;
+	private final static int CANCELLED = -2;
 	private final static int ROLLBACK = -3;
 
 	/**
@@ -72,8 +72,8 @@ public class CloseGameCouponCommand implements Command {
 				request.getSession(false).setAttribute(SUCCESS_CLOSE_MSG, false);
 			}
 
-			if (spResult == CANSELLED) {
-				request.getSession(false).setAttribute(CANSELLED_MSG, true);
+			if (spResult == CANCELLED) {
+				request.getSession(false).setAttribute(CANCELLED_MSG, true);
 			}
 			if (spResult == ROLLBACK) {
 				request.getSession(false).setAttribute(ROLLBACK_MSG, true);

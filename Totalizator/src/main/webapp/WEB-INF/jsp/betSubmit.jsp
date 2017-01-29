@@ -54,7 +54,7 @@
 							</div>
 
 							<div class='form-row'>
-								<label> ${betAmount }</label> <input type='number' min='1'
+								<label> ${betAmount }</label> <input type='number' min='1' max='2147483647'
 									name='bet-amount' value=${requestScope.betAmount } readonly />
 							</div>
 

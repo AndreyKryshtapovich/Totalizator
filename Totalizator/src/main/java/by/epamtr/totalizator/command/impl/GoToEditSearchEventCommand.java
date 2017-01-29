@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.listbean.JSPGameListBean;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -47,7 +47,7 @@ public class GoToEditSearchEventCommand implements Command {
 
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
-		List<GameCupoun> gamesList = null;
+		List<GameCoupon> gamesList = null;
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();

@@ -1,10 +1,10 @@
 package by.epamtr.totalizator.service.impl;
 
 import by.epamtr.totalizator.bean.dto.EventDTO;
-import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.GameCouponDTO;
 import by.epamtr.totalizator.bean.dto.EventsListDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.dao.AdminDAO;
 import by.epamtr.totalizator.dao.DAOFactory;
 import by.epamtr.totalizator.dao.exception.DAOException;
@@ -28,7 +28,7 @@ import java.util.Map;
 public class AdminOperation implements AdminOperationService {
 
 	@Override
-	public boolean createNewGameCupoun(GameCupounDTO gameCupounDTO) throws ServiceException {
+	public boolean createNewGameCupoun(GameCouponDTO gameCupounDTO) throws ServiceException {
 
 		boolean result = true;
 
@@ -46,7 +46,7 @@ public class AdminOperation implements AdminOperationService {
 		Timestamp gameCuponStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp gameCuponEndDate = Timestamp.valueOf(correctEndDate);
 
-		GameCupoun gameCupon = new GameCupoun();
+		GameCoupon gameCupon = new GameCoupon();
 
 		gameCupon.setStartDate(gameCuponStartDate);
 		gameCupon.setEndDate(gameCuponEndDate);
@@ -105,8 +105,8 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public List<GameCupoun> getGamesInDevelopment() throws ServiceException {
-		List<GameCupoun> gamesList = null;
+	public List<GameCoupon> getGamesInDevelopment() throws ServiceException {
+		List<GameCoupon> gamesList = null;
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO = factory.getDBAdminDAO();
 
@@ -189,8 +189,8 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public List<GameCupoun> getAllGames() throws ServiceException {
-		List<GameCupoun> gamesList = null;
+	public List<GameCoupon> getAllGames() throws ServiceException {
+		List<GameCoupon> gamesList = null;
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -315,8 +315,8 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public GameCupoun getGameByGameCupounId(int gameCupounId) throws ServiceException {
-		List<GameCupoun> gamesList = null;
+	public GameCoupon getGameByGameCupounId(int gameCupounId) throws ServiceException {
+		List<GameCoupon> gamesList = null;
 		DAOFactory factory = DAOFactory.getInstance();
 		AdminDAO adminDAO = factory.getDBAdminDAO();
 		try {
@@ -348,7 +348,7 @@ public class AdminOperation implements AdminOperationService {
 	}
 
 	@Override
-	public boolean updateGame(GameCupounDTO gameDTO) throws ServiceException {
+	public boolean updateGame(GameCouponDTO gameDTO) throws ServiceException {
 		boolean result = true;
 		if (!Validator.updateGameCouponValidation(gameDTO)) {
 			result = false;
@@ -366,7 +366,7 @@ public class AdminOperation implements AdminOperationService {
 		Timestamp gameStartDate = Timestamp.valueOf(correctStartDate);
 		Timestamp gameEndDate = Timestamp.valueOf(correctEndDate);
 
-		GameCupoun game = new GameCupoun();
+		GameCoupon game = new GameCoupon();
 		game.setGameCupounId(Integer.valueOf(gameDTO.getGameCupounId()));
 		game.setStartDate(gameStartDate);
 		game.setEndDate(gameEndDate);

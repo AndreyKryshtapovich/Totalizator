@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.dao.AdminDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
 import by.epamtr.totalizator.dao.connectionpool.exception.ConnectionPoolException;
@@ -96,7 +96,7 @@ public class DBAdminDAO implements AdminDAO {
 			+ " `status_id` = ?" + " WHERE `game_cupon_id` = ?;";
 
 	@Override
-	public boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException {
+	public boolean createNewGameCupoun(GameCoupon gameCupoun) throws DAOException {
 		boolean result = true;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -169,12 +169,12 @@ public class DBAdminDAO implements AdminDAO {
 	}
 
 	@Override
-	public List<GameCupoun> getGamesInDevelopment() throws DAOException {
+	public List<GameCoupon> getGamesInDevelopment() throws DAOException {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		List<GameCupoun> gamesList = new ArrayList<>();
+		List<GameCoupon> gamesList = new ArrayList<>();
 
 		try {
 			con = connectionPool.takeConnection();
@@ -187,7 +187,7 @@ public class DBAdminDAO implements AdminDAO {
 			rs = st.executeQuery(GET_GAMES_IN_DEVELOPMENT);
 
 			while (rs.next()) {
-				GameCupoun gameCupoun = new GameCupoun();
+				GameCoupon gameCupoun = new GameCoupon();
 				gameCupoun.setGameCupounId(rs.getInt(1));
 				gameCupoun.setStartDate(rs.getTimestamp(2));
 				gameCupoun.setEndDate(rs.getTimestamp(3));
@@ -358,12 +358,12 @@ public class DBAdminDAO implements AdminDAO {
 	}
 
 	@Override
-	public List<GameCupoun> getAllGames() throws DAOException {
+	public List<GameCoupon> getAllGames() throws DAOException {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		List<GameCupoun> gamesList = new ArrayList<>();
+		List<GameCoupon> gamesList = new ArrayList<>();
 
 		try {
 			con = connectionPool.takeConnection();
@@ -376,7 +376,7 @@ public class DBAdminDAO implements AdminDAO {
 			rs = st.executeQuery(GET_ALL_GAMES);
 
 			while (rs.next()) {
-				GameCupoun gameCupoun = new GameCupoun();
+				GameCoupon gameCupoun = new GameCoupon();
 				gameCupoun.setGameCupounId(rs.getInt(1));
 				gameCupoun.setStartDate(rs.getTimestamp(2));
 				gameCupoun.setEndDate(rs.getTimestamp(3));
@@ -433,12 +433,12 @@ public class DBAdminDAO implements AdminDAO {
 	}
 
 	@Override
-	public List<GameCupoun> getGameByGameCupounId(int gameCupounId) throws DAOException {
+	public List<GameCoupon> getGameByGameCupounId(int gameCupounId) throws DAOException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		List<GameCupoun> gamesList = new ArrayList<>();
+		List<GameCoupon> gamesList = new ArrayList<>();
 
 		try {
 			con = connectionPool.takeConnection();
@@ -453,7 +453,7 @@ public class DBAdminDAO implements AdminDAO {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				GameCupoun gameCupoun = new GameCupoun();
+				GameCoupon gameCupoun = new GameCoupon();
 				gameCupoun.setGameCupounId(rs.getInt(1));
 				gameCupoun.setStartDate(rs.getTimestamp(2));
 				gameCupoun.setEndDate(rs.getTimestamp(3));
@@ -635,7 +635,7 @@ public class DBAdminDAO implements AdminDAO {
 	}
 
 	@Override
-	public boolean updateGame(GameCupoun game) throws DAOException {
+	public boolean updateGame(GameCoupon game) throws DAOException {
 		boolean result = true;
 		Connection con = null;
 		PreparedStatement ps = null;

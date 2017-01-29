@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -49,7 +49,7 @@ public class ShowEventsCommand implements Command {
 		request.getSession(false).setAttribute(CURRENT_URL, url);
 
 		List<Event> eventsList = null;
-		GameCupoun game = new GameCupoun();
+		GameCoupon game = new GameCoupon();
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		ClientOperationService clientService = factory.getClientOperationService();

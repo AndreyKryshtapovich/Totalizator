@@ -4,7 +4,7 @@ import java.util.List;
 
 import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
@@ -50,11 +50,11 @@ public interface ClientDAO {
 	/**
 	 * Gets a game coupon with Opened status from the data storage.
 	 * 
-	 * @return {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
+	 * @return {@link by.epamtr.totalizator.bean.entity.GameCoupon} object.
 	 * @throws DAOException
 	 *             if obtaining information from the data storage fails.
 	 */
-	GameCupoun getOpenedGame() throws DAOException;
+	GameCoupon getOpenedGame() throws DAOException;
 
 	/**
 	 * Gets all the events available for betting from the data storage.

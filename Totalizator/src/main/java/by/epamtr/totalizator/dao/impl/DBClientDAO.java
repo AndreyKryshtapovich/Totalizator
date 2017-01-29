@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.dao.ClientDAO;
 import by.epamtr.totalizator.dao.connectionpool.ConnectionPool;
@@ -134,13 +134,13 @@ public class DBClientDAO implements ClientDAO {
 	}
 
 	@Override
-	public GameCupoun getOpenedGame() throws DAOException {
+	public GameCoupon getOpenedGame() throws DAOException {
 
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		ConnectionPool connectionPool = ConnectionPool.getInstance();
-		GameCupoun game = new GameCupoun();
+		GameCoupon game = new GameCoupon();
 
 		try {
 			con = connectionPool.takeConnection();

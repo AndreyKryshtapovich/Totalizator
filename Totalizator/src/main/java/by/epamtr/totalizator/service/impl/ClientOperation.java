@@ -6,7 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import by.epamtr.totalizator.bean.dto.MakeBetDTO;
 import by.epamtr.totalizator.bean.dto.UserDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.dao.ClientDAO;
 import by.epamtr.totalizator.dao.DAOFactory;
@@ -115,8 +115,8 @@ public class ClientOperation implements ClientOperationService {
 	}
 
 	@Override
-	public GameCupoun getOpenedGame() throws ServiceException {
-		GameCupoun game = new GameCupoun();
+	public GameCoupon getOpenedGame() throws ServiceException {
+		GameCoupon game = new GameCoupon();
 		DAOFactory factory = DAOFactory.getInstance();
 		ClientDAO clientDAO = factory.getDBClientDAO();
 		try {

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -47,7 +47,7 @@ public class DeleteEventCommand implements Command {
 		String url = null;
 		String event = request.getParameter(EVENT).toString();
 		Map<Integer, String> status = null;
-		GameCupoun game = null;
+		GameCoupon game = null;
 
 		if (request.getSession(false) == null) {
 			url = LOCALHOST;

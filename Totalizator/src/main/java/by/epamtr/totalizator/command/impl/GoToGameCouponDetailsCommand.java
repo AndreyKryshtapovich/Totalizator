@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
 import by.epamtr.totalizator.controller.PageName;
@@ -75,7 +75,7 @@ public class GoToGameCouponDetailsCommand implements Command {
 
 		ServiceFactory factory = ServiceFactory.getInstance();
 		AdminOperationService adminService = factory.getAdminOperationService();
-		GameCupoun game = null;
+		GameCoupon game = null;
 		Map<Integer, String> status = null;
 
 		try {

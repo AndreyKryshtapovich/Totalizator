@@ -14,7 +14,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.command.impl.DestroyConnectionPoolCommand;
 import by.epamtr.totalizator.command.impl.InitConnectionPoolCommand;
 import by.epamtr.totalizator.dao.DAOFactory;
@@ -94,7 +94,7 @@ public class UpdateGameCouponTest {
 			connectionPool.closeConnection(con, st, rs);
 		}
 		
-		GameCupoun expectedGame = new GameCupoun();
+		GameCoupon expectedGame = new GameCoupon();
 		Timestamp gameStartDate = Timestamp.valueOf(START_DATE);
 		expectedGame.setStartDate(gameStartDate);
 		
@@ -122,7 +122,7 @@ public class UpdateGameCouponTest {
 	}
 	
 	
-	private void checkUpdatedGame(GameCupoun expectedGame){
+	private void checkUpdatedGame(GameCoupon expectedGame){
 		Statement st = null;
 		ResultSet rs = null;
 		Connection con = null;

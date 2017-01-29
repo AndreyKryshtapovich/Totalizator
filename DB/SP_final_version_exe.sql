@@ -12,7 +12,7 @@ BEGIN
 		END;
         START TRANSACTION;
         
-	-- перенос джекпота из последней рассчитанной и закрытой игры в текущую 
+	-- copy jackpot from last closed game coupon to the current game coupon.
     SELECT MAX(game_cupon_id) INTO @last_closed_gc_id FROM game_cupon WHERE status_id = 3;
     
 		IF COALESCE(@last_closed_gc_id, 0) != 0
@@ -39,7 +39,7 @@ BEGIN
 			 from event as ev 
 			 where ev.game_cupon_id = p_game_coupon_id and ev.status_id = 4;
              
-             IF (@canselled_events_count >= 5) then -- cansel all game_coupon
+             IF (@canselled_events_count >= 5) then -- cancel all game_coupon
              
 				UPDATE `totalizator`.`game_cupon`
 				SET
@@ -58,7 +58,7 @@ BEGIN
 				ELSE false
 				END;
                 
-                -- подсчет количества правильно угаданных собтий в ставке win_event_count
+				-- cout the amount of correct results suggested by the user win_event_count
 				UPDATE `bet` AS b
 				JOIN
 				(SELECT bet_id, count(*) AS win_event_count
@@ -81,22 +81,24 @@ BEGIN
 				) AS b
 				WHERE a.win_event_count >= b.min_win_event_count;
                 
-			-- подсчет пула общего и обновление game_cupon
+
+			-- count game coupon's pool and update game_coupon
 			UPDATE `game_cupon`
 			SET  `game_cupon_pull` = (
 			SELECT SUM(`bet_money_amount`) FROM `bet`  
 			WHERE `game_cupon_id` = p_game_coupon_id) 
 			WHERE `game_cupon_id` = p_game_coupon_id;
             
-		-- на каждую игру надо создавать всегда по всем category_id чтобы знать сколько пула разыгралось
-		-- а сколько пошло в джек-пот
+		-- There should be 5 rows for each game coupon (a row per category_id in win_category_type table) to provide information
+		-- about the pool (how much money should be transfered to jackpot and how much should be given to the winers).
 		INSERT INTO `win_per_category` (game_cupon_id,win_category_type_id,win_pool_for_category,win_bet_category_count,win_bet_category_amount)
 		SELECT p_game_coupon_id, win_category_type.win_category_type_id,0,0,0
         FROM win_category_type;
         
         
-	-- при суммировании всегда будет не хватать 10%, т.к. по бизнесс логике их забирают организаторы тотализатора
-    -- в распроцентовке по категориям это уже учтено
+
+	-- Prize fund - the part of a pool (90%) intended for payment prizes. The prize fund is divided into 4 advantageous categories.
+	-- 10% - for the organizers of totalizator.
    UPDATE `win_per_category` as wpc
     JOIN `game_cupon` as gc
     ON wpc.game_cupon_id = gc.game_cupon_id and gc.game_cupon_id = p_game_coupon_id
@@ -110,7 +112,7 @@ BEGIN
         -- jackpot from the previous game 
     END;
 	
-    -- подсчет win_per_category_count	
+    -- Count win_per_category_count. How many bets won in each category.
 	UPDATE `win_per_category`AS wpc
 	JOIN
 	(SELECT ubr.win_category_type_id, b.game_cupon_id, count(*) AS bet_count
@@ -123,7 +125,7 @@ BEGIN
 	SET wpc.win_bet_category_count = q.bet_count
 	WHERE wpc.win_category_type_id = q.win_category_type_id AND q.game_cupon_id = p_game_coupon_id;
 	
-	-- подсчет win_bet_category_amount 
+	-- Count win_bet_category_amount.  win_bet_category_amount - sum of all bets that won in particular category.
 	UPDATE `win_per_category` AS wpc
 	JOIN
 	(SELECT win_category_type_id, SUM(bet_money_amount) as total_sum
@@ -135,7 +137,7 @@ BEGIN
 	SET wpc.win_bet_category_amount = q.total_sum
 	    WHERE wpc.game_cupon_id = p_game_coupon_id;
     
-	-- подсчет win_category_amount
+	-- Count win_category_amount
   UPDATE `user_bet_result`as ubr
   JOIN 
   ( 
@@ -150,7 +152,7 @@ BEGIN
   ON ubr.user_bet_result_id = q.user_bet_result_id
   SET ubr.win_category_amount = (q.win_pool_for_category / q.win_bet_category_amount) * q.bet_money_amount;
     
-	-- подсчет сколько в итоге выйграл пользователь по всем категориям win_bet_amount
+	-- Count user's prize for all categories win_bet_amount
 	UPDATE `bet` AS b
 	JOIN
 	(SELECT b.bet_id, sum(ubr.win_category_amount) AS total

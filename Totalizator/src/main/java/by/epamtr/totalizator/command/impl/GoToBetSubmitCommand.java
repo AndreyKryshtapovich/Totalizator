@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 import by.epamtr.totalizator.bean.listbean.JSPMapBean;
@@ -94,7 +94,7 @@ public class GoToBetSubmitCommand implements Command {
 			ServiceFactory factory = ServiceFactory.getInstance();
 			ClientOperationService clientService = factory.getClientOperationService();
 
-			GameCupoun gameCupoun = new GameCupoun();
+			GameCoupon gameCupoun = new GameCoupon();
 
 			try {
 				gameCupoun = clientService.getOpenedGame();
@@ -103,8 +103,15 @@ public class GoToBetSubmitCommand implements Command {
 				page = PageName.ERROR_PAGE;
 				return page;
 			}
-			Integer betAmount = Integer.valueOf(request.getParameter(BET_AMOUNT));
 
+			Integer betAmount = null;
+			
+			try {
+				betAmount = Integer.valueOf(request.getParameter(BET_AMOUNT));
+			} catch (NumberFormatException e) {
+				betAmount = 0;
+			}
+			
 			boolean betAmountResult = true;
 			if (betAmount < gameCupoun.getMinBetAmount()) {
 				betAmountResult = false;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.dao.exception.DAOException;
 
 /**
@@ -20,12 +20,12 @@ public interface AdminDAO {
 	 * Creates new record representing particular game coupon in a data storage.
 	 * 
 	 * @param gameCupoun
-	 *            {@link GameCupoun} object representing new game coupon.
+	 *            {@link GameCoupon} object representing new game coupon.
 	 * @return {@code true} if new game coupon was created in a data storage.
 	 * @throws DAOException
 	 *             if creating of new game coupon fails.
 	 */
-	boolean createNewGameCupoun(GameCupoun gameCupoun) throws DAOException;
+	boolean createNewGameCupoun(GameCoupon gameCupoun) throws DAOException;
 
 	/**
 	 * Creates new record representing particular event in a data storage.
@@ -71,13 +71,13 @@ public interface AdminDAO {
 	 * Updates record representing particular game coupon in the data storage.
 	 * 
 	 * @param game
-	 *            {@link GameCupoun} object representing particular game coupon
+	 *            {@link GameCoupon} object representing particular game coupon
 	 *            with up to date information.
 	 * @return {@code true} if game coupon's record was successfully updated.
 	 * @throws DAOException
 	 *             if update fails due to the data storage issues.
 	 */
-	boolean updateGame(GameCupoun game) throws DAOException;
+	boolean updateGame(GameCoupon game) throws DAOException;
 
 	/**
 	 * Unmatches event and the particular game coupon.
@@ -122,23 +122,23 @@ public interface AdminDAO {
 	/**
 	 * Gets all game coupons with In developing status from the data storage.
 	 * 
-	 * @return {@link List} of {@link GameCupoun} objects.
+	 * @return {@link List} of {@link GameCoupon} objects.
 	 * @throws DAOException
 	 *             if obtaining information from the data storage fails due to
 	 *             the data storage issues.
 	 */
-	List<GameCupoun> getGamesInDevelopment() throws DAOException;
+	List<GameCoupon> getGamesInDevelopment() throws DAOException;
 
 	/**
 	 * Gets all game coupons from the data storage except Closed and Cancelled
 	 * ones.
 	 * 
-	 * @return {@link List} of {@link GameCupoun} objects.
+	 * @return {@link List} of {@link GameCoupon} objects.
 	 * @throws DAOException
 	 *             if obtaining information from the data storage fails due to
 	 *             the data storage issues.
 	 */
-	List<GameCupoun> getAllGames() throws DAOException;
+	List<GameCoupon> getAllGames() throws DAOException;
 
 	/**
 	 * Gets all events from the data storage that could be matched to the
@@ -174,12 +174,12 @@ public interface AdminDAO {
 	 * 
 	 * @param gameCupounId
 	 *            Id of the game coupon in the data storage.
-	 * @return {@link List} containing {@link GameCupoun} object.
+	 * @return {@link List} containing {@link GameCoupon} object.
 	 * @throws DAOException
 	 *             if obtaining information from the data storage fails due to
 	 *             the data storage issues.
 	 */
-	List<GameCupoun> getGameByGameCupounId(int gameCupounId) throws DAOException;
+	List<GameCoupon> getGameByGameCupounId(int gameCupounId) throws DAOException;
 
 	/**
 	 * Gets all data about available results from the data storage.

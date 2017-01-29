@@ -49,6 +49,7 @@ public final class ConnectionPool {
 	private String password;
 	private int poolSize;
 	private final static Logger Logger = LogManager.getLogger(ConnectionPool.class.getName());
+	private final static int DEFAULT_NUMBER_OF_CONNECTIONS = 5;
 
 	private static ConnectionPool instance;
 
@@ -65,7 +66,7 @@ public final class ConnectionPool {
 		try {
 			this.poolSize = Integer.parseInt(dbResourseManager.getValue(DBParameter.DB_POOL_SIZE));
 		} catch (NumberFormatException e) {
-			poolSize = 5;
+			poolSize = DEFAULT_NUMBER_OF_CONNECTIONS;
 		}
 	}
 
@@ -74,7 +75,7 @@ public final class ConnectionPool {
 	 * 
 	 * @return {@code ConnectionPool instance}.
 	 */
-	public final static ConnectionPool getInstance() {
+	public static ConnectionPool getInstance() {
 		if (instance == null) {
 			instance = new ConnectionPool();
 		}

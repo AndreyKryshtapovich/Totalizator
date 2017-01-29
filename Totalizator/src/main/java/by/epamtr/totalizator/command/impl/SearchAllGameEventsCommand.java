@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.bean.listbean.JSPListBean;
 import by.epamtr.totalizator.command.Command;
@@ -67,7 +67,7 @@ public class SearchAllGameEventsCommand implements Command {
 
 			List<Event> eventsList = null;
 			String parameters = request.getParameter(GAME);
-			GameCupoun currentGame = null;
+			GameCoupon currentGame = null;
 
 			if (parameters.isEmpty()) {
 				page = PageName.ERROR_PAGE;

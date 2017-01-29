@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import by.epamtr.totalizator.bean.dto.EventDTO;
-import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.GameCouponDTO;
 import by.epamtr.totalizator.bean.dto.EventsListDTO;
 import by.epamtr.totalizator.bean.entity.Event;
-import by.epamtr.totalizator.bean.entity.GameCupoun;
+import by.epamtr.totalizator.bean.entity.GameCoupon;
 import by.epamtr.totalizator.service.exception.ServiceException;
 
 /**
@@ -23,14 +23,14 @@ public interface AdminOperationService {
 	 * Creates new game coupon in the system.
 	 * 
 	 * @param gameCupounDTO
-	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO } object
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCouponDTO } object
 	 *            that represents new game coupon.
 	 * @return {@code true} if new game coupon was created successfully.
 	 *         {@code false} if validation or DAO method fails.
 	 * @throws ServiceException
 	 *             if creating of new game coupon fails.
 	 */
-	boolean createNewGameCupoun(GameCupounDTO gameCupounDTO) throws ServiceException;
+	boolean createNewGameCupoun(GameCouponDTO gameCupounDTO) throws ServiceException;
 
 	/**
 	 * Creates new event in the system.
@@ -79,7 +79,7 @@ public interface AdminOperationService {
 	 * Updates information about particular game coupon in the system.
 	 * 
 	 * @param gameDTO
-	 *            {@link by.epamtr.totalizator.bean.dto.GameCupounDTO} object
+	 *            {@link by.epamtr.totalizator.bean.dto.GameCouponDTO} object
 	 *            that represents game coupon with up to date information about
 	 *            it.
 	 * @return {@code true} if game coupon was updated successfully.
@@ -88,7 +88,7 @@ public interface AdminOperationService {
 	 *             if update fails.
 	 */
 
-	boolean updateGame(GameCupounDTO gameDTO) throws ServiceException;
+	boolean updateGame(GameCouponDTO gameDTO) throws ServiceException;
 
 	/**
 	 * Unmatches event and the particular game coupon.
@@ -136,33 +136,33 @@ public interface AdminOperationService {
 	 * Gets the information about game coupons with status In developing.
 	 * 
 	 * @return {@link List} of
-	 *         {@link by.epamtr.totalizator.bean.entity.GameCupoun} objects
+	 *         {@link by.epamtr.totalizator.bean.entity.GameCoupon} objects
 	 * @throws ServiceException
 	 *             if obtaining information fails.
 	 */
-	List<GameCupoun> getGamesInDevelopment() throws ServiceException;
+	List<GameCoupon> getGamesInDevelopment() throws ServiceException;
 
 	/**
 	 * Gets the information about all game coupons except Closed or Cancelled
 	 * ones.
 	 * 
 	 * @return {@link List} of
-	 *         {@link by.epamtr.totalizator.bean.entity.GameCupoun} objects.
+	 *         {@link by.epamtr.totalizator.bean.entity.GameCoupon} objects.
 	 * @throws ServiceException
 	 *             if obtaining information fails.
 	 */
-	List<GameCupoun> getAllGames() throws ServiceException;
+	List<GameCoupon> getAllGames() throws ServiceException;
 
 	/**
 	 * Gets the information about particular game coupon.
 	 * 
 	 * @param gameCupounId
 	 *            Id of the game coupon in the system.
-	 * @return {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
+	 * @return {@link by.epamtr.totalizator.bean.entity.GameCoupon} object.
 	 * @throws ServiceException
 	 *             if obtaining information fails.
 	 */
-	GameCupoun getGameByGameCupounId(int gameCupounId) throws ServiceException;
+	GameCoupon getGameByGameCupounId(int gameCupounId) throws ServiceException;
 
 	/**
 	 * Gets all events that could be matched to a particular game coupon.

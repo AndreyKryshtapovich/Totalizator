@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.GameCouponDTO;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -70,7 +70,7 @@ public class EditGameCouponCommand implements Command {
 			String minBetAmount = request.getParameter(MIN_BET_AMOUNT).toString();
 			String jackpot = request.getParameter(JACKPOT).toString();
 
-			GameCupounDTO gameDTO = new GameCupounDTO();
+			GameCouponDTO gameDTO = new GameCouponDTO();
 			gameDTO.setGameCupounId(gameCouponId);
 
 			gameDTO.setStartDate(startDate);

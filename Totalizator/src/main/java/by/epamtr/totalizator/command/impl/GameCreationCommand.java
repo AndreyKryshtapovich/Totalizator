@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtr.totalizator.bean.dto.GameCupounDTO;
+import by.epamtr.totalizator.bean.dto.GameCouponDTO;
 import by.epamtr.totalizator.bean.entity.User;
 import by.epamtr.totalizator.command.Command;
 import by.epamtr.totalizator.command.exception.CommandException;
@@ -64,7 +64,7 @@ public class GameCreationCommand implements Command {
 			ServiceFactory factory = ServiceFactory.getInstance();
 			AdminOperationService adminService = factory.getAdminOperationService();
 
-			GameCupounDTO gameCupounDTO = new GameCupounDTO();
+			GameCouponDTO gameCupounDTO = new GameCouponDTO();
 			gameCupounDTO.setStartDate(startDate);
 			gameCupounDTO.setStartTimeHours(startTimeHours);
 			gameCupounDTO.setStartTimeMinutes(startTimeMinutes);

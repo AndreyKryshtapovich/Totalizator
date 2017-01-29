@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 /**
  * A Data Transfer Object representing
- * {@link by.epamtr.totalizator.bean.entity.GameCupoun} object.
+ * {@link by.epamtr.totalizator.bean.entity.GameCoupon} object.
  * 
  * @author Andrey Kryshtapovich
  *
  */
 
-public class GameCupounDTO implements Serializable {
+public class GameCouponDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String gameCupounId;
@@ -25,7 +25,7 @@ public class GameCupounDTO implements Serializable {
 	private String jackpot;
 	private String status;
 
-	public GameCupounDTO() {
+	public GameCouponDTO() {
 
 	}
 
@@ -147,7 +147,7 @@ public class GameCupounDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GameCupounDTO other = (GameCupounDTO) obj;
+		GameCouponDTO other = (GameCouponDTO) obj;
 		if (endDate == null) {
 			if (other.endDate != null)
 				return false;
